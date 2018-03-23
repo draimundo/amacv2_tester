@@ -796,8 +796,8 @@ CONFIG_pciutils=y
 #
 # vim 
 #
-# CONFIG_vim is not set
-# CONFIG_vim-syntax is not set
+CONFIG_vim=y
+CONFIG_vim-syntax=y
 # CONFIG_vim-dev is not set
 # CONFIG_vim-help is not set
 # CONFIG_vim-common is not set
@@ -4123,7 +4123,7 @@ CONFIG_bridge-utils=y
 # apps 
 #
 # CONFIG_gpio-demo is not set
-# CONFIG_peekpoke is not set
+CONFIG_peekpoke=y
 
 #
 # user packages 
@@ -4132,4 +4132,4 @@ CONFIG_bridge-utils=y
 #
 # PetaLinux RootFS Settings
 #
-CONFIG_ROOTFS_ROOT_PASSWD="root"
+CONFIG_ROOTFS_ROOT_PASSWD="cmssucks"
