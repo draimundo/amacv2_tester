@@ -2,24 +2,32 @@
    ExpandedHierarchyInLayout: "",
    guistr: "# # String gsaved with Nlview 6.6.11  2017-06-12 bk=1.3860 VDI=40 GEI=35 GUI=JA:1.6
 #  -string -flagsOSRD
-preplace port DDR -pg 1 -y -190 -defaultsOSRD
-preplace port FIXED_IO -pg 1 -y -170 -defaultsOSRD
-preplace inst ps7_0_axi_periph -pg 1 -lvl 4 -y -160 -defaultsOSRD
-preplace inst rst_ps7_0_100M -pg 1 -lvl 3 -y 60 -defaultsOSRD
-preplace inst microzed_fmc_led_controller_0 -pg 1 -lvl 1 -y 10 -defaultsOSRD
-preplace inst processing_system7_0 -pg 1 -lvl 2 -y -120 -defaultsOSRD
-preplace netloc processing_system7_0_DDR 1 2 5 NJ -200 1070 -40 1380 -190 N -190 N
-preplace netloc processing_system7_0_M_AXI_GP0 1 2 2 680 -220 NJ
-preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 0 4 40 160 NJ 160 NJ 160 1080
-preplace netloc processing_system7_0_FCLK_RESET0_N 1 2 1 680
-preplace netloc processing_system7_0_FIXED_IO 1 2 5 NJ -180 1050 -30 1390 -170 N -170 N
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 4 20 -120 260 -250 690 -210 1090
-preplace netloc ps7_0_axi_periph_M00_AXI 1 0 5 30 150 NJ 150 NJ 150 NJ 150 1370
-preplace netloc rst_ps7_0_100M_interconnect_aresetn 1 3 1 1060
-levelinfo -pg 1 0 150 470 870 1230 1410 1460 1500 -top -280 -bot 180
+preplace port DDR -pg 1 -y 50 -defaultsOSRD
+preplace port LED0 -pg 1 -y 180 -defaultsOSRD
+preplace port LED1 -pg 1 -y 200 -defaultsOSRD
+preplace port LED2 -pg 1 -y 220 -defaultsOSRD
+preplace port LED3 -pg 1 -y 240 -defaultsOSRD
+preplace port FIXED_IO -pg 1 -y 70 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 2 -y 190 -defaultsOSRD
+preplace inst microzed_fmc_led_controller_0 -pg 1 -lvl 3 -y 210 -defaultsOSRD
+preplace inst rst_ps7_0_100M -pg 1 -lvl 1 -y 360 -defaultsOSRD
+preplace inst processing_system7_0 -pg 1 -lvl 1 -y 130 -defaultsOSRD
+preplace netloc processing_system7_0_DDR 1 1 3 NJ 50 NJ 50 NJ
+preplace netloc microzed_fmc_led_controller_0_led3 1 3 1 NJ
+preplace netloc processing_system7_0_M_AXI_GP0 1 1 1 450
+preplace netloc rst_ps7_0_100M_peripheral_aresetn 1 1 2 480 320 770
+preplace netloc processing_system7_0_FCLK_RESET0_N 1 0 2 30 270 450
+preplace netloc processing_system7_0_FIXED_IO 1 1 3 NJ 70 NJ 70 NJ
+preplace netloc microzed_fmc_led_controller_0_led0 1 3 1 NJ
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 3 20 260 470 310 760
+preplace netloc ps7_0_axi_periph_M00_AXI 1 2 1 N
+preplace netloc microzed_fmc_led_controller_0_led1 1 3 1 NJ
+preplace netloc microzed_fmc_led_controller_0_led2 1 3 1 NJ
+preplace netloc rst_ps7_0_100M_interconnect_aresetn 1 1 1 460
+levelinfo -pg 1 0 240 620 880 1010 -top 0 -bot 450
 ",
 }
 {
-   da_axi4_cnt: "1",
+   da_axi4_cnt: "3",
    da_ps7_cnt: "1",
 }

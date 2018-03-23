@@ -1,0 +1,8 @@
+vhdl xil_defaultlib  \
+"../../../bd/TopLevel/ipshared/a77f/hdl/microzed_fmc_led_controller_v1_0_S00_AXI.vhd" \
+"../../../bd/TopLevel/ipshared/a77f/hdl/microzed_fmc_led_controller_v1_0.vhd" \
+"../../../bd/TopLevel/ip/TopLevel_microzed_fmc_led_controller_0_0/sim/TopLevel_microzed_fmc_led_controller_0_0.vhd" \
+"../../../bd/TopLevel/ip/TopLevel_rst_ps7_0_100M_0/sim/TopLevel_rst_ps7_0_100M_0.vhd" \
+"../../../bd/TopLevel/sim/TopLevel.vhd" \
+
+nosort

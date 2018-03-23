@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
---Date        : Thu Mar 22 18:51:52 2018
+--Date        : Thu Mar 22 19:21:38 2018
 --Host        : carl-pc running 64-bit CentOS Linux release 7.4.1708 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
@@ -33,7 +33,11 @@ entity TopLevel_wrapper is
     FIXED_IO_mio : inout STD_LOGIC_VECTOR ( 53 downto 0 );
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
-    FIXED_IO_ps_srstb : inout STD_LOGIC
+    FIXED_IO_ps_srstb : inout STD_LOGIC;
+    LED0 : out STD_LOGIC;
+    LED1 : out STD_LOGIC;
+    LED2 : out STD_LOGIC;
+    LED3 : out STD_LOGIC
   );
 end TopLevel_wrapper;
 
@@ -60,7 +64,11 @@ architecture STRUCTURE of TopLevel_wrapper is
     FIXED_IO_ddr_vrp : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     FIXED_IO_ps_clk : inout STD_LOGIC;
-    FIXED_IO_ps_porb : inout STD_LOGIC
+    FIXED_IO_ps_porb : inout STD_LOGIC;
+    LED0 : out STD_LOGIC;
+    LED1 : out STD_LOGIC;
+    LED2 : out STD_LOGIC;
+    LED3 : out STD_LOGIC
   );
   end component TopLevel;
 begin
@@ -86,6 +94,10 @@ TopLevel_i: component TopLevel
       FIXED_IO_mio(53 downto 0) => FIXED_IO_mio(53 downto 0),
       FIXED_IO_ps_clk => FIXED_IO_ps_clk,
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
-      FIXED_IO_ps_srstb => FIXED_IO_ps_srstb
+      FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
+      LED0 => LED0,
+      LED1 => LED1,
+      LED2 => LED2,
+      LED3 => LED3
     );
 end STRUCTURE;

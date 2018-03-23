@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Mar 22 18:52:07 2018" VIVADOVERSION="2017.4">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Thu Mar 22 19:21:38 2018" VIVADOVERSION="2017.4">
 
   <SYSTEMINFO ARCH="zynq" BOARD="em.avnet.com:microzed_7020:part0:1.1" DEVICE="7z020" NAME="TopLevel" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
@@ -25,6 +25,26 @@
     <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef"/>
     <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef"/>
+    <PORT DIR="O" NAME="LED0" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led0">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="led0"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="LED1" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led1">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="led1"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="LED2" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led2">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="led2"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="LED3" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led3">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="led3"/>
+      </CONNECTIONS>
+    </PORT>
   </EXTERNALPORTS>
 
   <EXTERNALINTERFACES>
@@ -75,7 +95,7 @@
   </EXTERNALINTERFACES>
 
   <MODULES>
-    <MODULE FULLNAME="/microzed_fmc_led_controller_0" HWVERSION="1.0" INSTANCE="microzed_fmc_led_controller_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="microzed_fmc_led_controller" VLNV="user.org:user:microzed_fmc_led_controller:1.0">
+    <MODULE FULLNAME="/microzed_fmc_led_controller_0" HWVERSION="1.0" INSTANCE="microzed_fmc_led_controller_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="microzed_fmc_led_controller" VLNV="atlas-lbl.org:user:microzed_fmc_led_controller:1.0">
       <DOCUMENTS/>
       <ADDRESSBLOCKS>
         <ADDRESSBLOCK ACCESS="" INTERFACE="S00_AXI" NAME="S00_AXI_reg" RANGE="4096" USAGE="register"/>
@@ -83,12 +103,32 @@
       <PARAMETERS>
         <PARAMETER NAME="C_S00_AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="4"/>
-        <PARAMETER NAME="Component_Name" VALUE="TopLevel_microzed_fmc_led_controller_0_0"/>
+        <PARAMETER NAME="Component_Name" VALUE="TopLevel_microzed_fmc_led_controller_0_2"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
         <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C00000"/>
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C0FFFF"/>
       </PARAMETERS>
       <PORTS>
+        <PORT DIR="O" NAME="led0" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led0">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="LED0"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="led1" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led1">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="LED1"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="led2" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led2">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="LED2"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="led3" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_led3">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="LED3"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" LEFT="3" NAME="s00_axi_awaddr" RIGHT="0" SIGIS="undef" SIGNAME="microzed_fmc_led_controller_0_s00_axi_awaddr">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_AXI_awaddr"/>
@@ -1401,9 +1441,9 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="M_AXI_GP0_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_ACLK"/>
             <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="slowest_sync_clk"/>
-            <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="s00_axi_aclk"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="ACLK"/>
+            <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="s00_axi_aclk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
@@ -2354,8 +2394,8 @@
         <PORT DIR="O" LEFT="0" NAME="peripheral_aresetn" RIGHT="0" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_ARESETN"/>
-            <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="s00_axi_aresetn"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ARESETN"/>
+            <CONNECTION INSTANCE="microzed_fmc_led_controller_0" PORT="s00_axi_aresetn"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>

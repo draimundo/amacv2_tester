@@ -1,10 +1,10 @@
 -- Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
--- Date        : Thu Mar 22 18:54:42 2018
+-- Date        : Thu Mar 22 18:54:41 2018
 -- Host        : carl-pc running 64-bit CentOS Linux release 7.4.1708 (Core)
--- Command     : write_vhdl -force -mode synth_stub
---               /home/kkrizka/Firmware/amacv2_tester/amacv2_testbench_microzed/amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ip/TopLevel_auto_pc_0/TopLevel_auto_pc_0_stub.vhdl
+-- Command     : write_vhdl -force -mode synth_stub -rename_top TopLevel_auto_pc_0 -prefix
+--               TopLevel_auto_pc_0_ TopLevel_auto_pc_0_stub.vhdl
 -- Design      : TopLevel_auto_pc_0
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1

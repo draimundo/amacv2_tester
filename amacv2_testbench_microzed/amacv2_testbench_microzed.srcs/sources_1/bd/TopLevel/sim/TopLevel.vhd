@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
---Date        : Thu Mar 22 18:51:52 2018
+--Date        : Thu Mar 22 19:21:38 2018
 --Host        : carl-pc running 64-bit CentOS Linux release 7.4.1708 (Core)
 --Command     : generate_target TopLevel.bd
 --Design      : TopLevel
@@ -610,10 +610,14 @@ entity TopLevel is
     FIXED_IO_mio : inout STD_LOGIC_VECTOR ( 53 downto 0 );
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
-    FIXED_IO_ps_srstb : inout STD_LOGIC
+    FIXED_IO_ps_srstb : inout STD_LOGIC;
+    LED0 : out STD_LOGIC;
+    LED1 : out STD_LOGIC;
+    LED2 : out STD_LOGIC;
+    LED3 : out STD_LOGIC
   );
   attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of TopLevel : entity is "TopLevel,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=TopLevel,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=6,numReposBlks=4,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}";
+  attribute CORE_GENERATION_INFO of TopLevel : entity is "TopLevel,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=TopLevel,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=6,numReposBlks=4,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=3,da_ps7_cnt=1,synth_mode=OOC_per_IP}";
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of TopLevel : entity is "TopLevel.hwdef";
 end TopLevel;
@@ -691,8 +695,26 @@ architecture STRUCTURE of TopLevel is
     PS_PORB : inout STD_LOGIC
   );
   end component TopLevel_processing_system7_0_0;
-  component TopLevel_microzed_fmc_led_controller_0_0 is
+  component TopLevel_rst_ps7_0_100M_0 is
   port (
+    slowest_sync_clk : in STD_LOGIC;
+    ext_reset_in : in STD_LOGIC;
+    aux_reset_in : in STD_LOGIC;
+    mb_debug_sys_rst : in STD_LOGIC;
+    dcm_locked : in STD_LOGIC;
+    mb_reset : out STD_LOGIC;
+    bus_struct_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
+    peripheral_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
+    interconnect_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 );
+    peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
+  );
+  end component TopLevel_rst_ps7_0_100M_0;
+  component TopLevel_microzed_fmc_led_controller_0_2 is
+  port (
+    led0 : out STD_LOGIC;
+    led1 : out STD_LOGIC;
+    led2 : out STD_LOGIC;
+    led3 : out STD_LOGIC;
     s00_axi_awaddr : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s00_axi_awprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
     s00_axi_awvalid : in STD_LOGIC;
@@ -715,21 +737,11 @@ architecture STRUCTURE of TopLevel is
     s00_axi_aclk : in STD_LOGIC;
     s00_axi_aresetn : in STD_LOGIC
   );
-  end component TopLevel_microzed_fmc_led_controller_0_0;
-  component TopLevel_rst_ps7_0_100M_0 is
-  port (
-    slowest_sync_clk : in STD_LOGIC;
-    ext_reset_in : in STD_LOGIC;
-    aux_reset_in : in STD_LOGIC;
-    mb_debug_sys_rst : in STD_LOGIC;
-    dcm_locked : in STD_LOGIC;
-    mb_reset : out STD_LOGIC;
-    bus_struct_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
-    peripheral_reset : out STD_LOGIC_VECTOR ( 0 to 0 );
-    interconnect_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 );
-    peripheral_aresetn : out STD_LOGIC_VECTOR ( 0 to 0 )
-  );
-  end component TopLevel_rst_ps7_0_100M_0;
+  end component TopLevel_microzed_fmc_led_controller_0_2;
+  signal microzed_fmc_led_controller_0_led0 : STD_LOGIC;
+  signal microzed_fmc_led_controller_0_led1 : STD_LOGIC;
+  signal microzed_fmc_led_controller_0_led2 : STD_LOGIC;
+  signal microzed_fmc_led_controller_0_led3 : STD_LOGIC;
   signal processing_system7_0_DDR_ADDR : STD_LOGIC_VECTOR ( 14 downto 0 );
   signal processing_system7_0_DDR_BA : STD_LOGIC_VECTOR ( 2 downto 0 );
   signal processing_system7_0_DDR_CAS_N : STD_LOGIC;
@@ -846,8 +858,16 @@ architecture STRUCTURE of TopLevel is
   attribute X_INTERFACE_INFO of DDR_dqs_p : signal is "xilinx.com:interface:ddrx:1.0 DDR DQS_P";
   attribute X_INTERFACE_INFO of FIXED_IO_mio : signal is "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO";
 begin
-microzed_fmc_led_controller_0: component TopLevel_microzed_fmc_led_controller_0_0
+  LED0 <= microzed_fmc_led_controller_0_led0;
+  LED1 <= microzed_fmc_led_controller_0_led1;
+  LED2 <= microzed_fmc_led_controller_0_led2;
+  LED3 <= microzed_fmc_led_controller_0_led3;
+microzed_fmc_led_controller_0: component TopLevel_microzed_fmc_led_controller_0_2
      port map (
+      led0 => microzed_fmc_led_controller_0_led0,
+      led1 => microzed_fmc_led_controller_0_led1,
+      led2 => microzed_fmc_led_controller_0_led2,
+      led3 => microzed_fmc_led_controller_0_led3,
       s00_axi_aclk => processing_system7_0_FCLK_CLK0,
       s00_axi_araddr(3 downto 0) => ps7_0_axi_periph_M00_AXI_ARADDR(3 downto 0),
       s00_axi_aresetn => rst_ps7_0_100M_peripheral_aresetn(0),

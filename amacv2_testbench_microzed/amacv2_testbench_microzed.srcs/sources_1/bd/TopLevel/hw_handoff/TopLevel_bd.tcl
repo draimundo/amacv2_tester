@@ -160,9 +160,13 @@ proc create_root_design { parentCell } {
   set FIXED_IO [ create_bd_intf_port -mode Master -vlnv xilinx.com:display_processing_system7:fixedio_rtl:1.0 FIXED_IO ]
 
   # Create ports
+  set LED0 [ create_bd_port -dir O LED0 ]
+  set LED1 [ create_bd_port -dir O LED1 ]
+  set LED2 [ create_bd_port -dir O LED2 ]
+  set LED3 [ create_bd_port -dir O LED3 ]
 
   # Create instance: microzed_fmc_led_controller_0, and set properties
-  set microzed_fmc_led_controller_0 [ create_bd_cell -type ip -vlnv user.org:user:microzed_fmc_led_controller:1.0 microzed_fmc_led_controller_0 ]
+  set microzed_fmc_led_controller_0 [ create_bd_cell -type ip -vlnv atlas-lbl.org:user:microzed_fmc_led_controller:1.0 microzed_fmc_led_controller_0 ]
 
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
@@ -632,6 +636,10 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M00_AXI [get_bd_intf_pins microzed_fmc_led_controller_0/S00_AXI] [get_bd_intf_pins ps7_0_axi_periph/M00_AXI]
 
   # Create port connections
+  connect_bd_net -net microzed_fmc_led_controller_0_led0 [get_bd_ports LED0] [get_bd_pins microzed_fmc_led_controller_0/led0]
+  connect_bd_net -net microzed_fmc_led_controller_0_led1 [get_bd_ports LED1] [get_bd_pins microzed_fmc_led_controller_0/led1]
+  connect_bd_net -net microzed_fmc_led_controller_0_led2 [get_bd_ports LED2] [get_bd_pins microzed_fmc_led_controller_0/led2]
+  connect_bd_net -net microzed_fmc_led_controller_0_led3 [get_bd_ports LED3] [get_bd_pins microzed_fmc_led_controller_0/led3]
   connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_pins microzed_fmc_led_controller_0/s00_axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_100M/ext_reset_in]
   connect_bd_net -net rst_ps7_0_100M_interconnect_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins rst_ps7_0_100M/interconnect_aresetn]
