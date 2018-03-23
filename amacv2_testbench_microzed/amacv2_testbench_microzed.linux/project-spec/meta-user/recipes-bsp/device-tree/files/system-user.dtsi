@@ -1,3 +1,16 @@
 /include/ "system-conf.dtsi"
 / {
+  amba@0 {
+      #address-cells = <0x1>;
+      #size-cells = <0x1>;
+      compatible = "simple-bus";
+      ranges;
+
+      microzed_fmc_led_controller@43C00000 {
+          compatible = "xlnx,avnet";
+          reg = <0x43C00000 0x10000>;
+          xlnx,s00-axi-addr-width = <0x4>;
+          xlnx,s00-axi-data-width = <0x20>;
+      };
+  };
 };
