@@ -56,7 +56,7 @@
 # CONFIG_busybox-hwclock is not set
 # CONFIG_busybox-udhcpc is not set
 # CONFIG_busybox-mdev is not set
-# CONFIG_busybox-syslog is not set
+CONFIG_busybox-syslog=y
 
 #
 # cpio 

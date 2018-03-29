@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER amacv2_dummy_testbench
+	OPTION supported_peripherals = (amacv2_dummy_testbench);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = amacv2_dummy_testbench;
+END DRIVER

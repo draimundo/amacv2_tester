@@ -24,11 +24,6 @@
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/TopLevel/ip/TopLevel_processing_system7_0_0/sim/TopLevel_processing_system7_0_0.v" \
 -endlib
--makelib ies_lib/xil_defaultlib \
-  "../../../bd/TopLevel/ipshared/a77f/hdl/microzed_fmc_led_controller_v1_0_S00_AXI.vhd" \
-  "../../../bd/TopLevel/ipshared/a77f/hdl/microzed_fmc_led_controller_v1_0.vhd" \
-  "../../../bd/TopLevel/ip/TopLevel_microzed_fmc_led_controller_0_0/sim/TopLevel_microzed_fmc_led_controller_0_0.vhd" \
--endlib
 -makelib ies_lib/lib_cdc_v1_0_2 \
   "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd" \
 -endlib
@@ -38,9 +33,15 @@
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/TopLevel/ip/TopLevel_rst_ps7_0_100M_0/sim/TopLevel_rst_ps7_0_100M_0.vhd" \
   "../../../bd/TopLevel/sim/TopLevel.vhd" \
+  "../../../bd/TopLevel/ipshared/4fcb/hdl/microzed_fmc_led_controller_v1_0_S00_AXI.vhd" \
+  "../../../bd/TopLevel/ipshared/4fcb/hdl/microzed_fmc_led_controller_v1_0.vhd" \
+  "../../../bd/TopLevel/ip/TopLevel_microzed_fmc_led_controller_0_2/sim/TopLevel_microzed_fmc_led_controller_0_2.vhd" \
 -endlib
 -makelib ies_lib/generic_baseblocks_v2_1_0 \
   "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
+-endlib
+-makelib ies_lib/axi_register_slice_v2_1_15 \
+  "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/3ed1/hdl/axi_register_slice_v2_1_vl_rfs.v" \
 -endlib
 -makelib ies_lib/fifo_generator_v13_2_1 \
   "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/5c35/simulation/fifo_generator_vlog_beh.v" \
@@ -54,8 +55,16 @@
 -makelib ies_lib/axi_data_fifo_v2_1_14 \
   "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/9909/hdl/axi_data_fifo_v2_1_vl_rfs.v" \
 -endlib
--makelib ies_lib/axi_register_slice_v2_1_15 \
-  "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/3ed1/hdl/axi_register_slice_v2_1_vl_rfs.v" \
+-makelib ies_lib/axi_crossbar_v2_1_16 \
+  "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/c631/hdl/axi_crossbar_v2_1_vl_rfs.v" \
+-endlib
+-makelib ies_lib/xil_defaultlib \
+  "../../../bd/TopLevel/ip/TopLevel_xbar_0/sim/TopLevel_xbar_0.v" \
+-endlib
+-makelib ies_lib/xil_defaultlib \
+  "../../../bd/TopLevel/ipshared/e151/hdl/amacv2_dummy_testbench_v1_0_S00_AXI.vhd" \
+  "../../../bd/TopLevel/ipshared/e151/hdl/amacv2_dummy_testbench_v1_0.vhd" \
+  "../../../bd/TopLevel/ip/TopLevel_amacv2_dummy_testbench_0_0/sim/TopLevel_amacv2_dummy_testbench_0_0.vhd" \
 -endlib
 -makelib ies_lib/axi_protocol_converter_v2_1_15 \
   "../../../../amacv2_testbench_microzed.srcs/sources_1/bd/TopLevel/ipshared/ff69/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \

@@ -46,15 +46,19 @@
 -- 
 -- DO NOT MODIFY THIS FILE.
 
--- IP VLNV: user.org:user:microzed_fmc_led_controller:1.0
+-- IP VLNV: atlas-lbl.org:user:microzed_fmc_led_controller:1.0
 -- IP Revision: 1
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY TopLevel_microzed_fmc_led_controller_0_0 IS
+ENTITY TopLevel_microzed_fmc_led_controller_0_2 IS
   PORT (
+    led0 : OUT STD_LOGIC;
+    led1 : OUT STD_LOGIC;
+    led2 : OUT STD_LOGIC;
+    led3 : OUT STD_LOGIC;
     s00_axi_awaddr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
     s00_axi_awprot : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
     s00_axi_awvalid : IN STD_LOGIC;
@@ -77,17 +81,21 @@ ENTITY TopLevel_microzed_fmc_led_controller_0_0 IS
     s00_axi_aclk : IN STD_LOGIC;
     s00_axi_aresetn : IN STD_LOGIC
   );
-END TopLevel_microzed_fmc_led_controller_0_0;
+END TopLevel_microzed_fmc_led_controller_0_2;
 
-ARCHITECTURE TopLevel_microzed_fmc_led_controller_0_0_arch OF TopLevel_microzed_fmc_led_controller_0_0 IS
+ARCHITECTURE TopLevel_microzed_fmc_led_controller_0_2_arch OF TopLevel_microzed_fmc_led_controller_0_2 IS
   ATTRIBUTE DowngradeIPIdentifiedWarnings : STRING;
-  ATTRIBUTE DowngradeIPIdentifiedWarnings OF TopLevel_microzed_fmc_led_controller_0_0_arch: ARCHITECTURE IS "yes";
+  ATTRIBUTE DowngradeIPIdentifiedWarnings OF TopLevel_microzed_fmc_led_controller_0_2_arch: ARCHITECTURE IS "yes";
   COMPONENT microzed_fmc_led_controller_v1_0 IS
     GENERIC (
       C_S00_AXI_DATA_WIDTH : INTEGER; -- Width of S_AXI data bus
       C_S00_AXI_ADDR_WIDTH : INTEGER -- Width of S_AXI address bus
     );
     PORT (
+      led0 : OUT STD_LOGIC;
+      led1 : OUT STD_LOGIC;
+      led2 : OUT STD_LOGIC;
+      led3 : OUT STD_LOGIC;
       s00_axi_awaddr : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
       s00_axi_awprot : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
       s00_axi_awvalid : IN STD_LOGIC;
@@ -144,6 +152,10 @@ BEGIN
       C_S00_AXI_ADDR_WIDTH => 4
     )
     PORT MAP (
+      led0 => led0,
+      led1 => led1,
+      led2 => led2,
+      led3 => led3,
       s00_axi_awaddr => s00_axi_awaddr,
       s00_axi_awprot => s00_axi_awprot,
       s00_axi_awvalid => s00_axi_awvalid,
@@ -166,4 +178,4 @@ BEGIN
       s00_axi_aclk => s00_axi_aclk,
       s00_axi_aresetn => s00_axi_aresetn
     );
-END TopLevel_microzed_fmc_led_controller_0_0_arch;
+END TopLevel_microzed_fmc_led_controller_0_2_arch;
