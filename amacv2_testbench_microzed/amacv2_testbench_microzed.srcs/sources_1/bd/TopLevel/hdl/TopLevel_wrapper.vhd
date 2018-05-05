@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
---Date        : Wed Mar 28 17:15:21 2018
+--Date        : Fri May  4 17:20:38 2018
 --Host        : carl-pc running 64-bit CentOS Linux release 7.4.1708 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
@@ -58,6 +58,8 @@ entity TopLevel_wrapper is
     GPO : in STD_LOGIC;
     HrstBx : in STD_LOGIC;
     HrstBy : in STD_LOGIC;
+    I2C_scl_io : inout STD_LOGIC;
+    I2C_sda_io : inout STD_LOGIC;
     ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
     LAM : in STD_LOGIC;
     LD_EN_1V8 : out STD_LOGIC;
@@ -115,6 +117,12 @@ architecture STRUCTURE of TopLevel_wrapper is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
+    I2C_scl_i : in STD_LOGIC;
+    I2C_scl_o : out STD_LOGIC;
+    I2C_scl_t : out STD_LOGIC;
+    I2C_sda_i : in STD_LOGIC;
+    I2C_sda_o : out STD_LOGIC;
+    I2C_sda_t : out STD_LOGIC;
     LED0 : out STD_LOGIC;
     LED1 : out STD_LOGIC;
     LED2 : out STD_LOGIC;
@@ -131,7 +139,6 @@ architecture STRUCTURE of TopLevel_wrapper is
     DPOT_CS2 : out STD_LOGIC;
     FPGA_ADC_CNV : out STD_LOGIC;
     GPI : out STD_LOGIC;
-    GPO : in STD_LOGIC;
     HrstBx : in STD_LOGIC;
     HrstBy : in STD_LOGIC;
     ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
@@ -151,9 +158,7 @@ architecture STRUCTURE of TopLevel_wrapper is
     LD_EN_3V3 : out STD_LOGIC;
     LD_EN_5 : out STD_LOGIC;
     OFin : out STD_LOGIC;
-    OFout : in STD_LOGIC;
     PGOOD : out STD_LOGIC;
-    RO_PG_O : in STD_LOGIC;
     SCLK : out STD_LOGIC;
     SDI : out STD_LOGIC;
     SDO : in STD_LOGIC;
@@ -163,6 +168,9 @@ architecture STRUCTURE of TopLevel_wrapper is
     FPGA_CMD_IN_N : out STD_LOGIC;
     FPGA_CMD_OUT_N : in STD_LOGIC;
     FPGA_CMD_OUT_P : in STD_LOGIC;
+    RO_PG_O : in STD_LOGIC;
+    OFout : in STD_LOGIC;
+    GPO : in STD_LOGIC;
     RESETB : out STD_LOGIC;
     FPGA_HVOSC2 : in STD_LOGIC;
     FPGA_HVOSC1 : in STD_LOGIC;
@@ -171,7 +179,35 @@ architecture STRUCTURE of TopLevel_wrapper is
     FPGA_CLKOUT : in STD_LOGIC
   );
   end component TopLevel;
+  component IOBUF is
+  port (
+    I : in STD_LOGIC;
+    O : out STD_LOGIC;
+    T : in STD_LOGIC;
+    IO : inout STD_LOGIC
+  );
+  end component IOBUF;
+  signal I2C_scl_i : STD_LOGIC;
+  signal I2C_scl_o : STD_LOGIC;
+  signal I2C_scl_t : STD_LOGIC;
+  signal I2C_sda_i : STD_LOGIC;
+  signal I2C_sda_o : STD_LOGIC;
+  signal I2C_sda_t : STD_LOGIC;
 begin
+I2C_scl_iobuf: component IOBUF
+     port map (
+      I => I2C_scl_o,
+      IO => I2C_scl_io,
+      O => I2C_scl_i,
+      T => I2C_scl_t
+    );
+I2C_sda_iobuf: component IOBUF
+     port map (
+      I => I2C_sda_o,
+      IO => I2C_sda_io,
+      O => I2C_sda_i,
+      T => I2C_sda_t
+    );
 TopLevel_i: component TopLevel
      port map (
       ADC_CS0 => ADC_CS0,
@@ -219,6 +255,12 @@ TopLevel_i: component TopLevel
       GPO => GPO,
       HrstBx => HrstBx,
       HrstBy => HrstBy,
+      I2C_scl_i => I2C_scl_i,
+      I2C_scl_o => I2C_scl_o,
+      I2C_scl_t => I2C_scl_t,
+      I2C_sda_i => I2C_sda_i,
+      I2C_sda_o => I2C_sda_o,
+      I2C_sda_t => I2C_sda_t,
       ID(4 downto 0) => ID(4 downto 0),
       LAM => LAM,
       LD_EN_1V8 => LD_EN_1V8,

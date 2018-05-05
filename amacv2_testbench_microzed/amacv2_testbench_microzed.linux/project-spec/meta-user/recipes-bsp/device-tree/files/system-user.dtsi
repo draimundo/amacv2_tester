@@ -19,5 +19,13 @@
           xlnx,s00-axi-addr-width = <0x4>;
           xlnx,s00-axi-data-width = <0x20>;
       };
+
+      axi_iic_0@43C10000 {
+          compatible = "xlnx,avnet";
+          reg = <0x41600000 0x10000>;
+          xlnx,s00-axi-addr-width = <0x4>;
+          xlnx,s00-axi-data-width = <0x20>;
+      };
+
   };
 };
