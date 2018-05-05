@@ -8,6 +8,9 @@
 # Vivado
 *.cache/
 *.runs/
+*vivado_pid*.str
+*webtalk*
+.Xil
 
 #
 # PetaLinux
