@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xF584D6B515A38AC2" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.4" bd:top="TopLevel" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0x8EE71CD33EF3774B" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="Hierarchical" bd:tool_version="2017.4" bd:top="TopLevel" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -247,12 +247,6 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_ADC_CNV</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
           <spirit:name>GPI</spirit:name>
           <spirit:wire>
             <spirit:direction>out</spirit:direction>
@@ -284,30 +278,6 @@
           <spirit:name>LAM</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_DCDC</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_DVDD</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_HI</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_HV</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
@@ -344,30 +314,6 @@
           <spirit:name>LDy2en</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_1V8</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_2V5</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_3V3</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>LD_EN_5</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
@@ -413,30 +359,6 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_CMD_IN_P</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>FPGA_CMD_IN_N</spirit:name>
-          <spirit:wire>
-            <spirit:direction>out</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>FPGA_CMD_OUT_N</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
-          <spirit:name>FPGA_CMD_OUT_P</spirit:name>
-          <spirit:wire>
-            <spirit:direction>in</spirit:direction>
-          </spirit:wire>
-        </spirit:port>
-        <spirit:port>
           <spirit:name>RO_PG_O</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
@@ -461,33 +383,127 @@
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_HVOSC2</spirit:name>
+          <spirit:name>ADC_CNV</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>MPM_MUX</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+            <spirit:vector>
+              <spirit:left>2</spirit:left>
+              <spirit:right>0</spirit:right>
+            </spirit:vector>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>HVSW_MUX_EN</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>MPM_MUX_EN</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>CMD_IN_P</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>CMD_IN_N</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>HVOSC2</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_HVOSC1</spirit:name>
+          <spirit:name>HVOSC1</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_HVOSC0</spirit:name>
+          <spirit:name>HVOSC0</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_HVOSC3</spirit:name>
+          <spirit:name>CMD_OUT_N</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
           </spirit:wire>
         </spirit:port>
         <spirit:port>
-          <spirit:name>FPGA_CLKOUT</spirit:name>
+          <spirit:name>CLKOUT</spirit:name>
           <spirit:wire>
             <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>HVOSC3</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>CMD_OUT_P</spirit:name>
+          <spirit:wire>
+            <spirit:direction>in</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LV_EN_VN5</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LV_EN_VP5</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LV_EN_AVDD5</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LV_EN_AVEE</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LV_EN_2V5</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LV_EN_AVCC</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
+          </spirit:wire>
+        </spirit:port>
+        <spirit:port>
+          <spirit:name>LD_EN_DVDD</spirit:name>
+          <spirit:wire>
+            <spirit:direction>out</spirit:direction>
           </spirit:wire>
         </spirit:port>
       </spirit:ports>
@@ -848,17 +864,17 @@
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
-        <spirit:instanceName>amacv2_dummy_testbench_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="user" spirit:name="amacv2_dummy_testbench" spirit:vendor="user.org" spirit:version="1.0"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_amacv2_dummy_testbench_0_0</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
         <spirit:instanceName>axi_iic_0</spirit:instanceName>
         <spirit:componentRef spirit:library="ip" spirit:name="axi_iic" spirit:vendor="xilinx.com" spirit:version="2.0"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_axi_iic_0_0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>amacv2_dummy_testbench_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="user" spirit:name="amacv2_dummy_testbench" spirit:vendor="user.org" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_amacv2_dummy_testbench_0_0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
     </spirit:componentInstances>
@@ -891,13 +907,13 @@
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="slowest_sync_clk"/>
         <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="s00_axi_aclk"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="s00_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="axi_iic_0" spirit:portRef="s_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M02_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="s00_axi_aclk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_RESET0_N</spirit:name>
@@ -908,12 +924,12 @@
         <spirit:name>rst_ps7_0_100M_peripheral_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="peripheral_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="s00_axi_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="s00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_iic_0" spirit:portRef="s_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M01_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M02_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="s00_axi_aresetn"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>rst_ps7_0_100M_interconnect_aresetn</spirit:name>
@@ -991,11 +1007,6 @@
         <spirit:externalPortReference spirit:portRef="DPOT_CS2"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_FPGA_ADC_CNV</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_ADC_CNV"/>
-        <spirit:externalPortReference spirit:portRef="FPGA_ADC_CNV"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>amacv2_dummy_testbench_0_GPI</spirit:name>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="GPI"/>
         <spirit:externalPortReference spirit:portRef="GPI"/>
@@ -1019,26 +1030,6 @@
         <spirit:name>LAM_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="LAM"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LAM"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LD_EN_DCDC</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_DCDC"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_DCDC"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LD_EN_DVDD</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_DVDD"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_DVDD"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LD_EN_HI</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_HI"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_HI"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LD_EN_HV</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_HV"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_HV"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>LDx0en_0_1</spirit:name>
@@ -1069,26 +1060,6 @@
         <spirit:name>LDy2en_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="LDy2en"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LDy2en"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LV_EN_1V8</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_1V8"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_1V8"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LV_EN_2V5</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_2V5"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_2V5"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LV_EN_3V3</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_3V3"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_3V3"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_LV_EN_5</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_5"/>
-        <spirit:externalPortReference spirit:portRef="LD_EN_5"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>amacv2_dummy_testbench_0_OFin</spirit:name>
@@ -1126,26 +1097,6 @@
         <spirit:externalPortReference spirit:portRef="SSSHy"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_FPGA_CMD_IN_P</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_CMD_IN_P"/>
-        <spirit:externalPortReference spirit:portRef="FPGA_CMD_IN_P"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>amacv2_dummy_testbench_0_FPGA_CMD_IN_N1</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_CMD_IN_N"/>
-        <spirit:externalPortReference spirit:portRef="FPGA_CMD_IN_N"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>FPGA_CMD_OUT_N_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_CMD_OUT_N"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_CMD_OUT_N"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>FPGA_CMD_OUT_P_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_CMD_OUT_P"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_CMD_OUT_P"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>RO_PG_O_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="RO_PG_O"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="RO_PG_O"/>
@@ -1166,29 +1117,104 @@
         <spirit:externalPortReference spirit:portRef="RESETB"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>FPGA_HVOSC2_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_HVOSC2"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_HVOSC2"/>
+        <spirit:name>amacv2_dummy_testbench_0_ADC_CNV</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="ADC_CNV"/>
+        <spirit:externalPortReference spirit:portRef="ADC_CNV"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>FPGA_HVOSC1_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_HVOSC1"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_HVOSC1"/>
+        <spirit:name>amacv2_dummy_testbench_0_MPM_MUX</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="MPM_MUX"/>
+        <spirit:externalPortReference spirit:portRef="MPM_MUX"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>FPGA_HVOSC0_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_HVOSC0"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_HVOSC0"/>
+        <spirit:name>amacv2_dummy_testbench_0_HVSW_MUX_EN</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVSW_MUX_EN"/>
+        <spirit:externalPortReference spirit:portRef="HVSW_MUX_EN"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>FPGA_HVOSC3_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_HVOSC3"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_HVOSC3"/>
+        <spirit:name>amacv2_dummy_testbench_0_MPM_MUX_EN</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="MPM_MUX_EN"/>
+        <spirit:externalPortReference spirit:portRef="MPM_MUX_EN"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>FPGA_CLKOUT_0_1</spirit:name>
-        <spirit:externalPortReference spirit:portRef="FPGA_CLKOUT"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="FPGA_CLKOUT"/>
+        <spirit:name>amacv2_dummy_testbench_0_CMD_IN_P</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="CMD_IN_P"/>
+        <spirit:externalPortReference spirit:portRef="CMD_IN_P"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_CMD_IN_N</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="CMD_IN_N"/>
+        <spirit:externalPortReference spirit:portRef="CMD_IN_N"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>HVOSC2_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="HVOSC2"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC2"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>HVOSC1_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="HVOSC1"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC1"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>HVOSC0_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="HVOSC0"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC0"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>CMD_OUT_N_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="CMD_OUT_N"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="CMD_OUT_N"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>CLKOUT_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="CLKOUT"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="CLKOUT"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>HVOSC3_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="HVOSC3"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC3"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>CMD_OUT_P_0_1</spirit:name>
+        <spirit:externalPortReference spirit:portRef="CMD_OUT_P"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="CMD_OUT_P"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LV_EN_VN5</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LV_EN_VN5"/>
+        <spirit:externalPortReference spirit:portRef="LV_EN_VN5"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LV_EN_VP5</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LV_EN_VP5"/>
+        <spirit:externalPortReference spirit:portRef="LV_EN_VP5"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LV_EN_AVDD5</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LV_EN_AVDD5"/>
+        <spirit:externalPortReference spirit:portRef="LV_EN_AVDD5"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LV_EN_AVEE</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LV_EN_AVEE"/>
+        <spirit:externalPortReference spirit:portRef="LV_EN_AVEE"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LV_EN_2V5</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LV_EN_2V5"/>
+        <spirit:externalPortReference spirit:portRef="LV_EN_2V5"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LV_EN_AVCC</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LV_EN_AVCC"/>
+        <spirit:externalPortReference spirit:portRef="LV_EN_AVCC"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_dummy_testbench_0_LD_EN_DVDD</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="LD_EN_DVDD"/>
+        <spirit:externalPortReference spirit:portRef="LD_EN_DVDD"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>
