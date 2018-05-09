@@ -3,26 +3,26 @@
   amba@0 {
       #address-cells = <0x1>;
       #size-cells = <0x1>;
-      compatible = "simple-bus";
+      compatible = "xlnx,ps7-axi-interconnect-1.00.a","simple-bus";
       ranges;
 
       microzed_fmc_led_controller_0@43C00000 {
-          compatible = "xlnx,avnet";
+          compatible = "generic-uio";
           reg = <0x43C00000 0x10000>;
           xlnx,s00-axi-addr-width = <0x4>;
           xlnx,s00-axi-data-width = <0x20>;
       };
 
       amacv2_dummy_testbench_0@43C10000 {
-          compatible = "xlnx,avnet";
+          compatible = "generic-uio";
           reg = <0x43C10000 0x10000>;
           xlnx,s00-axi-addr-width = <0x4>;
           xlnx,s00-axi-data-width = <0x20>;
       };
 
-      axi_iic_0@43C10000 {
-          compatible = "xlnx,avnet";
-          reg = <0x41600000 0x10000>;
+      endeavour_fmc_led_controller_0@43C20000 {
+          compatible = "generic-uio";
+          reg = <0x43C20000 0x10000>;
           xlnx,s00-axi-addr-width = <0x4>;
           xlnx,s00-axi-data-width = <0x20>;
       };
