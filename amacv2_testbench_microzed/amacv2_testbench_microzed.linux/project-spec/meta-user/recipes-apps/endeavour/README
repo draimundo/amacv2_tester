@@ -1,0 +1,5 @@
+Endeavour Test Software
+
+Software for controlling the endeavour_master firmware block on a Zynq FPGA. Communication with the device is done using the userspace I/O kernel module.
+
+See https://github.com/kkrizka/endeavour_software

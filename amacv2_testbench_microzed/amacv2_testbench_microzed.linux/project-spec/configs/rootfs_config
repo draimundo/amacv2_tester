@@ -4122,6 +4122,7 @@ CONFIG_bridge-utils=y
 #
 # apps 
 #
+CONFIG_endeavour=y
 # CONFIG_gpio-demo is not set
 CONFIG_peekpoke=y
 
