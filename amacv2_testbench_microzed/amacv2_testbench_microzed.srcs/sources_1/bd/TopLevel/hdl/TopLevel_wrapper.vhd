@@ -1,7 +1,7 @@
 --Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2017.4 (lin64) Build 2086221 Fri Dec 15 20:54:30 MST 2017
---Date        : Tue May  8 18:41:19 2018
+--Date        : Thu May 10 18:46:31 2018
 --Host        : carl-pc running 64-bit CentOS Linux release 7.4.1708 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
@@ -125,7 +125,6 @@ architecture STRUCTURE of TopLevel_wrapper is
     I2C_sda_i : in STD_LOGIC;
     I2C_sda_o : out STD_LOGIC;
     I2C_sda_t : out STD_LOGIC;
-    LED0 : out STD_LOGIC;
     LED1 : out STD_LOGIC;
     LED2 : out STD_LOGIC;
     LED3 : out STD_LOGIC;
@@ -165,8 +164,6 @@ architecture STRUCTURE of TopLevel_wrapper is
     MPM_MUX : out STD_LOGIC_VECTOR ( 2 downto 0 );
     HVSW_MUX_EN : out STD_LOGIC;
     MPM_MUX_EN : out STD_LOGIC;
-    CMD_IN_P : out STD_LOGIC;
-    CMD_IN_N : out STD_LOGIC;
     HVOSC2 : in STD_LOGIC;
     HVOSC1 : in STD_LOGIC;
     HVOSC0 : in STD_LOGIC;
@@ -180,7 +177,10 @@ architecture STRUCTURE of TopLevel_wrapper is
     LV_EN_AVEE : out STD_LOGIC;
     LV_EN_2V5 : out STD_LOGIC;
     LV_EN_AVCC : out STD_LOGIC;
-    LD_EN_DVDD : out STD_LOGIC
+    LD_EN_DVDD : out STD_LOGIC;
+    CMD_IN_P : out STD_LOGIC;
+    CMD_IN_N : out STD_LOGIC;
+    LED0 : out STD_LOGIC
   );
   end component TopLevel;
   component IOBUF is

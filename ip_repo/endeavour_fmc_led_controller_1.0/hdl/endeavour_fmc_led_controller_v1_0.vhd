@@ -2,6 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+library UNISIM;
+use UNISIM.Vcomponents.all;
+
 entity endeavour_fmc_led_controller_v1_0 is
   generic (
     -- Users to add parameters here
@@ -16,7 +19,10 @@ entity endeavour_fmc_led_controller_v1_0 is
     );
   port (
     -- Users to add ports here
-
+    busy                : out std_logic;
+    datavalid           : out std_logic;    
+    CMD_IN_P            : out std_logic;
+    CMD_IN_N            : out std_logic;
     -- User ports ends
     -- Do not modify the ports beyond this line
 
@@ -114,6 +120,7 @@ architecture arch_imp of endeavour_fmc_led_controller_v1_0 is
   signal axi_dataout    : std_logic_vector(63 downto 0);
 
   signal axi_nbitsout_integer : integer range 0 to 63;
+
 begin
 
 -- Instantiation of Axi Bus Interface S00_AXI
@@ -153,6 +160,20 @@ begin
       );
 
 -- Add user logic here
+
+  -- Differential buffers for AMAC communication
+  CMD_IN_buf_inst : OBUFDS
+    generic map (
+      IOSTANDARD=> "LVDS_25"
+      )
+    port map (
+      I         => serial,
+      O         => CMD_IN_P,
+      OB        => CMD_IN_N
+      );
+  busy          <= axi_status(0);
+  datavalid     <= axi_status(1);
+  --
   clock <= s00_axi_aclk;
 
   inst_endeavour_master : endeavour_master

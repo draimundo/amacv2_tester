@@ -624,8 +624,8 @@ CONFIG_openssh-sftp-server=y
 #
 # git 
 #
-# CONFIG_git is not set
-# CONFIG_git-bash-completion is not set
+CONFIG_git=y
+CONFIG_git-bash-completion=y
 # CONFIG_gitweb is not set
 # CONFIG_git-perltools is not set
 # CONFIG_git-dev is not set
@@ -4128,6 +4128,7 @@ CONFIG_peekpoke=y
 #
 # user packages 
 #
+CONFIG_cmake=y
 
 #
 # PetaLinux RootFS Settings
