@@ -12,7 +12,7 @@ use ieee.numeric_std.all;
 -- reg4(R)  - nbits out
 -- reg5(R)  - data out (LSB)
 -- reg6(R)  - data out (MSB)
--- reg7(RW) - unused
+-- reg7(R)  - slave register value
 
 entity endeavour_fmc_led_controller_v1_0_S00_AXI is
   generic (
@@ -35,6 +35,7 @@ entity endeavour_fmc_led_controller_v1_0_S00_AXI is
     axi_nbitsout        : in  std_logic_vector(31 downto 0);
     axi_dataout         : in  std_logic_vector(63 downto 0);
 
+    slave_data          : in  std_logic_vector(31 downto 0);
     -- User ports ends
     -- Do not modify the ports beyond this line
 
@@ -243,7 +244,7 @@ begin
         --slv_reg4 <= (others => '0');
         --slv_reg5 <= (others => '0');
         --slv_reg6 <= (others => '0');
-        slv_reg7 <= (others => '0');
+        --slv_reg7 <= (others => '0');
       else
         loc_addr := axi_awaddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
         if (slv_reg_wren = '1') then
@@ -304,23 +305,23 @@ begin
             --      slv_reg6(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
             --    end if;
             --  end loop;
-            when b"111" =>
-              for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
-                if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                  -- Respective byte enables are asserted as per write strobes                   
-                  -- slave registor 7
-                  slv_reg7(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
-                end if;
-              end loop;
+            --when b"111" =>
+            --  for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
+            --    if ( S_AXI_WSTRB(byte_index) = '1' ) then
+            --      -- Respective byte enables are asserted as per write strobes                   
+            --      -- slave registor 7
+            --      slv_reg7(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+            --    end if;
+            --  end loop;
             when others =>
               slv_reg0_pulse <= slv_reg0_pulse;
               slv_reg1 <= slv_reg1;
               slv_reg2 <= slv_reg2;
               slv_reg3 <= slv_reg3;
-              slv_reg4 <= slv_reg4;
-              slv_reg5 <= slv_reg5;
-              slv_reg6 <= slv_reg6;
-              slv_reg7 <= slv_reg7;
+              --slv_reg4 <= slv_reg4;
+              --slv_reg5 <= slv_reg5;
+              --slv_reg6 <= slv_reg6;
+              --slv_reg7 <= slv_reg7;
           end case;
         else
           slv_reg0_pulse        <= (others => '0');
@@ -467,6 +468,7 @@ begin
   slv_reg4 <=   axi_nbitsout(31 downto  0);
   slv_reg5 <=   axi_dataout (31 downto  0);
   slv_reg6 <=   axi_dataout (63 downto 32);
+  slv_reg7 <=   slave_data;
   -- User logic ends
 
 end arch_imp;

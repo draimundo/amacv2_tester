@@ -857,13 +857,6 @@
         </spirit:configurableElementValues>
       </spirit:componentInstance>
       <spirit:componentInstance>
-        <spirit:instanceName>microzed_fmc_led_controller_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="user" spirit:name="microzed_fmc_led_controller" spirit:vendor="atlas-lbl.org" spirit:version="1.0"/>
-        <spirit:configurableElementValues>
-          <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_microzed_fmc_led_controller_0_0</spirit:configurableElementValue>
-        </spirit:configurableElementValues>
-      </spirit:componentInstance>
-      <spirit:componentInstance>
         <spirit:instanceName>axi_iic_0</spirit:instanceName>
         <spirit:componentRef spirit:library="ip" spirit:name="axi_iic" spirit:vendor="xilinx.com" spirit:version="2.0"/>
         <spirit:configurableElementValues>
@@ -882,6 +875,13 @@
         <spirit:componentRef spirit:library="user" spirit:name="endeavour_fmc_led_controller" spirit:vendor="user.org" spirit:version="1.0"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_endeavour_fmc_led_controller_0_0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>microzed_fmc_led_controller_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="user" spirit:name="microzed_fmc_led_controller" spirit:vendor="atlas-lbl.org" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_microzed_fmc_led_controller_0_0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
     </spirit:componentInstances>
@@ -918,7 +918,6 @@
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK0"/>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="slowest_sync_clk"/>
-        <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="s00_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="axi_iic_0" spirit:portRef="s_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ACLK"/>
@@ -928,6 +927,7 @@
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M03_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="s00_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="s00_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="s00_axi_aclk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_RESET0_N</spirit:name>
@@ -937,7 +937,6 @@
       <spirit:adHocConnection>
         <spirit:name>rst_ps7_0_100M_peripheral_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="peripheral_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="s00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_iic_0" spirit:portRef="s_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ARESETN"/>
@@ -946,21 +945,12 @@
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M03_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="s00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="s00_axi_aresetn"/>
+        <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="s00_axi_aresetn"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>rst_ps7_0_100M_interconnect_aresetn</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="interconnect_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="ARESETN"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>microzed_fmc_led_controller_0_led2</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="led2"/>
-        <spirit:externalPortReference spirit:portRef="LED2"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>microzed_fmc_led_controller_0_led3</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="microzed_fmc_led_controller_0" spirit:portRef="led3"/>
-        <spirit:externalPortReference spirit:portRef="LED3"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>amacv2_dummy_testbench_0_ADC_CS0</spirit:name>
@@ -1213,16 +1203,6 @@
         <spirit:externalPortReference spirit:portRef="GPI"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>endeavour_fmc_led_controller_0_busy</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="busy"/>
-        <spirit:externalPortReference spirit:portRef="LED0"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>endeavour_fmc_led_controller_0_datavalid</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="datavalid"/>
-        <spirit:externalPortReference spirit:portRef="LED1"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>endeavour_fmc_led_controller_0_CMD_IN_P</spirit:name>
         <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="CMD_IN_P"/>
         <spirit:externalPortReference spirit:portRef="CMD_IN_P"/>
@@ -1231,6 +1211,26 @@
         <spirit:name>endeavour_fmc_led_controller_0_CMD_IN_N</spirit:name>
         <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="CMD_IN_N"/>
         <spirit:externalPortReference spirit:portRef="CMD_IN_N"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_led_controller_0_led2</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="led2"/>
+        <spirit:externalPortReference spirit:portRef="LED2"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_led_controller_0_led3</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="led3"/>
+        <spirit:externalPortReference spirit:portRef="LED3"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_led_controller_0_led1</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="led1"/>
+        <spirit:externalPortReference spirit:portRef="LED1"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_led_controller_0_led0</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="led0"/>
+        <spirit:externalPortReference spirit:portRef="LED0"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>

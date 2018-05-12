@@ -23,6 +23,11 @@ entity endeavour_fmc_led_controller_v1_0 is
     datavalid           : out std_logic;    
     CMD_IN_P            : out std_logic;
     CMD_IN_N            : out std_logic;
+
+    led0                : out std_logic;
+    led1                : out std_logic;
+    led2                : out std_logic;
+    led3                : out std_logic;
     -- User ports ends
     -- Do not modify the ports beyond this line
 
@@ -55,6 +60,45 @@ end endeavour_fmc_led_controller_v1_0;
 architecture arch_imp of endeavour_fmc_led_controller_v1_0 is
   --
   -- component declarations
+  component mon_reg32t
+    generic (
+      RESET_VALUE       : std_logic_vector(31 downto 0);
+      REG_ADDR          : std_logic_vector( 7 downto 0)
+      );
+    port (
+      dataOut   : out std_logic_vector(31 downto 0);
+      serOut    : out std_logic;
+      shiftOut  : out std_logic;				
+      bclk      : in  std_logic;
+      dataIn    : in  std_logic_vector(31 downto 0);
+      addrIn    : in  std_logic_vector( 7 downto 0);
+      latchIn   : in  std_logic;
+      latchOut  : in  std_logic;
+      shiftEn   : in  std_logic;
+      rstb      : in  std_logic
+      );
+  end component mon_reg32t;
+  
+  component endeavour
+    port (
+      hardrstb          : in  std_logic;
+      softrstb          : in  std_logic;
+      clk               : in  std_logic;
+      chipid_pads       : in  std_logic_vector(  4 downto 0);
+      efuse_chipid      : in  std_logic_vector( 19 downto 0);
+      serialin          : in  std_logic;
+      serialout         : out std_logic;
+      serialout_en      : out std_logic;
+      wstrobe           : out std_logic;
+      rstrobe           : out std_logic;
+      rshift            : out std_logic;
+      addr              : out std_logic_vector(  7 downto 0);
+      wdata             : out std_logic_vector( 31 downto 0);
+      rdata             : in  std_logic_vector(255 downto 0)
+
+      );
+  end component endeavour;
+
   component endeavour_fmc_led_controller_v1_0_S00_AXI is
     generic (
       C_S_AXI_DATA_WIDTH	: integer	:= 32;
@@ -66,7 +110,8 @@ architecture arch_imp of endeavour_fmc_led_controller_v1_0 is
       axi_nbitsin       : out std_logic_vector(31 downto 0);
       axi_datain        : out std_logic_vector(63 downto 0);
       axi_nbitsout      : in  std_logic_vector(31 downto 0);
-      axi_dataout       : in  std_logic_vector(63 downto 0);      
+      axi_dataout       : in  std_logic_vector(63 downto 0);
+      slave_data        : in  std_logic_vector(31 downto 0);
       S_AXI_ACLK	: in std_logic;
       S_AXI_ARESETN	: in std_logic;
       S_AXI_AWADDR	: in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
@@ -111,7 +156,10 @@ architecture arch_imp of endeavour_fmc_led_controller_v1_0 is
   --
   -- signal declarations
   signal clock          : std_logic;
-  signal serial         : std_logic;
+  signal reset          : std_logic;
+  signal resetn         : std_logic;
+  signal serial0        : std_logic;
+  signal serial1        : std_logic;
   signal axi_control    : std_logic_vector(31 downto 0);
   signal axi_status     : std_logic_vector(31 downto 0);
   signal axi_nbitsin    : std_logic_vector(31 downto 0);
@@ -121,6 +169,15 @@ architecture arch_imp of endeavour_fmc_led_controller_v1_0 is
 
   signal axi_nbitsout_integer : integer range 0 to 63;
 
+  -- Register connections
+  signal wstrobe        : std_logic;
+  signal rstrobe        : std_logic;
+  signal rshift         : std_logic;
+  signal addr           : std_logic_vector(  7 downto 0);
+  signal wdata          : std_logic_vector( 31 downto 0);
+  signal rdata          : std_logic_vector(255 downto 0);
+
+  signal slave_data     : std_logic_vector( 31 downto 0);
 begin
 
 -- Instantiation of Axi Bus Interface S00_AXI
@@ -136,6 +193,7 @@ begin
       axi_datain        => axi_datain,
       axi_nbitsout      => axi_nbitsout,
       axi_dataout       => axi_dataout,
+      slave_data        => slave_data,
       S_AXI_ACLK	=> s00_axi_aclk,
       S_AXI_ARESETN	=> s00_axi_aresetn,
       S_AXI_AWADDR	=> s00_axi_awaddr,
@@ -160,14 +218,61 @@ begin
       );
 
 -- Add user logic here
+  reset         <= axi_control(0);
+  resetn        <= not axi_control(0);
+  
+  --
+  -- The slave block
+  led0  <= slave_data(0);
+  led1  <= slave_data(1);
+  led2  <= slave_data(2);
+  led3  <= slave_data(3);
 
+  inst_reg01 : mon_reg32t
+    generic map(
+      RESET_VALUE       => x"00000000",
+      REG_ADDR          => x"01"
+      )
+    port map(
+      rstb              => resetn,
+      bclk              => clock,
+      dataOut           => slave_data,
+      shiftOut          => rdata(1),
+      dataIn            => wdata,
+      addrIn            => addr,
+      latchIn           => wstrobe,
+      latchOut          => rstrobe,
+      shiftEn           => rshift      
+    );
+  
+  inst_slave : endeavour
+    port map(
+      hardrstb => resetn,
+      softrstb => resetn,
+      clk      => clock,
+      chipid_pads => (others => '0'),
+      efuse_chipid => (others => '0'),
+      serialin  => serial0,
+      serialout => serial1,
+      wstrobe   => wstrobe,
+      rstrobe   => rstrobe,
+      rshift    => rshift,
+      addr      => addr,
+      wdata     => wdata,
+      rdata     => rdata
+      );
+
+
+  --
+  -- The master block
+  
   -- Differential buffers for AMAC communication
   CMD_IN_buf_inst : OBUFDS
     generic map (
       IOSTANDARD=> "LVDS_25"
       )
     port map (
-      I         => serial,
+      I         => serial0,
       O         => CMD_IN_P,
       OB        => CMD_IN_N
       );
@@ -179,7 +284,7 @@ begin
   inst_endeavour_master : endeavour_master
     port map (
       clock     => clock,
-      reset     => axi_control(0),
+      reset     => reset,
       nbitsin   => to_integer(unsigned(axi_nbitsin)),
       datain    => axi_datain,
       send      => axi_control(1),
@@ -188,8 +293,8 @@ begin
       dataout   => axi_dataout,
       datavalid => axi_status(1),
       error     => axi_status(2),
-      serialin  => serial,
-      serialout => serial
+      serialin  => serial1,
+      serialout => serial0
       );
   axi_nbitsout  <= std_logic_vector(to_unsigned(axi_nbitsout_integer,axi_nbitsout'length));
 
