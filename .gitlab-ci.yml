@@ -1,0 +1,38 @@
+stages:
+  - firmware
+  - petalinux
+
+build:firmware:
+  stage: firmware
+  tags:
+    - lbl
+    - vivado
+  script:
+    - pwd
+    - source /opt/Xilinx/Vivado/2018.2/settings64.sh
+    - cd amacv2_testbench_microzed
+    - echo launch_runs impl_1 -to_step write_bitstream >> compile.tcl
+    - echo wait_on_run impl_1 >> compile.tcl
+    - vivado -mode batch -source compile.tcl amacv2_testbench_microzed.xpr
+  artifacts:
+    paths:
+      - amacv2_testbench_microzed/amacv2_testbench_microzed.runs/impl_1/TopLevel_wrapper.bit
+
+build:petalinux:
+  stage: petalinux
+  tags:
+    - lbl
+    - petalinux
+  script:
+    - pwd
+    - source /data01/petalinux/2018.2/settings.sh
+    - cd amacv2_testbench_microzed/amacv2_testbench_microzed.linux
+    - petalinux-build
+    - petalinux-package --boot --fpga ../amacv2_testbench_microzed.runs/impl_1/TopLevel_wrapper.bit --fsbl images/linux/zynq_fsbl.elf --u-boot -o images/linux/BOOT.bin --force
+  dependencies:
+    - build:firmware
+  artifacts:
+    paths:
+      - amacv2_testbench_microzed/amacv2_testbench_microzed.linux/images/linux/BOOT.bin
+      - amacv2_testbench_microzed/amacv2_testbench_microzed.linux/images/linux/image.ub
+   
