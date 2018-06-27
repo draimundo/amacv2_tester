@@ -6,6 +6,9 @@ SET(SrcFiles DeviceCom.cpp
 
   ComIOException.cpp
   EndeavourComException.cpp
+
+  ClimateSensor.cpp
+  BME280.cpp
 )
 
 ADD_LIBRARY(devcom SHARED ${SrcFiles}) 
