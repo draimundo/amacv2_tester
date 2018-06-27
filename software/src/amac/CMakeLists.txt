@@ -1,4 +1,6 @@
 SET(SrcFiles AMACTB.cpp
+  AMAC.cpp
+  AMACTest.cpp
 )
 
 ADD_LIBRARY(amac SHARED ${SrcFiles}) 

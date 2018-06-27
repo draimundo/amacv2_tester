@@ -6,6 +6,9 @@ class AMACTB
 public:
   AMACTB();
   ~AMACTB();
+
+  void powerOn();
+  void powerOff();
 };
 
 #endif // AMACTB_H_
