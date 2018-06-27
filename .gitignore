@@ -9,6 +9,7 @@
 *.cache/
 *.runs/
 *.ip_user_files/
+*.tmp/
 *vivado_pid*.str
 *webtalk*
 .Xil

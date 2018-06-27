@@ -1,31 +1,59 @@
 /include/ "system-conf.dtsi"
 / {
-  amba@0 {
-      #address-cells = <0x1>;
-      #size-cells = <0x1>;
-      compatible = "xlnx,ps7-axi-interconnect-1.00.a","simple-bus";
-      ranges;
-
-      microzed_fmc_led_controller_0@43C00000 {
-          compatible = "generic-uio";
-          reg = <0x43C00000 0x10000>;
-          xlnx,s00-axi-addr-width = <0x4>;
-          xlnx,s00-axi-data-width = <0x20>;
-      };
-
-      amacv2_dummy_testbench_0@43C10000 {
-          compatible = "generic-uio";
-          reg = <0x43C10000 0x10000>;
-          xlnx,s00-axi-addr-width = <0x4>;
-          xlnx,s00-axi-data-width = <0x20>;
-      };
-
-      endeavour_fmc_led_controller_0@43C20000 {
-          compatible = "generic-uio";
-          reg = <0x43C20000 0x10000>;
-          xlnx,s00-axi-addr-width = <0x4>;
-          xlnx,s00-axi-data-width = <0x20>;
-      };
-
-  };
 };
+
+&microzed_fmc_led_controller_0 {
+        compatible = "generic-uio";
+};
+
+&amacv2_dummy_testbench_0 {
+        compatible = "generic-uio";
+};
+
+&endeavour_fmc_led_controller_0 {
+        compatible = "generic-uio";
+};
+
+
+&axi_quad_spi_0 {
+        spidev@0 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <0>;
+        };
+        spidev@1 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <1>;
+        };
+        spidev@2 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <2>;
+        };
+        spidev@3 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <3>;
+        };
+        spidev@4 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <4>;
+        };
+        spidev@5 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <5>;
+        };
+        spidev@6 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <6>;
+        };
+        spidev@7 {
+                compatible = "linux,spidev";
+                spi-max-frequency = <100000>;
+                reg = <7>;
+        };
+} ;

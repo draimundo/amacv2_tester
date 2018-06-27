@@ -98,6 +98,11 @@ CONFIG_busybox-syslog=y
 # CONFIG_diffutils-dev is not set
 
 #
+# dnf
+#
+# CONFIG_dnf is not set
+
+#
 # e2fsprogs 
 #
 # CONFIG_e2fsprogs is not set
@@ -230,7 +235,6 @@ CONFIG_mtd-utils=y
 # CONFIG_opkg-utils is not set
 # CONFIG_update-alternatives-opkg is not set
 # CONFIG_opkg-utils-dbg is not set
-# CONFIG_opkg-utils-dev is not set
 
 #
 # procps 
@@ -421,7 +425,6 @@ CONFIG_canutils=y
 # dropbear 
 #
 # CONFIG_dropbear is not set
-# CONFIG_dropbear-openssh-sftp-server is not set
 # CONFIG_dropbear-dev is not set
 # CONFIG_dropbear-dbg is not set
 
@@ -475,14 +478,6 @@ CONFIG_canutils=y
 # CONFIG_openssh-sftp is not set
 CONFIG_openssh-sftp-server=y
 # CONFIG_openssh-scp is not set
-
-#
-# portmap 
-#
-# CONFIG_portmap is not set
-# CONFIG_portmap-utils is not set
-# CONFIG_portmap-dev is not set
-# CONFIG_portmap-dbg is not set
 
 #
 # ppp 
@@ -701,7 +696,6 @@ CONFIG_git-bash-completion=y
 # CONFIG_mc is not set
 # CONFIG_mc-dev is not set
 # CONFIG_mc-helpers-perl is not set
-# CONFIG_mc-helpers-python is not set
 # CONFIG_mc-helpers is not set
 # CONFIG_mc-fish is not set
 # CONFIG_mc-dbg is not set
@@ -1050,27 +1044,6 @@ CONFIG_vim-syntax=y
 # CONFIG_python-crypt is not set
 
 #
-# python-async 
-#
-# CONFIG_python-async is not set
-# CONFIG_python-async-dbg is not set
-# CONFIG_python-async-dev is not set
-
-#
-# python-git 
-#
-# CONFIG_python-git is not set
-# CONFIG_python-git-dbg is not set
-# CONFIG_python-git-dev is not set
-
-#
-# python-gitdb 
-#
-# CONFIG_python-gitdb is not set
-# CONFIG_python-gitdb-dbg is not set
-# CONFIG_python-gitdb-dev is not set
-
-#
 # python-nose 
 #
 # CONFIG_python-nose is not set
@@ -1090,23 +1063,6 @@ CONFIG_vim-syntax=y
 # CONFIG_python-scons is not set
 # CONFIG_python-scons-dev is not set
 # CONFIG_python-scons-dbg is not set
-
-#
-# python-smartpm 
-#
-# CONFIG_python-smartpm is not set
-# CONFIG_python-smartpm-dev is not set
-# CONFIG_python-smartpm-dbg is not set
-# CONFIG_python-smartpm-interface-images is not set
-# CONFIG_smartpm is not set
-# CONFIG_python-smartpm-backend-rpm is not set
-
-#
-# python-smmap 
-#
-# CONFIG_python-smmap is not set
-# CONFIG_python-smmap-dev is not set
-# CONFIG_python-smmap-dbg is not set
 
 #
 # python3-dbus 
@@ -1247,7 +1203,6 @@ CONFIG_run-postinsts=y
 # CONFIG_bluez5-obex is not set
 # CONFIG_bluez5-dev is not set
 # CONFIG_bluez5-noinst-tools is not set
-# CONFIG_libasound-module-bluez is not set
 
 #
 # boost 
@@ -1966,7 +1921,6 @@ CONFIG_run-postinsts=y
 #
 # alsa-lib 
 #
-# CONFIG_alsa-lib is not set
 # CONFIG_alsa-lib-dbg is not set
 # CONFIG_alsa-lib-dev is not set
 # CONFIG_alsa-server is not set
@@ -2091,10 +2045,8 @@ CONFIG_run-postinsts=y
 # opencv 
 #
 # CONFIG_opencv is not set
-# CONFIG_opencv-samples-dbg is not set
 # CONFIG_opencv-dev is not set
 # CONFIG_opencv-apps is not set
-# CONFIG_python-opencv is not set
 # CONFIG_opencv-samples is not set
 # CONFIG_opencv-dbg is not set
 
@@ -2276,9 +2228,7 @@ CONFIG_run-postinsts=y
 #
 # connman-conf 
 #
-# CONFIG_connman-conf is not set
 # CONFIG_connman-conf-dbg is not set
-# CONFIG_connman-conf-dev is not set
 
 #
 # consolekit 
@@ -2330,7 +2280,6 @@ CONFIG_run-postinsts=y
 # CONFIG_eudev-dev is not set
 # CONFIG_eudev-dbg is not set
 # CONFIG_eudev-hwdb is not set
-# CONFIG_udev-cache is not set
 CONFIG_udev-extraconf=y
 
 #
@@ -2493,9 +2442,7 @@ CONFIG_udev-extraconf=y
 # CONFIG_icu-dbg is not set
 # CONFIG_libicuuc is not set
 # CONFIG_libicutu is not set
-# CONFIG_libiculx is not set
 # CONFIG_icu-dev is not set
-# CONFIG_libicule is not set
 
 #
 # iptables 
@@ -2720,48 +2667,6 @@ CONFIG_packagegroup-core-ssh-dropbear=y
 # CONFIG_packagegroup-core-x11-xserver-dbg is not set
 
 #
-# packagegroup-petalinux 
-#
-# CONFIG_packagegroup-petalinux is not set
-# CONFIG_packagegroup-petalinux-dev is not set
-# CONFIG_packagegroup-petalinux-dbg is not set
-
-#
-# packagegroup-petalinux-openamp 
-#
-# CONFIG_packagegroup-petalinux-openamp is not set
-# CONFIG_packagegroup-petalinux-openamp-dbg is not set
-# CONFIG_packagegroup-petalinux-openamp-dev is not set
-
-#
-# packagegroup-petalinux-opencv 
-#
-# CONFIG_packagegroup-petalinux-opencv is not set
-# CONFIG_packagegroup-petalinux-opencv-dbg is not set
-# CONFIG_packagegroup-petalinux-opencv-dev is not set
-
-#
-# packagegroup-petalinux-qt 
-#
-# CONFIG_packagegroup-petalinux-qt is not set
-# CONFIG_packagegroup-petalinux-qt-dbg is not set
-# CONFIG_packagegroup-petalinux-qt-dev is not set
-
-#
-# packagegroup-petalinux-self-hosted 
-#
-# CONFIG_packagegroup-petalinux-self-hosted is not set
-# CONFIG_packagegroup-petalinux-self-hosted-dev is not set
-# CONFIG_packagegroup-petalinux-self-hosted-dbg is not set
-
-#
-# packagegroup-petalinux-x11 
-#
-# CONFIG_packagegroup-petalinux-x11 is not set
-# CONFIG_packagegroup-petalinux-x11-dbg is not set
-# CONFIG_packagegroup-petalinux-x11-dev is not set
-
-#
 # packagegroup-self-hosted 
 #
 # CONFIG_packagegroup-self-hosted is not set
@@ -2962,7 +2867,6 @@ CONFIG_packagegroup-core-ssh-dropbear=y
 #
 # CONFIG_qtdeclarative is not set
 # CONFIG_qtdeclarative-examples-dev is not set
-# CONFIG_qtdeclarative-plugins is not set
 # CONFIG_qtdeclarative-examples is not set
 # CONFIG_qtdeclarative-dev is not set
 # CONFIG_qtdeclarative-dbg is not set
@@ -3199,10 +3103,7 @@ CONFIG_packagegroup-core-ssh-dropbear=y
 # CONFIG_rpm is not set
 # CONFIG_rpm-build is not set
 # CONFIG_rpm-dev is not set
-# CONFIG_python-rpm is not set
-# CONFIG_rpm-libs is not set
 # CONFIG_rpm-dbg is not set
-# CONFIG_rpm-common is not set
 
 #
 # rpmsg-echo-test 
@@ -3228,16 +3129,16 @@ CONFIG_packagegroup-core-ssh-dropbear=y
 #
 # rpmsg-proxy-module 
 #
-# CONFIG_rpmsg-proxy-module is not set
-# CONFIG_rpmsg-proxy-module-dev is not set
-# CONFIG_rpmsg-proxy-module-dbg is not set
+# CONFIG_kernel-module-rpmsg-proxy is not set
+# CONFIG_kernel-module-rpmsg-proxy-dev is not set
+# CONFIG_kernel-module-rpmsg-proxy-dbg is not set
 
 #
 # rpmsg-user-module 
 #
-# CONFIG_rpmsg-user-module is not set
-# CONFIG_rpmsg-user-module-dev is not set
-# CONFIG_rpmsg-user-module-dbg is not set
+# CONFIG_kernel-module-rpmsg-user is not set
+# CONFIG_kernel-module-rpmsg-user-dev is not set
+# CONFIG_kernel-module-rpmsg-user-dbg is not set
 
 #
 # scrnsaverproto 
@@ -3865,8 +3766,6 @@ CONFIG_bridge-utils=y
 #
 # gnome-themes-standard 
 #
-# CONFIG_gnome-theme-adwaita-dev is not set
-# CONFIG_gnome-theme-adwaita-dbg is not set
 # CONFIG_gnome-themes-standard-dev is not set
 # CONFIG_gnome-themes-standard-dbg is not set
 # CONFIG_gnome-theme-adwaita is not set
@@ -4106,18 +4005,127 @@ CONFIG_bridge-utils=y
 # CONFIG_matchbox-wm-dev is not set
 
 #
-# x11-common 
-#
-# CONFIG_x11-common is not set
-# CONFIG_x11-common-dbg is not set
-# CONFIG_x11-common-dev is not set
-
-#
 # xserver-nodm-init 
 #
 # CONFIG_xserver-nodm-init is not set
 # CONFIG_xserver-nodm-init-dbg is not set
 # CONFIG_xserver-nodm-init-dev is not set
+
+#
+# Petalinux Package Groups
+#
+
+#
+# packagegroup-petalinux 
+#
+# CONFIG_packagegroup-petalinux is not set
+# CONFIG_packagegroup-petalinux-dev is not set
+# CONFIG_packagegroup-petalinux-dbg is not set
+
+#
+# packagegroup-petalinux-display-debug 
+#
+# CONFIG_packagegroup-petalinux-display-debug is not set
+# CONFIG_packagegroup-petalinux-display-debug-dbg is not set
+# CONFIG_packagegroup-petalinux-display-debug-dev is not set
+
+#
+# packagegroup-petalinux-lmsensors 
+#
+# CONFIG_packagegroup-petalinux-lmsensors is not set
+# CONFIG_packagegroup-petalinux-lmsensors-dbg is not set
+# CONFIG_packagegroup-petalinux-lmsensors-dev is not set
+
+#
+# packagegroup-petalinux-matchbox 
+#
+# CONFIG_packagegroup-petalinux-matchbox is not set
+# CONFIG_packagegroup-petalinux-matchbox-dbg is not set
+# CONFIG_packagegroup-petalinux-matchbox-dev is not set
+
+#
+# packagegroup-petalinux-networking-debug
+#
+# CONFIG_packagegroup-petalinux-networking-debug is not set
+# CONFIG_packagegroup-petalinux-networking-debug-dbg is not set
+# CONFIG_packagegroup-petalinux-networking-debug-dev is not set
+
+#
+# packagegroup-petalinux-networking-stack 
+#
+# CONFIG_packagegroup-petalinux-networking-stack is not set
+# CONFIG_packagegroup-petalinux-networking-stack-dbg is not set
+# CONFIG_packagegroup-petalinux-networking-stack-dev is not set
+
+#
+# packagegroup-petalinux-openamp 
+#
+# CONFIG_packagegroup-petalinux-openamp is not set
+# CONFIG_packagegroup-petalinux-openamp-dbg is not set
+# CONFIG_packagegroup-petalinux-openamp-dev is not set
+
+#
+# packagegroup-petalinux-opencv 
+#
+# CONFIG_packagegroup-petalinux-opencv is not set
+# CONFIG_packagegroup-petalinux-opencv-dbg is not set
+# CONFIG_packagegroup-petalinux-opencv-dev is not set
+
+#
+# packagegroup-petalinux-python-modules 
+#
+# CONFIG_packagegroup-petalinux-python-modules is not set
+# CONFIG_packagegroup-petalinux-python-modules-dbg is not set
+# CONFIG_packagegroup-petalinux-python-modules-dev is not set
+
+#
+# packagegroup-petalinux-qt 
+#
+# CONFIG_packagegroup-petalinux-qt is not set
+# CONFIG_packagegroup-petalinux-qt-dbg is not set
+# CONFIG_packagegroup-petalinux-qt-dev is not set
+
+#
+# packagegroup-petalinux-qt-extended 
+#
+# CONFIG_packagegroup-petalinux-qt-extended is not set
+# CONFIG_packagegroup-petalinux-qt-extended-dbg is not set
+# CONFIG_packagegroup-petalinux-qt-extended-dev is not set
+
+#
+# packagegroup-petalinux-self-hosted 
+#
+# CONFIG_packagegroup-petalinux-self-hosted is not set
+# CONFIG_packagegroup-petalinux-self-hosted-dbg is not set
+# CONFIG_packagegroup-petalinux-self-hosted-dev is not set
+
+#
+# packagegroup-petalinux-utils 
+#
+# CONFIG_packagegroup-petalinux-utils is not set
+# CONFIG_packagegroup-petalinux-utils-dbg is not set
+# CONFIG_packagegroup-petalinux-utils-dev is not set
+
+#
+# packagegroup-petalinux-v4lutils 
+#
+# CONFIG_packagegroup-petalinux-v4lutils is not set
+# CONFIG_packagegroup-petalinux-v4lutils-dbg is not set
+# CONFIG_packagegroup-petalinux-v4lutils-dev is not set
+
+#
+# packagegroup-petalinux-x11 
+#
+# CONFIG_packagegroup-petalinux-x11 is not set
+# CONFIG_packagegroup-petalinux-x11-dbg is not set
+# CONFIG_packagegroup-petalinux-x11-dev is not set
+
+#
+# packagegroup-petalinux-xfce 
+#
+# CONFIG_packagegroup-petalinux-xfce is not set
+# CONFIG_packagegroup-petalinux-xfce-dbg is not set
+# CONFIG_packagegroup-petalinux-xfce-dev is not set
 
 #
 # apps 

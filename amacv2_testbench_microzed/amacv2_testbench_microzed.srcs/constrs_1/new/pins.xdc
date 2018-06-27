@@ -6,14 +6,6 @@ set_property IOSTANDARD LVCMOS25 [get_ports LED2]
 set_property IOSTANDARD LVCMOS25 [get_ports LED3]
 
 #
-# For I2C IP Core testing
-set_property PULLUP true [get_ports I2C_scl_io]
-set_property PULLUP true [get_ports I2C_sda_io]
-set_property IOSTANDARD LVCMOS25 [get_ports I2C_scl_io]
-set_property IOSTANDARD LVCMOS25 [get_ports I2C_sda_io]
-
-
-#
 # AMACv2 Digital IO
 set_property IOSTANDARD LVCMOS25 [get_ports RO_PG_O]
 set_property IOSTANDARD LVCMOS25 [get_ports OFout]
@@ -54,17 +46,26 @@ set_property IOSTANDARD LVCMOS25 [get_ports CLKOUT]
 # Testboard Control
 
 # SPI
-set_property IOSTANDARD LVCMOS25 [get_ports SCLK]
-set_property IOSTANDARD LVCMOS25 [get_ports SDI]
-set_property IOSTANDARD LVCMOS25 [get_ports SDO]
-set_property IOSTANDARD LVCMOS25 [get_ports DPOT_CS0]
-set_property IOSTANDARD LVCMOS25 [get_ports DPOT_CS1]
-set_property IOSTANDARD LVCMOS25 [get_ports DPOT_CS2]
-set_property IOSTANDARD LVCMOS25 [get_ports DAC_CS0]
-set_property IOSTANDARD LVCMOS25 [get_ports DAC_CS1]
-set_property IOSTANDARD LVCMOS25 [get_ports ADC_CS0]
-set_property IOSTANDARD LVCMOS25 [get_ports ADC_CS1]
-set_property IOSTANDARD LVCMOS25 [get_ports ADC_CS2]
+
+# DPOT_CS0 - spi_rtl_ss_io[0]
+# DPOT_CS1 - spi_rtl_ss_io[1]
+# DPOT_CS2 - spi_rtl_ss_io[2]
+# DAC_CS0 - spi_rtl_ss_io[3]
+# DAC_CS1 - spi_rtl_ss_io[4]
+# ADC_CS0 - spi_rtl_ss_io[5]
+# ADC_CS1 - spi_rtl_ss_io[6]
+# ADC_CS2 - spi_rtl_ss_io[7]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_sck_io]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_io0_io]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_io1_io]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[0]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[1]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[2]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[3]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[4]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[5]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[6]]
+set_property IOSTANDARD LVCMOS25 [get_ports spi_rtl_ss_io[7]]
 
 # Mux control
 set_property IOSTANDARD LVCMOS25 [get_ports MPM_MUX_EN]
