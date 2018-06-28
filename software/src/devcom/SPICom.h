@@ -25,4 +25,4 @@ private:
   int m_fd;
 };
 
-#endif // UICOM_H
+#endif // SPICOM_H
