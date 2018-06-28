@@ -1,0 +1,8 @@
+# Libraries
+ADD_SUBDIRECTORY(devcom)
+ADD_SUBDIRECTORY(amac)
+
+# Programs
+ADD_SUBDIRECTORY(tools)
+ADD_SUBDIRECTORY(tests)
+ADD_SUBDIRECTORY(play)
