@@ -3,7 +3,7 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="38" Path="/home/kkrizka/Firmware/amacv2_tester/amacv2_testbench_microzed/amacv2_testbench_microzed.xpr">
+<Project Version="7" Minor="38" Path="/opt/amacv2_tester/amacv2_testbench_microzed/amacv2_testbench_microzed.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="fe0cfdc459d04900aab0f12341fb3d7e"/>
@@ -23,6 +23,7 @@
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../ip_repo/endeavour_fmc_led_controller_1.0"/>
+    <Option Name="IPRepoPath" Val="$PPRDIR/../ip_repo/freq_meas_1.0"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../ip_repo/amacv2_dummy_testbench_1.0"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../ip_repo/microzed_fmc_led_controller_1.0"/>
     <Option Name="IPOutputRepo" Val="$PCACHEDIR/ip"/>
@@ -70,29 +71,32 @@
         <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_rst_ps7_0_100M_0/TopLevel_rst_ps7_0_100M_0.xci">
           <Proxy FileSetName="TopLevel_rst_ps7_0_100M_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_microzed_fmc_led_controller_0_0_2/TopLevel_microzed_fmc_led_controller_0_0.xci">
-          <Proxy FileSetName="TopLevel_microzed_fmc_led_controller_0_0"/>
-        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_amacv2_dummy_testbench_0_0/TopLevel_amacv2_dummy_testbench_0_0.xci">
           <Proxy FileSetName="TopLevel_amacv2_dummy_testbench_0_0"/>
         </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_axi_quad_spi_0_0/TopLevel_axi_quad_spi_0_0.xci">
-          <Proxy FileSetName="TopLevel_axi_quad_spi_0_0"/>
+        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_microzed_fmc_led_controller_0_0/TopLevel_microzed_fmc_led_controller_0_0.xci">
+          <Proxy FileSetName="TopLevel_microzed_fmc_led_controller_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_endeavour_fmc_led_controller_0_0/TopLevel_endeavour_fmc_led_controller_0_0.xci">
           <Proxy FileSetName="TopLevel_endeavour_fmc_led_controller_0_0"/>
         </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_axi_quad_spi_0_0/TopLevel_axi_quad_spi_0_0.xci">
+          <Proxy FileSetName="TopLevel_axi_quad_spi_0_0"/>
+        </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_xlconstant_0_0/TopLevel_xlconstant_0_0.xci">
           <Proxy FileSetName="TopLevel_xlconstant_0_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_auto_pc_0/TopLevel_auto_pc_0.xci">
+          <Proxy FileSetName="TopLevel_auto_pc_0"/>
+        </CompFileExtendedInfo>
+        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_freq_meas_0_0/TopLevel_freq_meas_0_0.xci">
+          <Proxy FileSetName="TopLevel_freq_meas_0_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_xbar_0/TopLevel_xbar_0.xci">
           <Proxy FileSetName="TopLevel_xbar_0"/>
         </CompFileExtendedInfo>
         <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_processing_system7_0_0/TopLevel_processing_system7_0_0.xci">
           <Proxy FileSetName="TopLevel_processing_system7_0_0"/>
-        </CompFileExtendedInfo>
-        <CompFileExtendedInfo CompFileName="TopLevel.bd" FileRelPathName="ip/TopLevel_auto_pc_0/TopLevel_auto_pc_0.xci">
-          <Proxy FileSetName="TopLevel_auto_pc_0"/>
         </CompFileExtendedInfo>
       </File>
       <File Path="$PSRCDIR/sources_1/bd/TopLevel/hdl/TopLevel_wrapper.vhd">
@@ -140,15 +144,15 @@
         <Option Name="SrcSet" Val="sources_1"/>
       </Config>
     </FileSet>
-    <FileSet Name="TopLevel_amacv2_dummy_testbench_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_amacv2_dummy_testbench_0_0">
+    <FileSet Name="TopLevel_freq_meas_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_freq_meas_0_0">
       <Config>
-        <Option Name="TopModule" Val="TopLevel_amacv2_dummy_testbench_0_0"/>
+        <Option Name="TopModule" Val="TopLevel_freq_meas_0_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
-    <FileSet Name="TopLevel_microzed_fmc_led_controller_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_microzed_fmc_led_controller_0_0">
+    <FileSet Name="TopLevel_amacv2_dummy_testbench_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_amacv2_dummy_testbench_0_0">
       <Config>
-        <Option Name="TopModule" Val="TopLevel_microzed_fmc_led_controller_0_0"/>
+        <Option Name="TopModule" Val="TopLevel_amacv2_dummy_testbench_0_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
@@ -158,15 +162,15 @@
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
-    <FileSet Name="TopLevel_processing_system7_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_processing_system7_0_0">
+    <FileSet Name="TopLevel_microzed_fmc_led_controller_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_microzed_fmc_led_controller_0_0">
       <Config>
-        <Option Name="TopModule" Val="TopLevel_processing_system7_0_0"/>
+        <Option Name="TopModule" Val="TopLevel_microzed_fmc_led_controller_0_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
-    <FileSet Name="TopLevel_rst_ps7_0_100M_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_rst_ps7_0_100M_0">
+    <FileSet Name="TopLevel_xbar_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_xbar_0">
       <Config>
-        <Option Name="TopModule" Val="TopLevel_rst_ps7_0_100M_0"/>
+        <Option Name="TopModule" Val="TopLevel_xbar_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
@@ -182,9 +186,15 @@
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
-    <FileSet Name="TopLevel_xbar_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_xbar_0">
+    <FileSet Name="TopLevel_rst_ps7_0_100M_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_rst_ps7_0_100M_0">
       <Config>
-        <Option Name="TopModule" Val="TopLevel_xbar_0"/>
+        <Option Name="TopModule" Val="TopLevel_rst_ps7_0_100M_0"/>
+        <Option Name="UseBlackboxStub" Val="1"/>
+      </Config>
+    </FileSet>
+    <FileSet Name="TopLevel_processing_system7_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_processing_system7_0_0">
+      <Config>
+        <Option Name="TopModule" Val="TopLevel_processing_system7_0_0"/>
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
@@ -229,71 +239,36 @@
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2017"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_amacv2_dummy_testbench_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_amacv2_dummy_testbench_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_amacv2_dummy_testbench_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_amacv2_dummy_testbench_0_0_synth_1" IncludeInArchive="true">
+    <Run Id="TopLevel_freq_meas_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_freq_meas_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_freq_meas_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_freq_meas_0_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
-      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2017"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_microzed_fmc_led_controller_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_microzed_fmc_led_controller_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_microzed_fmc_led_controller_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_microzed_fmc_led_controller_0_0_synth_1" IncludeInArchive="true">
+    <Run Id="TopLevel_amacv2_dummy_testbench_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_amacv2_dummy_testbench_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_amacv2_dummy_testbench_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_amacv2_dummy_testbench_0_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
-      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2017"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
     <Run Id="TopLevel_endeavour_fmc_led_controller_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_endeavour_fmc_led_controller_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_endeavour_fmc_led_controller_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_endeavour_fmc_led_controller_0_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2017"/>
-        <Step Id="synth_design"/>
-      </Strategy>
-      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
-      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2017"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-    </Run>
-    <Run Id="TopLevel_processing_system7_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_processing_system7_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_processing_system7_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_processing_system7_0_0_synth_1" IncludeInArchive="true">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_rst_ps7_0_100M_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_rst_ps7_0_100M_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_rst_ps7_0_100M_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_rst_ps7_0_100M_0_synth_1" IncludeInArchive="true">
+    <Run Id="TopLevel_microzed_fmc_led_controller_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_microzed_fmc_led_controller_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_microzed_fmc_led_controller_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_microzed_fmc_led_controller_0_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
-        <Step Id="synth_design"/>
-      </Strategy>
-      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
-      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-    </Run>
-    <Run Id="TopLevel_axi_quad_spi_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_axi_quad_spi_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_axi_quad_spi_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_axi_quad_spi_0_0_synth_1" IncludeInArchive="true">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
-        <Step Id="synth_design"/>
-      </Strategy>
-      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
-      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-    </Run>
-    <Run Id="TopLevel_xlconstant_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_xlconstant_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_xlconstant_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_xlconstant_0_0_synth_1" IncludeInArchive="true">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -302,9 +277,43 @@
     </Run>
     <Run Id="TopLevel_xbar_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_xbar_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_xbar_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_xbar_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_axi_quad_spi_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_axi_quad_spi_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_axi_quad_spi_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_axi_quad_spi_0_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_xlconstant_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_xlconstant_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_xlconstant_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_xlconstant_0_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_rst_ps7_0_100M_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_rst_ps7_0_100M_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_rst_ps7_0_100M_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_rst_ps7_0_100M_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
+        <Step Id="synth_design"/>
+      </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
+      <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_processing_system7_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_processing_system7_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_processing_system7_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_processing_system7_0_0_synth_1" IncludeInArchive="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -313,9 +322,7 @@
     </Run>
     <Run Id="TopLevel_auto_pc_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_auto_pc_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_auto_pc_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" Dir="$PRUNDIR/TopLevel_auto_pc_0_synth_1" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -339,59 +346,9 @@
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2017"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_amacv2_dummy_testbench_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_amacv2_dummy_testbench_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_amacv2_dummy_testbench_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="false">
+    <Run Id="TopLevel_freq_meas_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_freq_meas_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_freq_meas_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017"/>
-        <Step Id="init_design"/>
-        <Step Id="opt_design"/>
-        <Step Id="power_opt_design"/>
-        <Step Id="place_design"/>
-        <Step Id="post_place_power_opt_design"/>
-        <Step Id="phys_opt_design"/>
-        <Step Id="route_design"/>
-        <Step Id="post_route_phys_opt_design"/>
-        <Step Id="write_bitstream"/>
-      </Strategy>
-      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2017"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-    </Run>
-    <Run Id="TopLevel_microzed_fmc_led_controller_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_microzed_fmc_led_controller_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_microzed_fmc_led_controller_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="false">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017"/>
-        <Step Id="init_design"/>
-        <Step Id="opt_design"/>
-        <Step Id="power_opt_design"/>
-        <Step Id="place_design"/>
-        <Step Id="post_place_power_opt_design"/>
-        <Step Id="phys_opt_design"/>
-        <Step Id="route_design"/>
-        <Step Id="post_route_phys_opt_design"/>
-        <Step Id="write_bitstream"/>
-      </Strategy>
-      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2017"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-    </Run>
-    <Run Id="TopLevel_endeavour_fmc_led_controller_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_endeavour_fmc_led_controller_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_endeavour_fmc_led_controller_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="false">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017"/>
-        <Step Id="init_design"/>
-        <Step Id="opt_design"/>
-        <Step Id="power_opt_design"/>
-        <Step Id="place_design"/>
-        <Step Id="post_place_power_opt_design"/>
-        <Step Id="phys_opt_design"/>
-        <Step Id="route_design"/>
-        <Step Id="post_route_phys_opt_design"/>
-        <Step Id="write_bitstream"/>
-      </Strategy>
-      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2017"/>
-      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
-    </Run>
-    <Run Id="TopLevel_processing_system7_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_processing_system7_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_processing_system7_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
-      <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -405,11 +362,9 @@
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_rst_ps7_0_100M_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_rst_ps7_0_100M_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_rst_ps7_0_100M_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+    <Run Id="TopLevel_amacv2_dummy_testbench_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_amacv2_dummy_testbench_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_amacv2_dummy_testbench_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -423,11 +378,9 @@
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_axi_quad_spi_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_axi_quad_spi_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_axi_quad_spi_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+    <Run Id="TopLevel_endeavour_fmc_led_controller_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_endeavour_fmc_led_controller_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_endeavour_fmc_led_controller_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -441,11 +394,9 @@
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
-    <Run Id="TopLevel_xlconstant_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_xlconstant_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_xlconstant_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+    <Run Id="TopLevel_microzed_fmc_led_controller_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_microzed_fmc_led_controller_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_microzed_fmc_led_controller_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -461,9 +412,71 @@
     </Run>
     <Run Id="TopLevel_xbar_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_xbar_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_xbar_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_axi_quad_spi_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_axi_quad_spi_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_axi_quad_spi_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_xlconstant_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_xlconstant_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_xlconstant_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_rst_ps7_0_100M_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_rst_ps7_0_100M_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_rst_ps7_0_100M_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
+        <Step Id="init_design"/>
+        <Step Id="opt_design"/>
+        <Step Id="power_opt_design"/>
+        <Step Id="place_design"/>
+        <Step Id="post_place_power_opt_design"/>
+        <Step Id="phys_opt_design"/>
+        <Step Id="route_design"/>
+        <Step Id="post_route_phys_opt_design"/>
+        <Step Id="write_bitstream"/>
+      </Strategy>
+      <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
+      <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
+    </Run>
+    <Run Id="TopLevel_processing_system7_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_processing_system7_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_processing_system7_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
+      <Strategy Version="1" Minor="2">
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -479,9 +492,7 @@
     </Run>
     <Run Id="TopLevel_auto_pc_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_auto_pc_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_auto_pc_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>

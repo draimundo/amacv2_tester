@@ -1,8 +1,8 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Tue Jun 26 15:50:27 2018
---Host        : carl-pc running 64-bit CentOS Linux release 7.5.1804 (Core)
+--Date        : Thu Jun 28 15:45:43 2018
+--Host        : oceanpiglet running 64-bit CentOS Linux release 7.2.1511 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
 --Purpose     : IP block netlist
@@ -110,6 +110,18 @@ architecture STRUCTURE of TopLevel_wrapper is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
+    spi_rtl_io0_i : in STD_LOGIC;
+    spi_rtl_io0_o : out STD_LOGIC;
+    spi_rtl_io0_t : out STD_LOGIC;
+    spi_rtl_io1_i : in STD_LOGIC;
+    spi_rtl_io1_o : out STD_LOGIC;
+    spi_rtl_io1_t : out STD_LOGIC;
+    spi_rtl_sck_i : in STD_LOGIC;
+    spi_rtl_sck_o : out STD_LOGIC;
+    spi_rtl_sck_t : out STD_LOGIC;
+    spi_rtl_ss_i : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    spi_rtl_ss_o : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    spi_rtl_ss_t : out STD_LOGIC;
     DCDCadj : in STD_LOGIC;
     DCDCen : in STD_LOGIC;
     HrstBx : in STD_LOGIC;
@@ -154,19 +166,7 @@ architecture STRUCTURE of TopLevel_wrapper is
     LED2 : out STD_LOGIC;
     LED3 : out STD_LOGIC;
     LED1 : out STD_LOGIC;
-    LED0 : out STD_LOGIC;
-    spi_rtl_io0_i : in STD_LOGIC;
-    spi_rtl_io0_o : out STD_LOGIC;
-    spi_rtl_io0_t : out STD_LOGIC;
-    spi_rtl_io1_i : in STD_LOGIC;
-    spi_rtl_io1_o : out STD_LOGIC;
-    spi_rtl_io1_t : out STD_LOGIC;
-    spi_rtl_sck_i : in STD_LOGIC;
-    spi_rtl_sck_o : out STD_LOGIC;
-    spi_rtl_sck_t : out STD_LOGIC;
-    spi_rtl_ss_i : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    spi_rtl_ss_o : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    spi_rtl_ss_t : out STD_LOGIC
+    LED0 : out STD_LOGIC
   );
   end component TopLevel;
   component IOBUF is
