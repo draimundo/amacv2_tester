@@ -53,6 +53,7 @@ entity freq_meas_comp_v1_0 is
 end freq_meas_comp_v1_0;
 
 architecture Behavioral of freq_meas_comp_v1_0 is
+  
     -- Synchronous signals
     signal ts_cnt : unsigned(ts_cnt_i'high downto ts_cnt_i'low); --clock counter
 	signal ts_cnt_b : unsigned(ts_cnt_i'high downto ts_cnt_i'low); -- input buffer - can't change value during measurement
@@ -65,6 +66,17 @@ architecture Behavioral of freq_meas_comp_v1_0 is
     signal t_flg  : std_logic;
 
     signal frq_old : std_logic;
+    
+    attribute keep : string;
+    attribute keep of ts_cnt:signal is "true";
+    attribute keep of hi_cnt:signal is "true";
+    attribute keep of hi_n_o:signal is "true";
+    attribute keep of lo_cnt:signal is "true";
+    attribute keep of lo_n_o:signal is "true";
+    attribute keep of t_cnt:signal is "true";
+    attribute keep of hi_t_o:signal is "true";
+    attribute keep of freeze_i:signal is "true";
+    
 begin
 
 
@@ -109,6 +121,7 @@ begin
             if(frq_i = '1') then
                 if(t_cnt < (2**(t_cnt'length)-1)) then --no overflow
                     t_cnt <= t_cnt + 1;
+                    t_flg <= '0';
                 else
                     t_flg <= '1';
                 end if;
@@ -133,7 +146,7 @@ begin
                 lo_cnt <= (others => '0');
                 lo_flg <= '0';
                 t_cnt  <= (others => '0');
-                t_flg_o <= '0';
+                t_flg <= '0';
             end if;
         end if;
     end if;

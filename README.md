@@ -42,7 +42,7 @@ The frequency measurement bloc is a simple synchronous (to *clk_i*) counter, whi
 
 For the AMACv2, there are 5 frequencies to be measured : *HVOSC0*->*HVOSC3* and *CLKOUT*, needing each one an instance of the frequency measurement bloc (without the AXI system) these 5 blocs are then mapped to AXI registers following this scheme:
 
-![Frequency Measurment bloc AXI mapping](https://user-images.githubusercontent.com/39920129/42100697-bf6e8c2e-7b75-11e8-993a-8897377ca8d7.png)
+![Frequency Measurment bloc AXI mapping](https://user-images.githubusercontent.com/39920129/42113235-6c2e3f94-7b9f-11e8-91af-8232462ec0e4.png)
 
 ## Xilinx Quad SPI (0x41E00000 - 41E0FFFF)
 The `spidev` driver should be used for SPI commands instead of direct register access. The device-tree maps the SPI devices on the active board to the following `/dev` nodes.
