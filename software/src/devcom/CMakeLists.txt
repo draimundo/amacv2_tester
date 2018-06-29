@@ -4,6 +4,8 @@ SET(SrcFiles DeviceCom.cpp
   EndeavourCom.cpp
   EndeavourRaw.cpp
 
+  FreqMeas.cpp
+
   ComIOException.cpp
   EndeavourComException.cpp
 
