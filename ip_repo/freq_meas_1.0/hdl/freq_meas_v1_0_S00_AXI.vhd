@@ -121,8 +121,6 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
 	signal axi_rdata	: std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal axi_rresp	: std_logic_vector(1 downto 0);
 	signal axi_rvalid	: std_logic;
-	
-	signal nreset_s : std_logic;
 
 	-- Example-specific design signals
 	-- local parameter for addressing 32 bit / 64 bit C_S_AXI_DATA_WIDTH
@@ -130,7 +128,7 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
 	-- ADDR_LSB = 2 for 32 bits (n downto 2)
 	-- ADDR_LSB = 3 for 64 bits (n downto 3)
 	constant ADDR_LSB  : integer := (C_S_AXI_DATA_WIDTH/32)+ 1;
-	constant OPT_MEM_ADDR_BITS : integer := 2;
+	constant OPT_MEM_ADDR_BITS : integer := 3;
 	------------------------------------------------
 	---- Signals for user logic register space example
 	--------------------------------------------------
@@ -150,6 +148,13 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
     signal slv_reg12   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg13   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg14   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    
+    
+    attribute keep : string;
+        attribute keep of slv_reg0:signal is "true";
+        attribute keep of slv_reg1:signal is "true";
+        attribute keep of slv_reg2:signal is "true";
+    
 	signal slv_reg_rden	: std_logic;
 	signal slv_reg_wren	: std_logic;
 	signal reg_data_out	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
@@ -263,6 +268,9 @@ begin
             slv_reg9 <= (others => '0');
 --            slv_reg10 <= (others => '0');
 --            slv_reg11 <= (others => '0');
+            slv_reg12 <= (others => '0');
+--            slv_reg13 <= (others => '0');
+--            slv_reg14 <= (others => '0');
 	    else
 	      loc_addr := axi_awaddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
 	      if (slv_reg_wren = '1') then
@@ -309,20 +317,20 @@ begin
                                 end loop;
 	          when others =>
 	            slv_reg0 <= slv_reg0;
-                slv_reg1 <= slv_reg1;
-                slv_reg2 <= slv_reg2;
+--                slv_reg1 <= slv_reg1;
+--                slv_reg2 <= slv_reg2;
                 slv_reg3 <= slv_reg3;
-                slv_reg4 <= slv_reg4;
-                slv_reg5 <= slv_reg5;
+--                slv_reg4 <= slv_reg4;
+--                slv_reg5 <= slv_reg5;
                 slv_reg6 <= slv_reg6;
-                slv_reg7 <= slv_reg7;
-                slv_reg8 <= slv_reg8;
+--                slv_reg7 <= slv_reg7;
+--                slv_reg8 <= slv_reg8;
                 slv_reg9 <= slv_reg9;
-                slv_reg10 <= slv_reg10;
-                slv_reg11 <= slv_reg11;
+--                slv_reg10 <= slv_reg10;
+--                slv_reg11 <= slv_reg11;
                 slv_reg12 <= slv_reg12;
-                slv_reg13 <= slv_reg13;
-                slv_reg14 <= slv_reg14;
+--                slv_reg13 <= slv_reg13;
+--                slv_reg14 <= slv_reg14;
 	        end case;
 	      end if;
 	    end if;
@@ -410,7 +418,7 @@ begin
 	-- and the slave is ready to accept the read address.
 	slv_reg_rden <= axi_arready and S_AXI_ARVALID and (not axi_rvalid) ;
 
-    process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, slv_reg8, slv_reg9, slv_reg10, slv_reg11, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
+    process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, slv_reg8, slv_reg9, slv_reg10, slv_reg11, slv_reg12, slv_reg13, slv_reg14, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
     variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
     begin
         -- Address decoding for reading registers
