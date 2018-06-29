@@ -38,12 +38,12 @@ void FreqMeas::set_ts_cnt(uint32_t ts_cnt){
 void FreqMeas::read(){
   uint32_t edge_data = m_dev->read_reg(3*m_id+1);
   m_hi_n = (uint16_t)(edge_data & 0x7FFF);
-  m_hi_flg = (bool)(edge_data & 0x8000) >> 15;
-  m_lo_n = (uint16_t)(edge_data & 0x7FFF0000) >> 16;
-  m_lo_flg = (bool)(edge_data & 0x80000000) >> 31;
+  m_hi_flg = (bool)((edge_data & 0x8000) >> 15);
+  m_lo_n = (uint16_t)((edge_data & 0x7FFF0000) >> 16);
+  m_lo_flg = (bool)((edge_data & 0x80000000) >> 31);
   uint32_t dc_data = m_dev->read_reg(3*m_id+2);
   m_hi_t = (uint32_t)(dc_data & 0x7FFFFFFF);
-  m_t_flg = (bool)(dc_data & 0x80000000) >> 31;
+  m_t_flg = (bool)((dc_data & 0x80000000) >> 31);
 }
 
 uint32_t FreqMeas::get_ts_cnt(){
