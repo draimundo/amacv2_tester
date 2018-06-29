@@ -14,6 +14,10 @@
         compatible = "generic-uio";
 };
 
+&freq_meas_0 {
+        compatible = "generic-uio";
+};
+
 
 &axi_quad_spi_0 {
         spidev@0 {

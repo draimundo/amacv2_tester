@@ -832,6 +832,13 @@
           <spirit:configurableElementValue spirit:referenceId="CONST_VAL">0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
+      <spirit:componentInstance>
+        <spirit:instanceName>freq_meas_0</spirit:instanceName>
+        <spirit:componentRef spirit:library="user" spirit:name="freq_meas" spirit:vendor="user.org" spirit:version="1.0"/>
+        <spirit:configurableElementValues>
+          <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_freq_meas_0_0</spirit:configurableElementValue>
+        </spirit:configurableElementValues>
+      </spirit:componentInstance>
     </spirit:componentInstances>
     <spirit:interconnections>
       <spirit:interconnection>
@@ -850,14 +857,19 @@
         <spirit:activeInterface spirit:busRef="S00_AXI" spirit:componentRef="amacv2_dummy_testbench_0"/>
       </spirit:interconnection>
       <spirit:interconnection>
+        <spirit:name>ps7_0_axi_periph_M02_AXI</spirit:name>
+        <spirit:activeInterface spirit:busRef="AXI_LITE" spirit:componentRef="axi_quad_spi_0"/>
+        <spirit:activeInterface spirit:busRef="M02_AXI" spirit:componentRef="ps7_0_axi_periph"/>
+      </spirit:interconnection>
+      <spirit:interconnection>
         <spirit:name>ps7_0_axi_periph_M03_AXI</spirit:name>
-        <spirit:activeInterface spirit:busRef="M03_AXI" spirit:componentRef="ps7_0_axi_periph"/>
         <spirit:activeInterface spirit:busRef="S00_AXI" spirit:componentRef="endeavour_fmc_led_controller_0"/>
+        <spirit:activeInterface spirit:busRef="M03_AXI" spirit:componentRef="ps7_0_axi_periph"/>
       </spirit:interconnection>
       <spirit:interconnection>
         <spirit:name>ps7_0_axi_periph_M04_AXI</spirit:name>
         <spirit:activeInterface spirit:busRef="M04_AXI" spirit:componentRef="ps7_0_axi_periph"/>
-        <spirit:activeInterface spirit:busRef="AXI_LITE" spirit:componentRef="axi_quad_spi_0"/>
+        <spirit:activeInterface spirit:busRef="S00_AXI" spirit:componentRef="freq_meas_0"/>
       </spirit:interconnection>
     </spirit:interconnections>
     <spirit:adHocConnections>
@@ -878,6 +890,7 @@
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M02_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M03_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M04_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="s00_axi_aclk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_RESET0_N</spirit:name>
@@ -897,6 +910,7 @@
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M02_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M03_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M04_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="s00_axi_aresetn"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>rst_ps7_0_100M_interconnect_aresetn</spirit:name>
@@ -1027,16 +1041,19 @@
         <spirit:name>HVOSC2_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="HVOSC2"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC2"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="frq2_i"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>HVOSC1_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="HVOSC1"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC1"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="frq1_i"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>HVOSC0_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="HVOSC0"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC0"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="frq0_i"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>CMD_OUT_N_0_1</spirit:name>
@@ -1047,11 +1064,13 @@
         <spirit:name>CLKOUT_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="CLKOUT"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="CLKOUT"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="frq4_i"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>HVOSC3_0_1</spirit:name>
         <spirit:externalPortReference spirit:portRef="HVOSC3"/>
         <spirit:internalPortReference spirit:componentRef="amacv2_dummy_testbench_0" spirit:portRef="HVOSC3"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="frq3_i"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>CMD_OUT_P_0_1</spirit:name>
@@ -2996,7 +3015,7 @@
           <spirit:segment>
             <spirit:name>SEG_amacv2_dummy_testbench_0_S00_AXI_reg</spirit:name>
             <spirit:displayName>/amacv2_dummy_testbench_0/S00_AXI/S00_AXI_reg</spirit:displayName>
-            <spirit:addressOffset>0x43C10000</spirit:addressOffset>
+            <spirit:addressOffset>0x43C00000</spirit:addressOffset>
             <spirit:range>64K</spirit:range>
           </spirit:segment>
           <spirit:segment>
@@ -3008,13 +3027,19 @@
           <spirit:segment>
             <spirit:name>SEG_endeavour_fmc_led_controller_0_S00_AXI_reg</spirit:name>
             <spirit:displayName>/endeavour_fmc_led_controller_0/S00_AXI/S00_AXI_reg</spirit:displayName>
+            <spirit:addressOffset>0x43C10000</spirit:addressOffset>
+            <spirit:range>64K</spirit:range>
+          </spirit:segment>
+          <spirit:segment>
+            <spirit:name>SEG_freq_meas_0_S00_AXI_reg</spirit:name>
+            <spirit:displayName>/freq_meas_0/S00_AXI/S00_AXI_reg</spirit:displayName>
             <spirit:addressOffset>0x43C20000</spirit:addressOffset>
             <spirit:range>64K</spirit:range>
           </spirit:segment>
           <spirit:segment>
             <spirit:name>SEG_microzed_fmc_led_controller_0_S00_AXI_reg</spirit:name>
             <spirit:displayName>/microzed_fmc_led_controller_0/S00_AXI/S00_AXI_reg</spirit:displayName>
-            <spirit:addressOffset>0x43C00000</spirit:addressOffset>
+            <spirit:addressOffset>0x43C30000</spirit:addressOffset>
             <spirit:range>64K</spirit:range>
           </spirit:segment>
         </spirit:segments>
