@@ -37,7 +37,12 @@ The address space is divded among the different IP blocks used in the top-level 
 
 ## Endeavour (0x43C10000 - 0x43C1FFFF)
 
-## Frequency Measurement (to be defiend)
+## Frequency Measurement (0x43C20000 - 0x43C2FFFF `/dev/uio2`)
+The frequency measurement bloc is a simple synchronous (to *clk_i*) counter, which reacts on edges (if the signal is slow enough to be detected), with outputs *hi_n_o* and *lo_n_o* counting rising respectively falling edges and also measures the duty cycle of the input signal *frq_i*, with *hi_t_o* incrementing everytime *frq_i* is high and *clk_i* rises. The different *\*_flg_o* outputs monitor the registers, and are active high if an overflow is detected. On the input side, *ts_cnt_i* sets the number of clock cycles during which the measurement is done. *freeze_i*, active high, freezes the ouput registers (the measurement continues in the background) and *nrst_i*, active low, resets the bloc.
+
+For the AMACv2, there are 5 frequencies to be measured : *HVOSC0*->*HVOSC3* and *CLKOUT*, needing each one an instance of the frequency measurement bloc (without the AXI system) these 5 blocs are then mapped to AXI registers following this scheme:
+
+![Frequency Measurment bloc AXI mapping](https://user-images.githubusercontent.com/39920129/42100697-bf6e8c2e-7b75-11e8-993a-8897377ca8d7.png)
 
 ## Xilinx Quad SPI (0x41E00000 - 41E0FFFF)
 The `spidev` driver should be used for SPI commands instead of direct register access. The device-tree maps the SPI devices on the active board to the following `/dev` nodes.
