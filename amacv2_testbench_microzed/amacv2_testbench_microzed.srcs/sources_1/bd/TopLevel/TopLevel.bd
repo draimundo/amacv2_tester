@@ -1118,11 +1118,6 @@
         <spirit:externalPortReference spirit:portRef="GPI"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>endeavour_fmc_led_controller_0_CMD_IN_P</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="CMD_IN_P"/>
-        <spirit:externalPortReference spirit:portRef="CMD_IN_P"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>endeavour_fmc_led_controller_0_CMD_IN_N</spirit:name>
         <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="CMD_IN_N"/>
         <spirit:externalPortReference spirit:portRef="CMD_IN_N"/>
@@ -1156,6 +1151,11 @@
         <spirit:name>axi_quad_spi_0_ip2intc_irpt</spirit:name>
         <spirit:internalPortReference spirit:componentRef="axi_quad_spi_0" spirit:portRef="ip2intc_irpt"/>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="IRQ_F2P"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_led_controller_0_CMD_IN_P</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_led_controller_0" spirit:portRef="CMD_IN_P"/>
+        <spirit:externalPortReference spirit:portRef="CMD_IN_P"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>
