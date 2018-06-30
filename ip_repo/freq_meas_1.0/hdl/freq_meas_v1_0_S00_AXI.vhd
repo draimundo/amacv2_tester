@@ -149,12 +149,6 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
     signal slv_reg13   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg14   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     
-    
-    attribute keep : string;
-        attribute keep of slv_reg0:signal is "true";
-        attribute keep of slv_reg1:signal is "true";
-        attribute keep of slv_reg2:signal is "true";
-    
 	signal slv_reg_rden	: std_logic;
 	signal slv_reg_wren	: std_logic;
 	signal reg_data_out	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
@@ -579,7 +573,7 @@ begin
         ts_cnt_i => slv_reg12(29 downto 0),
         freeze_i => slv_reg12(30),
         nrst_i => slv_reg12(31)
-        );
+    );
         
 	-- User logic ends
 

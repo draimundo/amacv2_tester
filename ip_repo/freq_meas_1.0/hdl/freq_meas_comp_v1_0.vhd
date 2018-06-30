@@ -53,30 +53,18 @@ entity freq_meas_comp_v1_0 is
 end freq_meas_comp_v1_0;
 
 architecture Behavioral of freq_meas_comp_v1_0 is
-  
     -- Synchronous signals
     signal ts_cnt : unsigned(ts_cnt_i'high downto ts_cnt_i'low); --clock counter
 	signal ts_cnt_b : unsigned(ts_cnt_i'high downto ts_cnt_i'low); -- input buffer - can't change value during measurement
 
-    signal hi_cnt : unsigned(hi_n_o'high downto hi_n_o'low);
+    signal hi_n : unsigned(hi_n_o'high downto hi_n_o'low);
     signal hi_flg : std_logic;
-    signal lo_cnt : unsigned(lo_n_o'high downto lo_n_o'low);
+    signal lo_n : unsigned(lo_n_o'high downto lo_n_o'low);
     signal lo_flg : std_logic;
-    signal t_cnt  : unsigned(hi_t_o'high downto hi_t_o'low);
+    signal hi_t  : unsigned(hi_t_o'high downto hi_t_o'low);
     signal t_flg  : std_logic;
 
     signal frq_old : std_logic;
-    
-    attribute keep : string;
-    attribute keep of ts_cnt:signal is "true";
-    attribute keep of hi_cnt:signal is "true";
-    attribute keep of hi_n_o:signal is "true";
-    attribute keep of lo_cnt:signal is "true";
-    attribute keep of lo_n_o:signal is "true";
-    attribute keep of t_cnt:signal is "true";
-    attribute keep of hi_t_o:signal is "true";
-    attribute keep of freeze_i:signal is "true";
-    
 begin
 
 
@@ -84,6 +72,8 @@ process(clk_i)
 begin
     if(rising_edge(clk_i)) then
         frq_old <= frq_i; -- no reset needed - just one sync. register
+        
+---- RESET
         if (nrst_i = '0') then -- synchronous reset
 
             hi_n_o <= (others => '0');
@@ -94,58 +84,64 @@ begin
             ts_cnt_b <= (others => '0'); -- to restart conversion in 2 clk edges            
             ts_cnt <= (others => '0');
 
-            hi_cnt <= (others => '0');
+            hi_n <= (others => '0');
 			hi_flg <= '0';
-			lo_cnt <= (others => '0');
+			lo_n <= (others => '0');
 			lo_flg <= '0';	
         else
-			ts_cnt <= ts_cnt + 1; --increase main counter -> NB: Begins truly counting at 1
-			if(frq_i /= frq_old) then
-                if(frq_i = '1') then
-                    if(hi_cnt < (2**(hi_cnt'length)-1)) then --no overflow
-                        hi_cnt <= hi_cnt + 1;
-                        hi_flg <= '0';
-                    else --overflow
-                        hi_flg <= '1';
-                    end if;
-                elsif(frq_i = '0') then
-                    if(lo_cnt < (2**(lo_cnt'length)-1)) then --no overflow
-                        lo_cnt <= lo_cnt + 1;
-                        lo_flg <= '0';
-                    else --overflow
-                        lo_flg <= '1';
-                    end if;
+
+---- EDGE COUNTERS
+			if(frq_i = '1' and frq_old = '0') then -- Rising edge
+                hi_n <= hi_n + 1;
+                if(hi_n < (2**(hi_n'length)-1)) then --no overflow
+                    hi_n <= hi_n + 1;
+                    hi_flg <= '0';
+                else --overflow
+                    hi_flg <= '1';
                 end if;
             end if;
             
+            if(frq_i = '0' and frq_old = '1') then -- Falling edge
+                lo_n <= lo_n + 1;
+                if(lo_n < (2**(lo_n'length)-1)) then --no overflow
+                    lo_n <= lo_n + 1;
+                    lo_flg <= '0';
+                else --overflow
+                    lo_flg <= '1';
+                end if;
+            end if;
+            
+----DUTY CYCLE COUNTER
             if(frq_i = '1') then
-                if(t_cnt < (2**(t_cnt'length)-1)) then --no overflow
-                    t_cnt <= t_cnt + 1;
+                hi_t <= hi_t + 1;
+                if(hi_t < (2**(hi_t'length)-1)) then --no overflow
+                    hi_t <= hi_t + 1;
                     t_flg <= '0';
                 else
                     t_flg <= '1';
                 end if;
             end if;
             
+-- MAIN COUNTER (MEASUREMENT TIME)
+            ts_cnt <= ts_cnt + 1; --increase main counter
 			if(ts_cnt >= ts_cnt_b) then --meas time elapsed
-                --Update outputs if not frozen
-                if(freeze_i = '0') then
-                    hi_n_o <= std_logic_vector(hi_cnt);
+                if(freeze_i = '0') then --Update outputs if not frozen
+                    hi_n_o <= std_logic_vector(hi_n);
                     hi_flg_o <= hi_flg;
-                    lo_n_o <= std_logic_vector(lo_cnt);
+                    lo_n_o <= std_logic_vector(lo_n);
                     lo_flg_o <= lo_flg;
-                    hi_t_o <= std_logic_vector(t_cnt);
+                    hi_t_o <= std_logic_vector(hi_t);
                     t_flg_o <= t_flg;
                 end if;
                 --Update buffers
                 ts_cnt <= (others => '0');
                 ts_cnt_b <= unsigned(ts_cnt_i); -- reset counter, downcounting one 32bit latch less, but 4/5 ROMs with 32bit adress width
                 
-                hi_cnt <= (others => '0');
+                hi_n <= (others => '0');
                 hi_flg <= '0';
-                lo_cnt <= (others => '0');
+                lo_n <= (others => '0');
                 lo_flg <= '0';
-                t_cnt  <= (others => '0');
+                hi_t  <= (others => '0');
                 t_flg <= '0';
             end if;
         end if;

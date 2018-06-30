@@ -45,13 +45,13 @@
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="78"/>
-    <Option Name="WTModelSimExportSim" Val="78"/>
-    <Option Name="WTQuestaExportSim" Val="78"/>
-    <Option Name="WTIesExportSim" Val="78"/>
-    <Option Name="WTVcsExportSim" Val="78"/>
-    <Option Name="WTRivieraExportSim" Val="78"/>
-    <Option Name="WTActivehdlExportSim" Val="78"/>
+    <Option Name="WTXSimExportSim" Val="81"/>
+    <Option Name="WTModelSimExportSim" Val="81"/>
+    <Option Name="WTQuestaExportSim" Val="81"/>
+    <Option Name="WTIesExportSim" Val="81"/>
+    <Option Name="WTVcsExportSim" Val="81"/>
+    <Option Name="WTRivieraExportSim" Val="81"/>
+    <Option Name="WTActivehdlExportSim" Val="81"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -115,6 +115,7 @@
         <Option Name="SrcSet" Val="sources_1"/>
       </Config>
     </FileSet>
+<<<<<<< HEAD
     <FileSet Name="TopLevel_endeavour_fmc_led_controller_0_0" Type="BlockSrcs" RelSrcDir="$PSRCDIR/TopLevel_endeavour_fmc_led_controller_0_0">
       <Config>
         <Option Name="TopModule" Val="TopLevel_endeavour_fmc_led_controller_0_0"/>
@@ -151,6 +152,8 @@
         <Option Name="UseBlackboxStub" Val="1"/>
       </Config>
     </FileSet>
+=======
+>>>>>>> a12d20e1408419e04abde20b35dd8f987ab76ef6
   </FileSets>
   <Simulators>
     <Simulator Name="XSim">
@@ -179,6 +182,7 @@
       <ReportStrategy Name="Vivado Synthesis Default Reports" Flow="Vivado Synthesis 2017"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
+<<<<<<< HEAD
     <Run Id="TopLevel_endeavour_fmc_led_controller_0_0_synth_1" Type="Ft3:Synth" SrcSet="TopLevel_endeavour_fmc_led_controller_0_0" Part="xc7z020clg400-1" ConstrsSet="TopLevel_endeavour_fmc_led_controller_0_0" Description="Vivado Synthesis Defaults" WriteIncrSynthDcp="false" IncludeInArchive="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2018"/>
@@ -228,6 +232,9 @@
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
     <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." WriteIncrSynthDcp="false" State="current" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="false">
+=======
+    <Run Id="impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="constrs_1" Description="Default settings for Implementation." WriteIncrSynthDcp="false" State="current" Dir="$PRUNDIR/impl_1" SynthRun="synth_1" IncludeInArchive="true" GenFullBitstream="false">
+>>>>>>> a12d20e1408419e04abde20b35dd8f987ab76ef6
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2017"/>
         <Step Id="init_design"/>
@@ -240,9 +247,11 @@
         <Step Id="post_route_phys_opt_design"/>
         <Step Id="write_bitstream"/>
       </Strategy>
+      <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2017"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
+<<<<<<< HEAD
     <Run Id="TopLevel_endeavour_fmc_led_controller_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7z020clg400-1" ConstrsSet="TopLevel_endeavour_fmc_led_controller_0_0" Description="Default settings for Implementation." WriteIncrSynthDcp="false" SynthRun="TopLevel_endeavour_fmc_led_controller_0_0_synth_1" IncludeInArchive="false" GenFullBitstream="true">
       <Strategy Version="1" Minor="2">
         <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2018"/>
@@ -339,6 +348,8 @@
       <ReportStrategy Name="Vivado Implementation Default Reports" Flow="Vivado Implementation 2018"/>
       <Report Name="ROUTE_DESIGN.REPORT_METHODOLOGY" Enabled="1"/>
     </Run>
+=======
+>>>>>>> a12d20e1408419e04abde20b35dd8f987ab76ef6
   </Runs>
   <Board>
     <Jumpers/>
