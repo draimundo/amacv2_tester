@@ -34,7 +34,32 @@ The contents of the repository are organized as follows:
 The address space is divded among the different IP blocks used in the top-level firmware entity.
 
 ## Digital I/O (0x43C10000 - 0x43C1FFFF)
+The digital IO IP block simply maps AXI registers to the simple (needing no processing) inputs/outputs used by the AMACv2 and the testbench. The 3 registers are used as follows:
 
+`slv_reg0` is used to monitor the AMACv2 outputs:
+
+| `slv_reg0` | bit 7    | bit 6    | bit 5     | bit 4    | bit 3    | bit 2     | bit 1    | bit 0    |
+|------------|----------|----------|-----------|----------|----------|-----------|----------|----------|
+| byte 0     | `HrstBy` | `HrstBx` | `LDy2en`  | `LDx2en` | `LDy1en` | `LDx1en`  | `LDy0en` | `LDx0en` |
+| byte 1     | -        | -        | `RO_PG_O` | `Ofout`  | `DCDCEn` | `DCDCadj` | `GPO`    | `LAM`    |
+| bytes 2-3   | -        | -        | -         | -        | -        | -         | -        | -        |
+
+`slv_reg1` is used to set the AMACv2 inputs:
+
+| `slv_reg1` | bit 7    | bit 6    | bit 5     | bit 4    | bit 3    | bit 2     | bit 1    | bit 0    |
+|------------|----------|----------|-----------|----------|----------|-----------|----------|----------|
+| byte 0     | `ID1` | `ID0` | `Ofin`  | `GPI` | `PGOOD` | `ResetB`  | `SSSHy` | `SSSHx` |
+| byte 1     | -        | -        | - | -  | - | `ID4` | `ID3`    | `ID2`    |
+| bytes 2-3   | -        | -        | -         | -        | -        | -         | -        | -        |
+
+`slv_reg2`is used to contol the testbench:
+
+| `slv_reg2` | bit 7    | bit 6    | bit 5     | bit 4    | bit 3    | bit 2     | bit 1    | bit 0    |
+|------------|----------|----------|-----------|----------|----------|-----------|----------|----------|
+| byte 0     | `ADC_CNV` | `LV_EN_AVCC` | `LV_EN_AVEE`  | `LV_EN_AVDD5` | `LV_EN_VN5` | `LV_EN_VP5`  | `LV_EN_2V5` | `LD_EN_VDDRL` |
+| byte 1     | `HVSW_MUX_EN` | `MPM_MUX_EN`  | `LVL_TRANS_EN` | `Hvret_SW`  | `LD_EN_VDCDC` | `MUX_SEL2` | `MUX_SEL1`    | `MUX_SEL0`    |
+| byte 2   | -        | -        | -         | -        | -        | -         | `HVref_HGND_SW`        | `FPGA_EFUSE_PULSE`   |
+| byte 3   | -        | -        | -         | -        | -        | -         | -        | -        |
 ## Endeavour (0x43C10000 - 0x43C1FFFF)
 
 ## Frequency Measurement (0x43C20000 - 0x43C2FFFF `/dev/uio2`)
@@ -42,7 +67,7 @@ The frequency measurement bloc is a simple synchronous (to *clk_i*) counter, whi
 
 For the AMACv2, there are 5 frequencies to be measured : *HVOSC0*->*HVOSC3* and *CLKOUT*, needing each one an instance of the frequency measurement bloc (without the AXI system) these 5 blocs are then mapped to AXI registers following this scheme:
 
-![Frequency Measurment bloc AXI mapping](https://user-images.githubusercontent.com/39920129/42113235-6c2e3f94-7b9f-11e8-91af-8232462ec0e4.png)
+![Frequency block axi mapping](https://user-images.githubusercontent.com/39920129/42184389-377b5cac-7dfa-11e8-843a-c454c8907a40.png)
 
 ## Xilinx Quad SPI (0x41E00000 - 41E0FFFF)
 The `spidev` driver should be used for SPI commands instead of direct register access. The device-tree maps the SPI devices on the active board to the following `/dev` nodes.
@@ -54,4 +79,3 @@ The `spidev` driver should be used for SPI commands instead of direct register a
 * `ADC_CS0` → `/dev/spidev1.5`
 * `ADC_CS1` → `/dev/spidev1.6`
 * `ADC_CS2` → `/dev/spidev1.7`
-
