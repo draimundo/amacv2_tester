@@ -17,7 +17,7 @@ int main(){
 	std::cout << "Power on" << std::endl;
 	
 //SETID
-	TB.END.setid(EndeavourCom::REFMODE::IDPads, 0x01);
+	TB.END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
 	usleep(1E6); // 1s wait for a clear send
 	
 //POWER OFF
