@@ -9,6 +9,9 @@ SET(SrcFiles DeviceCom.cpp
 
   ClimateSensor.cpp
   BME280.cpp
+
+  DACDevice.cpp
+  LTC2666.cpp
 )
 
 ADD_LIBRARY(devcom SHARED ${SrcFiles}) 
