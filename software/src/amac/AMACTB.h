@@ -11,6 +11,7 @@
 #include "ADCDevice.h"
 #include "AD5160.h"		//SPI potentiometer
 #include "FreqMeas.h"	//FreqMeas bloc
+#include "EndeavourCom.h"
 
 enum direction_t{IN, OUT};
 struct io_t {
@@ -52,6 +53,7 @@ enum class HVref_t{HVref, HGND};
 class AMACTB {
 public:
 	AMACTB(	std::shared_ptr<DeviceCom> dio	= std::make_shared<UIOCom>("/dev/uio0", 0x10000),
+					std::shared_ptr<DeviceCom> end	= std::make_shared<UIOCom>("/dev/uio1", 0x10000),
 					std::shared_ptr<DeviceCom> dac0	= std::make_shared<SPICom>("/dev/spidev1.3"),
 					std::shared_ptr<DeviceCom> dac1	= std::make_shared<SPICom>("/dev/spidev1.4"),
 					std::shared_ptr<DeviceCom> adc0	= std::make_shared<SPICom>("/dev/spidev1.5"),
@@ -156,6 +158,7 @@ public:
 	const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2, .adcChanSpan = p1_25div};
 	const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2, .adcChanSpan = p1_25div};
 	
+	EndeavourCom END;
 	LTC2666 DAC0;
 	LTC2666 DAC1;
 	LTC2333 ADC0;

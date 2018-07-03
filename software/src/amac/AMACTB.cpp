@@ -4,6 +4,7 @@
 #include "AMACTB.h"
 
 AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
+								std::shared_ptr<DeviceCom> end,
 								std::shared_ptr<DeviceCom> dac0,
 								std::shared_ptr<DeviceCom> dac1,
 								std::shared_ptr<DeviceCom> adc0,
@@ -14,6 +15,7 @@ AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
 								std::shared_ptr<DeviceCom> pot2,
 								std::shared_ptr<DeviceCom> frq) :
 								m_dio(dio),
+								END(0x15, end),
 								DAC0(dac0),
 								DAC1(dac1),
 								ADC0(adc0),
