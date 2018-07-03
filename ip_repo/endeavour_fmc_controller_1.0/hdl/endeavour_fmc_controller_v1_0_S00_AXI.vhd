@@ -35,7 +35,7 @@ entity endeavour_fmc_controller_v1_0_S00_AXI is
         axi_nbitsout        : in  std_logic_vector(31 downto 0);
         axi_dataout         : in  std_logic_vector(63 downto 0);
     
-        slave_data          : in  std_logic_vector(31 downto 0);
+--        slave_data          : in  std_logic_vector(31 downto 0);
 		-- User ports ends
 		-- Do not modify the ports beyond this line
 
@@ -135,7 +135,7 @@ architecture arch_imp of endeavour_fmc_controller_v1_0_S00_AXI is
     signal slv_reg4    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg5    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg6    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-    signal slv_reg7    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+--    signal slv_reg7    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
 	signal slv_reg_rden	: std_logic;
 	signal slv_reg_wren	: std_logic;
 	signal reg_data_out	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
@@ -409,7 +409,7 @@ begin
 	-- and the slave is ready to accept the read address.
 	slv_reg_rden <= axi_arready and S_AXI_ARVALID and (not axi_rvalid) ;
 
-	process (slv_reg0_read, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
+	process (slv_reg0_read, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
 	variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
 	begin
 	    -- Address decoding for reading registers
@@ -429,8 +429,8 @@ begin
 	        reg_data_out <= slv_reg5;
 	      when b"110" =>
 	        reg_data_out <= slv_reg6;
-	      when b"111" =>
-	        reg_data_out <= slv_reg7;
+--	      when b"111" =>
+--	        reg_data_out <= slv_reg7;
 	      when others =>
 	        reg_data_out  <= (others => '0');
 	    end case;
@@ -466,7 +466,7 @@ begin
     slv_reg4 <=   axi_nbitsout(31 downto  0);
     slv_reg5 <=   axi_dataout (31 downto  0);
     slv_reg6 <=   axi_dataout (63 downto 32);
-    slv_reg7 <=   slave_data;
+--    slv_reg7 <=   slave_data;
 	-- User logic ends
 
 end arch_imp;

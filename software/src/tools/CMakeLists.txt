@@ -1,4 +1,6 @@
 INCLUDE_DIRECTORIES( ../devcom )
+INCLUDE_DIRECTORIES( ../amac )
+
 LINK_DIRECTORIES( ${CMAKE_BINARY_DIR}/lib )
 
 # add executables, but exclude files ending in "~"
@@ -12,6 +14,9 @@ FOREACH(target ${tools})
   ADD_EXECUTABLE(${execname} ${srcfile})
   TARGET_LINK_LIBRARIES(${execname} -ldevcom)
   ADD_DEPENDENCIES(${execname} devcom)
+
+  TARGET_LINK_LIBRARIES(${execname} -lamac)
+  ADD_DEPENDENCIES(${execname} amac)
 
   INSTALL(TARGETS ${execname} RUNTIME DESTINATION bin)
 ENDFOREACH()

@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Fri Jun 29 17:34:02 2018
+--Date        : Tue Jul  3 13:35:25 2018
 --Host        : oceanpiglet running 64-bit CentOS Linux release 7.2.1511 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
@@ -42,6 +42,7 @@ entity TopLevel_wrapper is
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
     FIXED_IO_ps_srstb : inout STD_LOGIC;
+    FPGA_EFUSE_PULSE : out STD_LOGIC;
     GPI : out STD_LOGIC;
     GPO : in STD_LOGIC;
     HVOSC0 : in STD_LOGIC;
@@ -49,11 +50,14 @@ entity TopLevel_wrapper is
     HVOSC2 : in STD_LOGIC;
     HVOSC3 : in STD_LOGIC;
     HVSW_MUX_EN : out STD_LOGIC;
+    HVref_HGND_SW : out STD_LOGIC;
+    HVret_SW : out STD_LOGIC;
     HrstBx : in STD_LOGIC;
     HrstBy : in STD_LOGIC;
     ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
     LAM : in STD_LOGIC;
-    LD_EN_DVDD : out STD_LOGIC;
+    LD_EN_VDCDC : out STD_LOGIC;
+    LD_EN_VDDRL : out STD_LOGIC;
     LDx0en : in STD_LOGIC;
     LDx1en : in STD_LOGIC;
     LDx2en : in STD_LOGIC;
@@ -64,6 +68,7 @@ entity TopLevel_wrapper is
     LED1 : out STD_LOGIC;
     LED2 : out STD_LOGIC;
     LED3 : out STD_LOGIC;
+    LVL_TRANS_EN : out STD_LOGIC;
     LV_EN_2V5 : out STD_LOGIC;
     LV_EN_AVCC : out STD_LOGIC;
     LV_EN_AVDD5 : out STD_LOGIC;
@@ -122,51 +127,56 @@ architecture STRUCTURE of TopLevel_wrapper is
     spi_rtl_ss_i : in STD_LOGIC_VECTOR ( 7 downto 0 );
     spi_rtl_ss_o : out STD_LOGIC_VECTOR ( 7 downto 0 );
     spi_rtl_ss_t : out STD_LOGIC;
-    DCDCadj : in STD_LOGIC;
-    DCDCen : in STD_LOGIC;
-    HrstBx : in STD_LOGIC;
-    HrstBy : in STD_LOGIC;
-    ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
-    LAM : in STD_LOGIC;
-    LDx0en : in STD_LOGIC;
-    LDx1en : in STD_LOGIC;
-    LDx2en : in STD_LOGIC;
-    LDy0en : in STD_LOGIC;
-    LDy1en : in STD_LOGIC;
-    LDy2en : in STD_LOGIC;
-    OFin : out STD_LOGIC;
-    PGOOD : out STD_LOGIC;
-    SSSHx : out STD_LOGIC;
-    SSSHy : out STD_LOGIC;
-    RO_PG_O : in STD_LOGIC;
-    OFout : in STD_LOGIC;
-    GPO : in STD_LOGIC;
-    RESETB : out STD_LOGIC;
-    ADC_CNV : out STD_LOGIC;
-    MPM_MUX : out STD_LOGIC_VECTOR ( 2 downto 0 );
-    HVSW_MUX_EN : out STD_LOGIC;
-    MPM_MUX_EN : out STD_LOGIC;
-    HVOSC2 : in STD_LOGIC;
-    HVOSC1 : in STD_LOGIC;
-    HVOSC0 : in STD_LOGIC;
-    CMD_OUT_N : in STD_LOGIC;
-    CLKOUT : in STD_LOGIC;
-    HVOSC3 : in STD_LOGIC;
-    CMD_OUT_P : in STD_LOGIC;
-    LV_EN_VN5 : out STD_LOGIC;
-    LV_EN_VP5 : out STD_LOGIC;
-    LV_EN_AVDD5 : out STD_LOGIC;
-    LV_EN_AVEE : out STD_LOGIC;
-    LV_EN_2V5 : out STD_LOGIC;
-    LV_EN_AVCC : out STD_LOGIC;
-    LD_EN_DVDD : out STD_LOGIC;
-    GPI : out STD_LOGIC;
-    CMD_IN_P : out STD_LOGIC;
-    CMD_IN_N : out STD_LOGIC;
     LED2 : out STD_LOGIC;
     LED3 : out STD_LOGIC;
     LED1 : out STD_LOGIC;
-    LED0 : out STD_LOGIC
+    LED0 : out STD_LOGIC;
+    HVOSC2 : in STD_LOGIC;
+    HVOSC1 : in STD_LOGIC;
+    HVOSC0 : in STD_LOGIC;
+    CLKOUT : in STD_LOGIC;
+    HVOSC3 : in STD_LOGIC;
+    LAM : in STD_LOGIC;
+    DCDCadj : in STD_LOGIC;
+    DCDCen : in STD_LOGIC;
+    OFout : in STD_LOGIC;
+    RO_PG_O : in STD_LOGIC;
+    GPO : in STD_LOGIC;
+    HrstBy : in STD_LOGIC;
+    HrstBx : in STD_LOGIC;
+    LDy2en : in STD_LOGIC;
+    LDx2en : in STD_LOGIC;
+    LDy1en : in STD_LOGIC;
+    LDx1en : in STD_LOGIC;
+    LDy0en : in STD_LOGIC;
+    LDx0en : in STD_LOGIC;
+    PGOOD : out STD_LOGIC;
+    SSSHx : out STD_LOGIC;
+    SSSHy : out STD_LOGIC;
+    GPI : out STD_LOGIC;
+    OFin : out STD_LOGIC;
+    ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
+    LV_EN_2V5 : out STD_LOGIC;
+    LV_EN_VP5 : out STD_LOGIC;
+    LV_EN_VN5 : out STD_LOGIC;
+    LV_EN_AVDD5 : out STD_LOGIC;
+    LV_EN_AVEE : out STD_LOGIC;
+    LV_EN_AVCC : out STD_LOGIC;
+    ADC_CNV : out STD_LOGIC;
+    HVSW_MUX_EN : out STD_LOGIC;
+    MPM_MUX_EN : out STD_LOGIC;
+    MPM_MUX : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    CMD_OUT_P : in STD_LOGIC;
+    CMD_OUT_N : in STD_LOGIC;
+    CMD_IN_P : out STD_LOGIC;
+    CMD_IN_N : out STD_LOGIC;
+    RESETB : out STD_LOGIC;
+    LD_EN_VDDRL : out STD_LOGIC;
+    LD_EN_VDCDC : out STD_LOGIC;
+    LVL_TRANS_EN : out STD_LOGIC;
+    FPGA_EFUSE_PULSE : out STD_LOGIC;
+    HVref_HGND_SW : out STD_LOGIC;
+    HVret_SW : out STD_LOGIC
   );
   end component TopLevel;
   component IOBUF is
@@ -243,6 +253,7 @@ TopLevel_i: component TopLevel
       FIXED_IO_ps_clk => FIXED_IO_ps_clk,
       FIXED_IO_ps_porb => FIXED_IO_ps_porb,
       FIXED_IO_ps_srstb => FIXED_IO_ps_srstb,
+      FPGA_EFUSE_PULSE => FPGA_EFUSE_PULSE,
       GPI => GPI,
       GPO => GPO,
       HVOSC0 => HVOSC0,
@@ -250,11 +261,14 @@ TopLevel_i: component TopLevel
       HVOSC2 => HVOSC2,
       HVOSC3 => HVOSC3,
       HVSW_MUX_EN => HVSW_MUX_EN,
+      HVref_HGND_SW => HVref_HGND_SW,
+      HVret_SW => HVret_SW,
       HrstBx => HrstBx,
       HrstBy => HrstBy,
       ID(4 downto 0) => ID(4 downto 0),
       LAM => LAM,
-      LD_EN_DVDD => LD_EN_DVDD,
+      LD_EN_VDCDC => LD_EN_VDCDC,
+      LD_EN_VDDRL => LD_EN_VDDRL,
       LDx0en => LDx0en,
       LDx1en => LDx1en,
       LDx2en => LDx2en,
@@ -265,6 +279,7 @@ TopLevel_i: component TopLevel
       LED1 => LED1,
       LED2 => LED2,
       LED3 => LED3,
+      LVL_TRANS_EN => LVL_TRANS_EN,
       LV_EN_2V5 => LV_EN_2V5,
       LV_EN_AVCC => LV_EN_AVCC,
       LV_EN_AVDD5 => LV_EN_AVDD5,

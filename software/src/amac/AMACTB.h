@@ -1,7 +1,17 @@
 #ifndef AMACTB_H_
 #define AMACTB_H_
 
+#include <memory>
 #include <cstdint>
+#include "UIOCom.h"
+
+enum direction{IN, OUT};
+
+struct io_t {
+	uint8_t bit;
+	uint8_t reg;
+	direction dir; 
+};
 
 class AMACTB 
 {
@@ -62,14 +72,7 @@ public:
 	const io_t HVref_HGND_SW	 = {17, 0x2, 	OUT};
 	
 private:
-	enum direction{IN, OUT};
-	
-	struct io_t {
-		uint8_t bit;
-		uint8_t reg;
-		direction dir; 
-	};
-	
+
 	std::shared_ptr<DeviceCom> m_uio;
 };
 

@@ -42,7 +42,7 @@ entity amacv2_digital_io_v1_0 is
         ID      : out std_logic_vector(4 downto 0);
 
 -- TB inputs - slv_reg2
-        LV_EN_VDDRL     : out std_logic;
+        LD_EN_VDDRL     : out std_logic;
         LV_EN_2V5       : out std_logic;
         LV_EN_VP5       : out std_logic;
         LV_EN_VN5       : out std_logic;
@@ -52,7 +52,7 @@ entity amacv2_digital_io_v1_0 is
         ADC_CNV         : out std_logic;
         MUX_SEL         : out std_logic_vector(2 downto 0);
         LD_EN_VDCDC     : out std_logic;
-        Hvret_SW        : out std_logic;
+        HVret_SW        : out std_logic;
         LVL_TRANS_EN    : out std_logic;
         MPM_MUX_EN      : out std_logic;
         HVSW_MUX_EN     : out std_logic;
@@ -122,7 +122,7 @@ architecture arch_imp of amacv2_digital_io_v1_0 is
         ID      : out std_logic_vector(4 downto 0);
         
 -- TB inputs - slv_reg2
-        LV_EN_VDDRL     : out std_logic;
+        LD_EN_VDDRL     : out std_logic;
         LV_EN_2V5       : out std_logic;
         LV_EN_VP5       : out std_logic;
         LV_EN_VN5       : out std_logic;
@@ -132,7 +132,7 @@ architecture arch_imp of amacv2_digital_io_v1_0 is
         ADC_CNV         : out std_logic;
         MUX_SEL         : out std_logic_vector(2 downto 0);
         LD_EN_VDCDC     : out std_logic;
-        Hvret_SW        : out std_logic;
+        HVret_SW        : out std_logic;
         LVL_TRANS_EN    : out std_logic;
         MPM_MUX_EN      : out std_logic;
         HVSW_MUX_EN     : out std_logic;
@@ -193,7 +193,7 @@ amacv2_digital_io_v1_0_S00_AXI_inst : amacv2_digital_io_v1_0_S00_AXI
         GPI                    => GPI,
         Ofin                => Ofin,
         ID                    => ID,
-        LV_EN_VDDRL            => LV_EN_VDDRL,
+        LD_EN_VDDRL            => LD_EN_VDDRL,
         LV_EN_2V5            => LV_EN_2V5,
         LV_EN_VP5            => LV_EN_VP5,
         LV_EN_VN5            => LV_EN_VN5,
@@ -203,7 +203,7 @@ amacv2_digital_io_v1_0_S00_AXI_inst : amacv2_digital_io_v1_0_S00_AXI
         ADC_CNV                => ADC_CNV,
         MUX_SEL                => MUX_SEL,
         LD_EN_VDCDC            => LD_EN_VDCDC,
-        Hvret_SW            => Hvret_SW,
+        HVret_SW            => HVret_SW,
         LVL_TRANS_EN        => LVL_TRANS_EN,
         MPM_MUX_EN            => MPM_MUX_EN,
         HVSW_MUX_EN            => HVSW_MUX_EN,
