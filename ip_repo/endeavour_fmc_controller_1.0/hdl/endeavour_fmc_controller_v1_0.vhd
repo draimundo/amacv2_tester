@@ -69,7 +69,7 @@ architecture arch_imp of endeavour_fmc_controller_v1_0 is
         axi_datain        : out std_logic_vector(63 downto 0);
         axi_nbitsout      : in  std_logic_vector(31 downto 0);
         axi_dataout       : in  std_logic_vector(63 downto 0);
-        slave_data        : in  std_logic_vector(31 downto 0);
+--        slave_data        : in  std_logic_vector(31 downto 0);
 		S_AXI_ACLK	: in std_logic;
 		S_AXI_ARESETN	: in std_logic;
 		S_AXI_AWADDR	: in std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
@@ -126,7 +126,7 @@ architecture arch_imp of endeavour_fmc_controller_v1_0 is
   
     signal axi_nbitsout_integer : integer range 0 to 63;
 
-    signal slave_data     : std_logic_vector( 31 downto 0);
+--    signal slave_data     : std_logic_vector( 31 downto 0);
 	
 begin
 
@@ -143,7 +143,7 @@ endeavour_fmc_controller_v1_0_S00_AXI_inst : endeavour_fmc_controller_v1_0_S00_A
         axi_datain        => axi_datain,
         axi_nbitsout      => axi_nbitsout,
         axi_dataout       => axi_dataout,
-        slave_data        => slave_data,
+--        slave_data        => slave_data,
 		S_AXI_ACLK	=> s00_axi_aclk,
 		S_AXI_ARESETN	=> s00_axi_aresetn,
 		S_AXI_AWADDR	=> s00_axi_awaddr,

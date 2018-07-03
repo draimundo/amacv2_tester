@@ -42,7 +42,7 @@ entity amacv2_digital_io_v1_0_S00_AXI is
         ID      : out std_logic_vector(4 downto 0);
         
 -- TB inputs - slv_reg2
-        LV_EN_VDDRL     : out std_logic;
+        LD_EN_VDDRL     : out std_logic;
         LV_EN_2V5       : out std_logic;
         LV_EN_VP5       : out std_logic;
         LV_EN_VN5       : out std_logic;
@@ -52,7 +52,7 @@ entity amacv2_digital_io_v1_0_S00_AXI is
         ADC_CNV         : out std_logic;
         MUX_SEL         : out std_logic_vector(2 downto 0);
         LD_EN_VDCDC     : out std_logic;
-        Hvret_SW        : out std_logic;
+        HVret_SW        : out std_logic;
         LVL_TRANS_EN    : out std_logic;
         MPM_MUX_EN      : out std_logic;
         HVSW_MUX_EN     : out std_logic;
@@ -452,7 +452,7 @@ begin
     ID(4 downto 0)	<= slv_reg1(10 downto 6);
 
 -- TB inputs - slv_reg2
-    LV_EN_VDDRL			<= slv_reg2(0);
+    LD_EN_VDDRL			<= slv_reg2(0);
     LV_EN_2V5			<= slv_reg2(1);
     LV_EN_VP5			<= slv_reg2(2);
     LV_EN_VN5			<= slv_reg2(3);
@@ -462,7 +462,7 @@ begin
     ADC_CNV				<= slv_reg2(7);
     MUX_SEL(2 downto 0)	<= slv_reg2(10 downto 8);
     LD_EN_VDCDC			<= slv_reg2(11);
-    Hvret_SW			<= slv_reg2(12);
+    HVret_SW			<= slv_reg2(12);
     LVL_TRANS_EN		<= slv_reg2(13);
     MPM_MUX_EN			<= slv_reg2(14);
     HVSW_MUX_EN			<= slv_reg2(15);

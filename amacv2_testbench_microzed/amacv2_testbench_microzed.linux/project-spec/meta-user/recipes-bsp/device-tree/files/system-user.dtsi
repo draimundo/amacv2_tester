@@ -2,15 +2,11 @@
 / {
 };
 
-&microzed_fmc_led_controller_0 {
+&amacv2_digital_io_0 {
         compatible = "generic-uio";
 };
 
-&amacv2_dummy_testbench_0 {
-        compatible = "generic-uio";
-};
-
-&endeavour_fmc_led_controller_0 {
+&endeavour_fmc_contro_0 {
         compatible = "generic-uio";
 };
 
