@@ -131,3 +131,40 @@ bool AMACTB::readIO(uint8_t reg, uint32_t regOffset){
 	uint32_t data = m_dio->read_reg(regOffset);
 	return (bool)(data & regOffset);
 }
+
+void AMACTB::setDAC(dac_t pin, float voltage){
+	if(voltage > pin.chanMax){
+		std::cout << "Overvoltage, channel max is " << pin.chanMax << "V, while set voltage is " << voltage << "V."  << std::endl;
+		return;
+	} else if(voltage > pin.chanMax){
+		std::cout << "Undervoltage, channel min is " << pin.chanMin << "V, while set voltage is " << voltage << "V."  << std::endl;
+		return;
+	}
+	float adj_voltage = voltage * pin.mult_fac; //adjust to voltage divider
+	uint16_t counts;
+	switch(pin.dacChanSpan){
+		case p5V :
+			counts = (adj_voltage/5) * DAC_FSR;
+			break;
+		case p10V :
+			counts = (adj_voltage/10) * DAC_FSR;
+			std::cout << "+10V Range not supported yet"  << std::endl;
+			return;
+		case pm5V :
+			counts = (adj_voltage + 5)/10 * DAC_FSR;
+			std::cout << "+-5V Range not supported yet"  << std::endl;
+			return;
+		case pm10V :
+			counts = (adj_voltage + 10)/20 * DAC_FSR;
+			std::cout << "+-10V Range not supported yet"  << std::endl;
+			return;
+		case pm2_5V :
+			counts = (adj_voltage + 2.5)/5 * DAC_FSR;
+			std::cout << "+-2.5V Range not supported yet"  << std::endl;
+			return;
+		default:
+			break;
+	}
+	pin.DAC->writeUpdateChan(pin.chanNbr, counts);	
+	return;
+}

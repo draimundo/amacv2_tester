@@ -16,6 +16,8 @@ int main(){
 	std::cout << "Power off" << std::endl;
 	usleep(1E6); // 1s wait for a clear power up
 	TB.powerOn();
+	TB.setDAC(TB.VDDHI_ADJ, 1.2);
+	TB.setDAC(TB.VDD1V2_ADJ, 1.2);
 	std::cout << "Power on" << std::endl;
 	
 	TB.FRQ.reset("CLKOUT");
@@ -53,13 +55,13 @@ int main(){
 		M7 = ((float)ret.front()/res)*5; //scale to full range
 		
 		
-		std::cout << "AM_VDDLR voltage: " << (M3) << "A" << std::endl;
+		std::cout << "AM_VDDLR voltage: " << (M3) << "V" << std::endl;
 		std::cout << "AM_VDDLR current: " << (M2-M3) << "A" << std::endl;
 		
-		std::cout << "AM_VDCDC voltage: " << (M5) << "A" << std::endl;
+		std::cout << "AM_VDCDC voltage: " << (M5) << "V" << std::endl;
 		std::cout << "AM_VDCDC current: " << (M4-M5) << "A" << std::endl;
 		
-		std::cout << "AM_VDD_HI voltage: " << (M7) << "A" << std::endl;
+		std::cout << "AM_VDD_HI voltage: " << (M7) << "V" << std::endl;
 		std::cout << "AM_VDD_HI current: " << (M6-M7) << "A" << std::endl;
 		
 		std::cout << "Measured CLKOUT frequency: " << TB.FRQ.get_frq("CLKOUT") << "Hz" << std::endl;

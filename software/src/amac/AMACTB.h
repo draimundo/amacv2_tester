@@ -22,11 +22,12 @@ struct io_t {
 
 enum dacChanSpan_t{p5V, p10V, pm5V, pm10V, pm2_5V};
 struct dac_t{
+	float mult_fac;
 	float chanMin;
 	float chanMax;
 	dacChanSpan_t dacChanSpan;
 	uint8_t	chanNbr;
-	uint8_t DACNbr;
+	LTC2666* DAC;
 };
 
 // adc input channel span
@@ -65,6 +66,24 @@ public:
 					std::shared_ptr<DeviceCom> frq	= std::make_shared<UIOCom>("/dev/uio2", 0x10000));
 	~AMACTB();
 
+	/* ======================================
+		DEVICES
+	====================================== */
+	
+	EndeavourCom END;
+	LTC2666 DAC0;
+	LTC2666 DAC1;
+	LTC2333 ADC0;
+	LTC2333 ADC1;
+	LTC2333 ADC2;
+	AD5160	POT0;
+	AD5160	POT1;
+	AD5160	POT2;
+	FreqMeas FRQ;
+	
+	/* ======================================
+		IO CONTROL
+	====================================== */
 	void powerOn();
 	void powerOff();
 	
@@ -124,18 +143,37 @@ public:
 	const io_t FPGA_EFUSE_PULSE	 = {16, 0x2, 	OUT};
 	const io_t HVref_HGND_SW	 = {17, 0x2, 	OUT};
 	
-	//DAC outputs
-	const dac_t CAL = {.chanMin = 0, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 0, .DACNbr = 0};
-	const dac_t Cur1Vp = {.chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 1, .DACNbr = 0};
-	const dac_t Cur10Vp = {.chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 2, .DACNbr = 0};
-	const dac_t PTAT = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DACNbr = 0};
-	const dac_t VCC1 = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DACNbr = 0};
-	const dac_t HVref = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DACNbr = 0};
-	const dac_t Cur10Vp_offset = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DACNbr = 0}; //To be adapted
-	const dac_t Cur1Vp_offset = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DACNbr = 0}; //To be adapted
-	const dac_t RgOsc_Vref = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 2, .DACNbr = 1}; //To be adapted
-	const dac_t HVOsc_Vref = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DACNbr = 1}; //To be adapted
 	
+	/* ======================================
+		DAC CONTROL
+	====================================== */
+	
+	const uint16_t DAC_FSR = 0xFFFF; //=2^16
+	void setDAC(dac_t pin, float voltage);
+	
+	//DAC outputs
+	const dac_t CAL = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 0, .DAC = &DAC0};
+	const dac_t Cur1Vp = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 1, .DAC = &DAC0};
+	const dac_t Cur10Vp = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC0};
+	const dac_t PTAT = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC0};
+	const dac_t VCC1 = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC0};
+	const dac_t HVref = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC0};
+	const dac_t Cur10Vp_offset = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC0}; //To be adapted
+	const dac_t Cur1Vp_offset = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC0}; //To be adapted
+	const dac_t HVret_DAC = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 0, .DAC = &DAC1}; //To be adapted
+	const dac_t HVret_OffSetDAC = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 1, .DAC = &DAC1}; //To be adapted
+	const dac_t RgOsc_Vref = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC1}; //To be adapted
+	const dac_t HVOsc_Vref = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC1}; //To be adapted
+	const dac_t VDCDC_ADJ = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC1}; //To be adapted
+	const dac_t VDDHI_ADJ = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC1}; //To be adapted
+	const dac_t VDDRL_ADJ = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC1}; //To be adapted
+	const dac_t VDD1V2_ADJ = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC1}; //To be adapted
+	
+	/* ======================================
+		ADC CONTROL
+	====================================== */
+	
+		
 	//ADC inputs
 	const adc_t M1 = {.chanNbr = 7, .ADCNbr = 0, .adcChanSpan = p1_25div};
 	const adc_t M2 = {.chanNbr = 6, .ADCNbr = 0, .adcChanSpan = p1_25div};
@@ -158,16 +196,7 @@ public:
 	const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2, .adcChanSpan = p1_25div};
 	const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2, .adcChanSpan = p1_25div};
 	
-	EndeavourCom END;
-	LTC2666 DAC0;
-	LTC2666 DAC1;
-	LTC2333 ADC0;
-	LTC2333 ADC1;
-	LTC2333 ADC2;
-	AD5160	POT0;
-	AD5160	POT1;
-	AD5160	POT2;
-	FreqMeas FRQ;
+
 	
 private:
 	std::shared_ptr<DeviceCom> m_dio;
