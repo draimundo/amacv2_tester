@@ -22,9 +22,9 @@ void AMACTB::setIO(io_t pin, bool value){
 		std::cout << "Pin direction error, not OUT" << std::endl;
 		return;
 	}
-	uint32_t data = m_uio->read_reg(pin.reg);
+	uint32_t data = m_uio->read_reg(pin.reg); 
 	uint32_t mask = (uint32_t)(1 << pin.bit);
-	data = (data & ~mask) | (data << pin.bit);
+	data = (data & ~mask) | (value << pin.bit);
 	m_uio->write_reg(pin.reg, data);
 }
 
