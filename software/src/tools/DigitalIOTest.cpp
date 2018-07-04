@@ -7,7 +7,7 @@
 
 int main(){
 	std::cout << "Hello world!" << std::endl;
-	std::shared_ptr<DeviceCom> uio = std::make_shared<UIOCom>("/dev/uio2", 0x10000);
+	std::shared_ptr<DeviceCom> uio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
 	AMACTB a (uio);
 	
 	while(true){
@@ -74,7 +74,7 @@ int main(){
 		a.setIO(a.FPGA_EFUSE_PULSE,false);
 		a.setIO(a.HVref_HGND_SW,false);
 		
-		std::cout << "LDx0en " << a.readIO(a.LDx0en  ) << std::endl;
+		std::cout << "\nLDx0en " << a.readIO(a.LDx0en  ) << std::endl;
 		std::cout << "LDy0en " << a.readIO(a.LDy0en  ) << std::endl;
 		std::cout << "LDx1en " << a.readIO(a.LDx1en  ) << std::endl;
 		std::cout << "LDy1en " << a.readIO(a.LDy1en  ) << std::endl;
@@ -87,7 +87,7 @@ int main(){
 		std::cout << "DCDCadj" << a.readIO(a.DCDCadj ) << std::endl;
 		std::cout << "DCDCEn " << a.readIO(a.DCDCEn  ) << std::endl;
 		std::cout << "Ofout	 " << a.readIO(a.Ofout	 ) << std::endl;
-		std::cout << "RO_PG_O" << a.readIO(a.RO_PG_O ) << std::endl;
+		std::cout << "RO_PG_O " << a.readIO(a.RO_PG_O ) << std::endl;
 	}
 	return 0;
 }
