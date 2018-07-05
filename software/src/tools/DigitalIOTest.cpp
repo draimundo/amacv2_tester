@@ -42,7 +42,7 @@ int main(){
 		a.setIO(a.FPGA_EFUSE_PULSE,true);
 		a.setIO(a.HVref_HGND_SW,true);
 		
-		usleep(500E3);
+		usleep(1E6);
 		
 		a.setIO(a.SSSHx,false);
 		a.setIO(a.SSSHy,false);
@@ -88,6 +88,8 @@ int main(){
 		std::cout << "DCDCEn " << a.readIO(a.DCDCEn  ) << std::endl;
 		std::cout << "Ofout	 " << a.readIO(a.Ofout	 ) << std::endl;
 		std::cout << "RO_PG_O " << a.readIO(a.RO_PG_O ) << std::endl;
+
+		usleep(1E6);
 	}
 	return 0;
 }
