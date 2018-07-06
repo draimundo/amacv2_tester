@@ -90,7 +90,7 @@ void SPICom::write_reg(std::vector<unsigned int> data_vec)
   uint8_t tx[data_vec.size()] = {0, };
   
   for(int vec_index = 0; vec_index < data_vec.size(); ++vec_index){
-  unsigned int data = data_vec.at(vec_index);
+    unsigned int data = data_vec.at(vec_index);
     tx[vec_index] = (uint8_t)(data&0xFF);
   }
   
