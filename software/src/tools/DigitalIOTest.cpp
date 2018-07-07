@@ -35,7 +35,7 @@ int main(){
 		a.setIO(a.MUX_SEL1,true);
 		a.setIO(a.MUX_SEL2,true);
 		a.setIO(a.LD_EN_VDCDC,true);
-		a.setIO(a.Hvret_SW,true);
+		a.setIO(a.HVret_SW,true);
 		a.setIO(a.LVL_TRANS_EN,true);
 		a.setIO(a.MPM_MUX_EN,true);		
 		a.setIO(a.HVSW_MUX_EN,true);
@@ -67,7 +67,7 @@ int main(){
 		a.setIO(a.MUX_SEL1,false);
 		a.setIO(a.MUX_SEL2,false);
 		a.setIO(a.LD_EN_VDCDC,false);
-		a.setIO(a.Hvret_SW,false);
+		a.setIO(a.HVret_SW,false);
 		a.setIO(a.LVL_TRANS_EN,false);
 		a.setIO(a.MPM_MUX_EN,false);		
 		a.setIO(a.HVSW_MUX_EN,false);

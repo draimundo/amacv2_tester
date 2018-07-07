@@ -5,16 +5,22 @@
 #include <cstdint>
 #include "UIOCom.h"
 
-enum direction{IN, OUT};
-
+enum direction_t{IN, OUT};
 struct io_t {
 	uint8_t bit;
 	uint8_t reg;
-	direction dir; 
+	direction_t dir;
 };
 
-class AMACTB 
-{
+enum mux_t{
+	HVCtrl0, HVCtrl1, HVCtrl2, HVCtrl3,
+	AVCC, AVDD5, VCC5, VDD2V5, AVEE, VEE5, VDD1V2};
+
+enum HVref_t{HVret1, HVret2};
+
+enum HVret_t{HVref, HGND};
+
+class AMACTB {
 public:
 	AMACTB(std::shared_ptr<DeviceCom> uio);
 	~AMACTB();
@@ -22,8 +28,14 @@ public:
 	void powerOn();
 	void powerOff();
 	
+	void selHVrefChannel(HVref_t sel);
+	void selHVretChannel(HVret_t sel);
+	void selMUXChannel(mux_t mux_sel);
+	
 	void setIO(io_t pin, bool value);
+	void setIO(uint8_t reg, uint32_t regOffset, bool value);
 	bool readIO(io_t pin);
+	bool readIO(uint8_t reg, uint32_t regOffset);
 	
 	const io_t LDx0en			 = {0, 0x0, IN};
 	const io_t LDy0en			 = {1, 0x0, IN};
@@ -64,7 +76,7 @@ public:
 	const io_t MUX_SEL1			 = {9, 0x2, 	OUT};
 	const io_t MUX_SEL2			 = {10, 0x2, 	OUT};
 	const io_t LD_EN_VDCDC		 = {11, 0x2, 	OUT};
-	const io_t Hvret_SW			 = {12, 0x2, 	OUT};
+	const io_t HVret_SW			 = {12, 0x2, 	OUT};
 	const io_t LVL_TRANS_EN		 = {13, 0x2, 	OUT};
 	const io_t MPM_MUX_EN		 = {14, 0x2, 	OUT};
 	const io_t HVSW_MUX_EN		 = {15, 0x2, 	OUT};
