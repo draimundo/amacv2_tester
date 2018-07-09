@@ -2,6 +2,7 @@
 #define SPICOM_H
 
 #include <string>
+#include <vector>
 
 #include <linux/spi/spidev.h>
 
@@ -18,6 +19,8 @@ public:
   void setMaxSpeed(uint32_t speed);
   
   virtual void write_reg(unsigned int address, unsigned int data);
+  virtual void write_reg(std::vector<unsigned int> data_vec);
+
   virtual unsigned int read_reg(unsigned int address);
   virtual void read_reg(unsigned int address, uint8_t* data, unsigned int len);
 

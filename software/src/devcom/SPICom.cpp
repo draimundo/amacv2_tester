@@ -83,6 +83,29 @@ void SPICom::write_reg(unsigned int address, unsigned int data)
     throw ComIOException("SPICom transfer error");
 }
 
+void SPICom::write_reg(std::vector<unsigned int> data_vec)
+{
+  int ret;
+
+  uint8_t tx[data_vec.size()] = {0, };
+  
+  for(int vec_index = 0; vec_index < data_vec.size(); ++vec_index){
+    unsigned int data = data_vec.at(vec_index);
+    tx[vec_index] = (uint8_t)(data&0xFF);
+  }
+  
+  uint8_t rx[ARRAY_SIZE(tx)] = {0, };
+  struct spi_ioc_transfer tr = {
+    .tx_buf = (unsigned long)tx,
+    .rx_buf = (unsigned long)rx,
+    .len = ARRAY_SIZE(tx),
+  };
+
+  ret = ioctl(m_fd, SPI_IOC_MESSAGE(1), &tr);
+  if (ret < 1)
+    throw ComIOException("SPICom transfer error");
+}
+
 unsigned int SPICom::read_reg(unsigned int address)
 {
   int ret;
