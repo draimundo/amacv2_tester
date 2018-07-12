@@ -57,11 +57,11 @@ architecture Behavioral of freq_meas_comp_v1_0 is
     signal ts_cnt : unsigned(ts_cnt_i'high downto ts_cnt_i'low); --clock counter
 --	signal ts_cnt_b : unsigned(ts_cnt_i'high downto ts_cnt_i'low); -- input buffer - can't change value during measurement
 
-    signal hi_n : unsigned(hi_n_o'high to hi_n_o'low);
+    signal hi_n : unsigned(hi_n_o'high downto hi_n_o'low);
     signal hi_flg : std_logic;
-    signal lo_n : unsigned(lo_n_o'high to lo_n_o'low);
+    signal lo_n : unsigned(lo_n_o'high downto lo_n_o'low);
     signal lo_flg : std_logic;
-    signal hi_t  : unsigned(hi_t_o'high to hi_t_o'low);
+    signal hi_t  : unsigned(hi_t_o'high downto hi_t_o'low);
     signal t_flg  : std_logic;
     
     signal frq_b   : std_logic;
