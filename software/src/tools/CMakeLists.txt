@@ -1,8 +1,9 @@
 INCLUDE_DIRECTORIES( ../devcom )
 LINK_DIRECTORIES( ${CMAKE_BINARY_DIR}/lib )
 
-# add executables
+# add executables, but exclude files ending in "~"
 FILE(GLOB tools [a-zA-Z]*.c[a-zA-Z]*)
+LIST(FILTER tools EXCLUDE REGEX ".*~$")
 
 FOREACH(target ${tools})
   GET_FILENAME_COMPONENT(execname ${target} NAME_WE)
