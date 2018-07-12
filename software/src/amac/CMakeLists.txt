@@ -1,6 +1,7 @@
 INCLUDE_DIRECTORIES( ../devcom )
 SET(SrcFiles AMACTB.cpp
   AMAC.cpp
+	AMACreg.cpp
   AMACTest.cpp
 )
 

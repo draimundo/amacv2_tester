@@ -3,9 +3,11 @@
 
 class AMAC 
 {
+	
 public:
   AMAC();
   ~AMAC();
+	
 };
 
 #endif // AMAC_H_

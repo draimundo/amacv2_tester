@@ -17,6 +17,8 @@ SET(SrcFiles DeviceCom.cpp
 
   ADCDevice.cpp
   LTC2333.cpp
+
+  AD5160.cpp
 )
 
 ADD_LIBRARY(devcom SHARED ${SrcFiles}) 
