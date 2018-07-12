@@ -26,15 +26,26 @@ void AMACTB::powerOn(){ //active = working (NOT off/low power)
 
 }
 
-void AMACTB::powerOff()
-{ }
+void AMACTB::powerOff(){
+	this->setIO(this->LD_EN_VDDRL,~true);		//LT3022, active high
+	this->setIO(this->LV_EN_2V5,~true);			//LT3092, active high
+	this->setIO(this->LV_EN_VP5,~true);			//LT3092, active high
+	this->setIO(this->LV_EN_VN5,~true); 			//LT3015 for VEE5, active high
+	this->setIO(this->LV_EN_AVDD5,~true);		//LT3092, active high
+	this->setIO(this->LV_EN_AVEE,~true); 		//LT3015, active high
+	this->setIO(this->LV_EN_AVCC,~true);			//LT3092, active high
+	this->setIO(this->LD_EN_VDCDC,~true);		//LT3022, active high
+	this->setIO(this->LVL_TRANS_EN,~false); 		//sn74avc8t245, active low
+	this->setIO(this->MPM_MUX_EN,~true);			//ADG1608, active high
+	this->setIO(this->HVSW_MUX_EN,~true);		//ADG1609, active high
+}
 
 void AMACTB::selHVrefChannel(HVref_t sel){
-	this->setIO(this->HVref_HGND_SW,(sel == HVref)?false:true); //could have directly used the enum
+	this->setIO(this->HVref_HGND_SW,(sel == HVref_t::HVref)?false:true); //could have directly used the enum
 }
 
 void AMACTB::selHVretChannel(HVret_t sel){
-	this->setIO(this->HVret_SW,(sel == HVret1)?false:true);	
+	this->setIO(this->HVret_SW,(sel == HVret_t::HVret1)?false:true);	
 }
 
 void AMACTB::selMUXChannel(mux_t mux_sel){
