@@ -60,9 +60,9 @@ public:
 private:
   SPICom* m_spi;
 
-  const unsigned int chanMax = 0x7;
-  const unsigned int muxChanMax = 0xC;
-  const unsigned int spanMax = 0x4;
+  const unsigned int m_chanMax = 0x7;
+  const unsigned int m_muxChanMax = 0xC;
+  const unsigned int m_spanMax = 0x4;
 };
 
 #endif // LTC2666_H

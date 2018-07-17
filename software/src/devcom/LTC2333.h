@@ -35,7 +35,20 @@ public:
   // 5: 0V to 2.5*V_refbuf
   // 6: +/-2.5*V_refbuf/1.024
   // 7: +/-2.5*V_refbuf
+  //
+  // FIXME: one drawback here right now is that the command sent is followed
+  // by 24-bits worth of 0's, which means (a) this might be slower than
+  // intended and (b) I'm not sure if this already initiates the read of 
+  // *this* conversion. We'll have to play with this on the bench once the
+  // board is built
   std::vector<unsigned int> setNextConversion(unsigned int chan, unsigned int span);
+
+  // We can specify up to three conversions for each read. This only
+  // returns the previous conversion result, and three subsequent reads are needed
+  // to extract the results
+  //
+  // Input is a vector of size up to three containing (chan, span) pairs
+  std::vector<unsigned int> setUpToThreeConversions(std::vector<std::pair<unsigned int, unsigned int>> vec);
 
   // Sends dummy signal and reads out previous conversion result
   std::vector<unsigned int> readPreviousConversion();
@@ -43,12 +56,14 @@ public:
 private:
   SPICom* m_spi;
 
-  const unsigned int chanMax = 0x7;
-  const unsigned int spanMax = 0x7;
+  const unsigned int m_chanMax = 0x7;
+  const unsigned int m_spanMax = 0x7;
 
   // 3 bytes = 24 bits, which is enough for our ADC reads
-  const unsigned int nBytesData = 3;
+  const unsigned int m_nBytesData = 3;
 
+  bool checkValidInput(unsigned int chan, unsigned int span);
+  unsigned int formatCommand(unsigned int chan, unsigned int span);
   std::vector<unsigned int> formatConversionResult(uint8_t* data);
 
 };

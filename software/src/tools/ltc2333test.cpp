@@ -21,13 +21,17 @@ int main(int argc, char* argv[])
       std::cout << "about to create LTC2333" << std::endl;
       std::shared_ptr<LTC2333> ltc = std::make_shared<LTC2333>(dev.get());
 
-      sleep(5);
       std::cout << "about to setNextConversion(4, 3)" << std::endl;
       ltc->setNextConversion(0x4,0x3);
 
-      /*sleep(5);
-      std::cout << "about to turn off chan 3" << std::endl;
-      ltc->powerDownChan(0x3);*/
+      sleep(5);
+      std::cout << "about to setUpToThreeConversions" << std::endl;
+
+      std::vector<std::pair<unsigned int, unsigned int>> vec;
+      vec.push_back(std::make_pair(1,2));
+      vec.push_back(std::make_pair(3,5));
+      vec.push_back(std::make_pair(6,6));
+      ltc->setUpToThreeConversions(vec);
 
     }
   catch(ComIOException e)

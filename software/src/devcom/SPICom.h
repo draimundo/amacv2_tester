@@ -24,6 +24,7 @@ public:
 
 	virtual unsigned int read_reg(unsigned int address);
 	virtual void read_reg(unsigned int address, uint8_t* data, unsigned int len);
+	virtual void read_reg(std::vector<unsigned int> addresses, uint8_t* data, unsigned int len);
 
 private:
 	int m_fd;

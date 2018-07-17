@@ -37,8 +37,8 @@ void LTC2666::writeUpdateAll(unsigned int counts){
 }
 void LTC2666::writeUpdateChan(unsigned int chan, unsigned int counts){
 
-  if(chan > chanMax){
-    std::cout << "LTC2666::writeUpdateChan ERROR chan is" << std::hex << chan << ", but chanMax is" << std::hex << chanMax << std::endl;
+  if(chan > m_chanMax){
+    std::cout << "LTC2666::writeUpdateChan ERROR chan is" << std::hex << chan << ", but chanMax is" << std::hex << m_chanMax << std::endl;
     std::cout << "Exiting writeUpdateChan" << std::endl;
     return;
   }
@@ -66,8 +66,8 @@ void LTC2666::powerDownAll(){
 }
 void LTC2666::powerDownChan(unsigned int chan){
 
-  if(chan > chanMax){
-    std::cout << "LTC2666::powerDownChan ERROR chan is" << std::hex << chan << ", but chanMax is" << std::hex << chanMax << std::endl;
+  if(chan > m_chanMax){
+    std::cout << "LTC2666::powerDownChan ERROR chan is" << std::hex << chan << ", but chanMax is" << std::hex << m_chanMax << std::endl;
     std::cout << "Exiting powerDownChan" << std::endl;
     return;
   }
@@ -84,8 +84,8 @@ void LTC2666::powerDownChan(unsigned int chan){
 }
 void LTC2666::changeSpanAll(unsigned int span){
 
-  if(span > spanMax){
-    std::cout << "LTC2666::changeSpanAll ERROR span is" << std::hex << span << ", but spanMax is" << std::hex << spanMax << std::endl;
+  if(span > m_spanMax){
+    std::cout << "LTC2666::changeSpanAll ERROR span is" << std::hex << span << ", but spanMax is" << std::hex << m_spanMax << std::endl;
     std::cout << "Exiting changeSpanAll" << std::endl;
     return;
   }
@@ -99,14 +99,14 @@ void LTC2666::changeSpanAll(unsigned int span){
 }
 void LTC2666::changeSpanChan(unsigned int chan, unsigned int span){
 
-  if(chan > chanMax){
-    std::cout << "LTC2666::changeSpanChan ERROR chan is" << std::hex << chan << ", but chanMax is" << std::hex << chanMax << std::endl;
+  if(chan > m_chanMax){
+    std::cout << "LTC2666::changeSpanChan ERROR chan is" << std::hex << chan << ", but chanMax is" << std::hex << m_chanMax << std::endl;
     std::cout << "Exiting changeSpanChan" << std::endl;
     return;
   }
 
-  if(span > spanMax){
-    std::cout << "LTC2666::changeSpanChan ERROR span is" << std::hex << span << ", but spanMax is" << std::hex << spanMax << std::endl;
+  if(span > m_spanMax){
+    std::cout << "LTC2666::changeSpanChan ERROR span is" << std::hex << span << ", but spanMax is" << std::hex << m_spanMax << std::endl;
     std::cout << "Exiting changeSpanChan" << std::endl;
     return;
   }
@@ -123,8 +123,8 @@ void LTC2666::changeSpanChan(unsigned int chan, unsigned int span){
 }
 void LTC2666::pointMuxAtChan(unsigned int muxChan){
 
-  if(muxChan > muxChanMax){
-    std::cout << "LTC2666::pointMuxAtChan ERROR muxChan is" << std::hex << muxChan << ", but muxChanMax is" << std::hex << muxChanMax << std::endl;
+  if(muxChan > m_muxChanMax){
+    std::cout << "LTC2666::pointMuxAtChan ERROR muxChan is" << std::hex << muxChan << ", but muxChanMax is" << std::hex << m_muxChanMax << std::endl;
     std::cout << "Exiting pointMuxAtChan" << std::endl;
     return;
   }
