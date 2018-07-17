@@ -3,8 +3,26 @@
 
 #include "AMACTB.h"
 
-AMACTB::AMACTB(std::shared_ptr<DeviceCom> uio) : m_uio(uio){
+AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
+								SPICom* dac0,
+								SPICom* dac1,
+								SPICom* adc0,
+								SPICom* adc1,
+								SPICom* adc2,
+								std::shared_ptr<DeviceCom> frq) : 
+								m_dio(dio),
+								m_dac0(dac0),
+								m_dac1(dac1),
+								m_adc0(adc0),
+								m_adc1(adc1),
+								m_adc2(adc2),
+								m_frq(frq),
+								DAC0(m_dac0),
+								DAC1(m_dac1),
+								FRQ(m_frq){
+	
 	this->powerOn();
+
 }
 
 AMACTB::~AMACTB()
@@ -49,7 +67,7 @@ void AMACTB::selHVretChannel(HVret_t sel){
 }
 
 void AMACTB::selMUXChannel(mux_t mux_sel){
-	uint32_t mux_data = m_uio->read_reg(0x2);
+	uint32_t mux_data = m_dio->read_reg(0x2);
 	uint32_t mask = MUX_SEL2.bit | MUX_SEL1.bit | MUX_SEL0.bit;
 	uint8_t val = 0;
 	switch(mux_sel){
@@ -74,7 +92,7 @@ void AMACTB::selMUXChannel(mux_t mux_sel){
 		default: val = 0;
 	}
 	mux_data = (mux_data & ~mask) | (val << MUX_SEL0.bit); // supposing the 3 stay grouped
-	m_uio->write_reg(MUX_SEL0.reg, mux_data);	
+	m_dio->write_reg(MUX_SEL0.reg, mux_data);	
 }
 
 void AMACTB::setIO(io_t pin, bool value){
@@ -82,16 +100,16 @@ void AMACTB::setIO(io_t pin, bool value){
 		std::cout << "Pin direction error, not OUT" << std::endl;
 		return;
 	}
-	uint32_t data = m_uio->read_reg(pin.reg); 
+	uint32_t data = m_dio->read_reg(pin.reg); 
 	uint32_t mask = (uint32_t)(1 << pin.bit);
 	data = (data & ~mask) | (value << pin.bit);
-	m_uio->write_reg(pin.reg, data);
+	m_dio->write_reg(pin.reg, data);
 }
 
 void AMACTB::setIO(uint8_t reg, uint32_t regOffset, bool value){
-	uint32_t data = m_uio->read_reg(reg);
+	uint32_t data = m_dio->read_reg(reg);
 	data = (data & ~regOffset) | ((uint32_t) value * regOffset);
-	m_uio->write_reg(reg, data);
+	m_dio->write_reg(reg, data);
 }
 
 bool AMACTB::readIO(io_t pin){
@@ -99,12 +117,12 @@ bool AMACTB::readIO(io_t pin){
 		std::cout << "Pin direction error, not IN" << std::endl;
 		return false;
 	}
-	uint32_t data = m_uio->read_reg(pin.reg);
+	uint32_t data = m_dio->read_reg(pin.reg);
 	uint32_t mask = (uint32_t)(1 << pin.bit);
 	return (bool)((data & mask) >> pin.bit);
 }
 
 bool AMACTB::readIO(uint8_t reg, uint32_t regOffset){
-	uint32_t data = m_uio->read_reg(regOffset);
+	uint32_t data = m_dio->read_reg(regOffset);
 	return (bool)(data & regOffset);
 }
