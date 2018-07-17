@@ -8,7 +8,7 @@
 int main(){
 	std::cout << "Hello world!" << std::endl;
 	std::shared_ptr<DeviceCom> uio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
-	AMACTB a (uio);
+	AMACTB a (uio, NULL, NULL, NULL, NULL, NULL, NULL);
 	
 	while(true){
 		a.setIO(a.SSSHx,true);

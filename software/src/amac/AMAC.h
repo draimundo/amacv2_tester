@@ -10,7 +10,7 @@ private:
 	uint32_t rdEndeavourReg(uint32_t address);
 	
 public:
-	AMAC(); // no harware
+	//AMAC(); // no harware
 
 	AMAC(unsigned short amacid, std::shared_ptr<DeviceCom> fpgaCom); // with hardware
 	

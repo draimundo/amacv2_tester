@@ -4,6 +4,8 @@
 #include <memory>
 #include <cstdint>
 #include "UIOCom.h"
+#include "FreqMeas.h"
+#include "LTC2666.h"
 
 enum direction_t{IN, OUT};
 struct io_t {
@@ -36,7 +38,13 @@ enum class HVref_t{HVref, HGND};
 
 class AMACTB {
 public:
-	AMACTB(std::shared_ptr<DeviceCom> uio);
+	AMACTB(	std::shared_ptr<DeviceCom> dio,
+					SPICom* dac0,
+					SPICom* dac1,
+					SPICom* adc0,
+					SPICom* adc1,
+					SPICom* adc2,
+					std::shared_ptr<DeviceCom> frq);
 	~AMACTB();
 
 	void powerOn();
@@ -62,10 +70,10 @@ public:
 	const io_t HrstBy			 = {7, 0x0, IN};
 	const io_t LAM				 = {8, 0x0, IN};
 	const io_t GPO				 = {9, 0x0, IN};
-	const io_t DCDCadj			 = {10, 0x0, IN};
+	const io_t DCDCadj		 = {10, 0x0, IN};
 	const io_t DCDCEn			 = {11, 0x0, IN};
 	const io_t Ofout			 = {12, 0x0, IN};
-	const io_t RO_PG_O			 = {13, 0x0, IN};
+	const io_t RO_PG_O		 = {13, 0x0, IN};
 	//TB outputs - AMAC inputs
 	const io_t SSSHx			 = {0, 0x1, OUT};
 	const io_t SSSHy			 = {1, 0x1, OUT};
@@ -132,9 +140,25 @@ public:
 	const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2};
 	const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2};
 	
+	LTC2666 DAC0;
+	LTC2666 DAC1;
+	FreqMeas FRQ;
+	
 private:
+	std::shared_ptr<DeviceCom> m_dio;
+	
+	SPICom* m_dac0;
+	SPICom* m_dac1;
+	
+	SPICom* m_adc0;
+	SPICom* m_adc1;
+	SPICom* m_adc2;
+	
+	std::shared_ptr<DeviceCom> m_frq;
+	
 
-	std::shared_ptr<DeviceCom> m_uio;
+	
+	
 };
 
 #endif // AMACTB_H_

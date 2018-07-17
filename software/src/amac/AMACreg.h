@@ -32,7 +32,7 @@ class AMACv2Field{
 			m_fieldName = "";
 		};
 		
-		bool canBeWritten(){
+		bool canBeWrittenField(){
 			return (m_rw != WO);
 		}
 		
@@ -58,6 +58,14 @@ class AMACv2Field{
 			return ((m_cfg[m_regNbr] & m_mask) >> m_offset);
 		}
 		
+		uint32_t readRaw() const{
+			if(m_rw == WO){
+				std::cerr << " --> Error: Write-only register \"" << m_fieldName <<"\""<< std::endl;
+				return 0;
+			}
+			return m_cfg[m_regNbr];
+		}
+		
 		void write(const uint32_t& cfgBits){
 			if(m_rw == RO){
 				std::cerr << " --> Error: Read-only register \"" << m_fieldName <<"\""<< std::endl;
@@ -74,13 +82,7 @@ class AMACv2Field{
 			m_cfg[m_regNbr] = cfgBits;
 		}
 		
-		uint32_t readRaw() const{
-			if(m_rw == WO){
-				std::cerr << " --> Error: Write-only register \"" << m_fieldName <<"\""<< std::endl;
-				return 0;
-			}
-			return m_cfg[m_regNbr];
-		}
+
 		
 		uint8_t addr() const{
 			return m_regNbr;
@@ -110,6 +112,10 @@ class AMACv2Reg{
 			return 0;
 		}
 		
+		uint32_t getReg(AMACv2Field AMACv2Reg::* ref){
+			return (this->*ref).readRaw();
+		}
+		
 		void setField(AMACv2Field AMACv2Reg::* ref, uint32_t value){
 			(this->*ref).write(value);
 		}
@@ -122,6 +128,10 @@ class AMACv2Reg{
 			return;
 		}
 		
+		void setReg(AMACv2Field AMACv2Reg::* ref, uint32_t value){
+			(this->*ref).writeRaw(value);
+		}
+		
 		uint8_t getAddr(AMACv2Field AMACv2Reg::* ref){
 			return (this->*ref).addr();
 		}
@@ -132,6 +142,10 @@ class AMACv2Reg{
 				std::cerr << " --> Error: Could not find register \""<< fieldName << "\"" << std::endl;
 			}
 			return 0;
+		}
+		
+		bool canBeWritten(AMACv2Field AMACv2Reg::* ref){
+			return (this->*ref).canBeWrittenField();
 		}
 
 		std::map<std::string, AMACv2Field AMACv2Reg::*> regMap;

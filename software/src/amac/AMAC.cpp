@@ -5,8 +5,8 @@
 // }
 
 AMAC::AMAC(unsigned short amacid, std::shared_ptr<DeviceCom> fpgaCom) : AMACv2Reg(), EndeavourCom(amacid, fpgaCom){
-	for (auto const& p : regMap){
-		if((this->*p.second).canBeWritten()){
+	for (auto const& p : regMap){ //set all amac registers according to default values
+		if(canBeWritten(p.second)){
 			syncReg(p.second);
 		}
 	}
@@ -25,13 +25,13 @@ void AMAC::wrVirtualField(AMACv2Field AMACv2Reg::* ref, uint32_t data){
 	setField(ref, data);
 }
 void AMAC::wrVirtualReg(AMACv2Field AMACv2Reg::* ref, uint32_t data){
-	(this->*ref).writeRaw(data);
+	setReg(ref, data);
 }
 uint32_t AMAC::rdVirtualField(AMACv2Field AMACv2Reg::* ref){
 	return getField(ref);
 }
 uint32_t AMAC::rdVirtualReg(AMACv2Field AMACv2Reg::* ref){
-	return (this->*ref).readRaw();
+	return getReg(ref);
 }
 
 void AMAC::syncReg(AMACv2Field AMACv2Reg::* ref){
