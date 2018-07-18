@@ -6,6 +6,7 @@
 #include "UIOCom.h"
 #include "FreqMeas.h"
 #include "LTC2666.h"
+#include "AD5160.h"
 
 enum direction_t{IN, OUT};
 struct io_t {
