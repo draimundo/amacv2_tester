@@ -5,7 +5,7 @@
 #include <iomanip>
 #include <vector>
 
-#include "SPICom.h"
+#include "DeviceCom.h"
 #include "LTC2666.h"
 #include "ComIOException.h"
 
@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
   try
     {
       // Create the communication object
-      std::shared_ptr<SPICom> dev=std::make_shared<SPICom>(device);
+      std::shared_ptr<DeviceCom> dev=std::make_shared<SPICom>(device);
 
       std::cout << "about to create LTC2666" << std::endl;
-      std::shared_ptr<LTC2666> ltc = std::make_shared<LTC2666>(dev.get());
+      std::shared_ptr<LTC2666> ltc = std::make_shared<LTC2666>(dev);
 
       sleep(5);
       std::cout << "about to write chan 4 with FF00 counts" << std::endl;

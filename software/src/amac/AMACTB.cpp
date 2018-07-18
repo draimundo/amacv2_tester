@@ -4,22 +4,25 @@
 #include "AMACTB.h"
 
 AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
-								SPICom* dac0,
-								SPICom* dac1,
-								SPICom* adc0,
-								SPICom* adc1,
-								SPICom* adc2,
-								std::shared_ptr<DeviceCom> frq) : 
+								std::shared_ptr<DeviceCom> dac0,
+								std::shared_ptr<DeviceCom> dac1,
+								std::shared_ptr<DeviceCom> adc0,
+								std::shared_ptr<DeviceCom> adc1,
+								std::shared_ptr<DeviceCom> adc2,
+								std::shared_ptr<DeviceCom> pot0,
+								std::shared_ptr<DeviceCom> pot1,
+								std::shared_ptr<DeviceCom> pot2,
+								std::shared_ptr<DeviceCom> frq) :
 								m_dio(dio),
-								m_dac0(dac0),
-								m_dac1(dac1),
-								m_adc0(adc0),
-								m_adc1(adc1),
-								m_adc2(adc2),
-								m_frq(frq),
-								DAC0(m_dac0),
-								DAC1(m_dac1),
-								FRQ(m_frq){
+								DAC0(dac0),
+								DAC1(dac1),
+								ADC0(adc0),
+								ADC1(adc1),
+								ADC2(adc2),
+								POT0(pot0),
+								POT1(pot1),
+								POT2(pot2),
+								FRQ(frq){
 	
 	this->powerOn();
 

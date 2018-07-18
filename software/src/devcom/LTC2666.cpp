@@ -1,8 +1,6 @@
 #include "LTC2666.h"
 
-LTC2666::LTC2666(SPICom* spi)
-{ 
-  m_spi = spi;
+LTC2666::LTC2666(std::shared_ptr<DeviceCom> dev) : m_dev(dev){ 
   init();
 }
 
@@ -32,7 +30,7 @@ void LTC2666::writeUpdateAll(unsigned int counts){
   unsigned int leadDigits = (counts >> 8) & 0xFF;
   unsigned int subleadDigits = counts & 0xFF;
 
-  m_spi->write_reg({cmd, leadDigits, subleadDigits});
+  m_dev->write_reg({cmd, leadDigits, subleadDigits});
 
 }
 void LTC2666::writeUpdateChan(unsigned int chan, unsigned int counts){
@@ -52,7 +50,7 @@ void LTC2666::writeUpdateChan(unsigned int chan, unsigned int counts){
   unsigned int leadDigits = (counts >> 8) & 0xFF;
   unsigned int subleadDigits = counts & 0xFF;
 
-  m_spi->write_reg({cmd, leadDigits, subleadDigits});
+  m_dev->write_reg({cmd, leadDigits, subleadDigits});
 
 }
 void LTC2666::powerDownAll(){
@@ -61,7 +59,7 @@ void LTC2666::powerDownAll(){
   unsigned int cmd = 0x50;
   
   // Other values don't matter.
-  m_spi->write_reg({cmd, 0x00, 0x00});
+  m_dev->write_reg({cmd, 0x00, 0x00});
 
 }
 void LTC2666::powerDownChan(unsigned int chan){
@@ -79,7 +77,7 @@ void LTC2666::powerDownChan(unsigned int chan){
   cmd += chan;
 
   // Other values don't matter.
-  m_spi->write_reg({cmd, 0x00, 0x00});
+  m_dev->write_reg({cmd, 0x00, 0x00});
 
 }
 void LTC2666::changeSpanAll(unsigned int span){
@@ -94,7 +92,7 @@ void LTC2666::changeSpanAll(unsigned int span){
   unsigned int cmd = 0xE0;
 
   // Middle value doesn't matter
-  m_spi->write_reg({cmd, 0x00, span});
+  m_dev->write_reg({cmd, 0x00, span});
 
 }
 void LTC2666::changeSpanChan(unsigned int chan, unsigned int span){
@@ -118,7 +116,7 @@ void LTC2666::changeSpanChan(unsigned int chan, unsigned int span){
   cmd += chan;
 
   // Middle value doesn't matter
-  m_spi->write_reg({cmd, 0x00, span});
+  m_dev->write_reg({cmd, 0x00, span});
 
 }
 void LTC2666::pointMuxAtChan(unsigned int muxChan){
@@ -139,7 +137,7 @@ void LTC2666::pointMuxAtChan(unsigned int muxChan){
   chanSel += muxChan;
 
   // Middle value doesn't matter
-  m_spi->write_reg({cmd, 0x00, chanSel});
+  m_dev->write_reg({cmd, 0x00, chanSel});
 
 }
 void LTC2666::disableMux(){
@@ -151,6 +149,6 @@ void LTC2666::disableMux(){
   unsigned int chanSel = 0x00;
 
   // Middle value doesn't matter
-  m_spi->write_reg({cmd, 0x00, chanSel});
+  m_dev->write_reg({cmd, 0x00, chanSel});
 
 }

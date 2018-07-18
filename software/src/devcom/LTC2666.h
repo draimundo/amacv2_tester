@@ -5,11 +5,12 @@
 #include "SPICom.h"
 #include <vector>
 #include <iostream>
+#include <memory>
 
 class LTC2666 : public DACDevice
 {
 public:
-  LTC2666(SPICom* spi);
+  LTC2666(std::shared_ptr<DeviceCom> dev);
   ~LTC2666();
 
   void init();
@@ -58,7 +59,7 @@ public:
   void disableMux();
 
 private:
-  SPICom* m_spi;
+  std::shared_ptr<DeviceCom> m_dev;
 
   const unsigned int chanMax = 0x7;
   const unsigned int muxChanMax = 0xC;
