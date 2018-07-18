@@ -8,7 +8,7 @@
 int main(){
 	std::cout << "Hello world!" << std::endl;
 	std::shared_ptr<DeviceCom> uio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
-	AMACTB TB (uio, NULL, NULL, NULL, NULL, NULL, NULL);
+	AMACTB TB (uio);
 	TB.powerOff();
 	std::cout << "Power off" << std::endl;
 	usleep(1E6); // 1s wait for a clear power up

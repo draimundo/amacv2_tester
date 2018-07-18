@@ -21,6 +21,11 @@ public:
 
   virtual void write_reg(unsigned int address, unsigned int data);
   virtual unsigned int read_reg(unsigned int address);
+	
+	//implemented in DeviceCom
+	virtual void write_reg(std::vector<unsigned int> data_vec){};
+	virtual void write_data(uint8_t data){};
+	virtual void read_reg(unsigned int address, uint8_t* data, unsigned int len){};
 
 private:
   unsigned short m_amacid;

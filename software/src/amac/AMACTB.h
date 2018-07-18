@@ -3,10 +3,12 @@
 
 #include <memory>
 #include <cstdint>
-#include "UIOCom.h"
-#include "FreqMeas.h"
-#include "LTC2666.h"
-#include "AD5160.h"
+
+#include "DeviceCom.h"
+#include "LTC2666.h" 	//DAC
+#include "LTC2333.h" 	//ADC
+#include "AD5160.h"		//SPI potentiometer
+#include "FreqMeas.h"	//FreqMeas bloc
 
 enum direction_t{IN, OUT};
 struct io_t {
@@ -39,13 +41,16 @@ enum class HVref_t{HVref, HGND};
 
 class AMACTB {
 public:
-	AMACTB(	std::shared_ptr<DeviceCom> dio,
-					SPICom* dac0,
-					SPICom* dac1,
-					SPICom* adc0,
-					SPICom* adc1,
-					SPICom* adc2,
-					std::shared_ptr<DeviceCom> frq);
+	AMACTB(	std::shared_ptr<DeviceCom> dio	= std::make_shared<UIOCom>("/dev/uio0", 0x10000),
+					std::shared_ptr<DeviceCom> dac0	= std::make_shared<SPICom>("/dev/spidev1.3"),
+					std::shared_ptr<DeviceCom> dac1	= std::make_shared<SPICom>("/dev/spidev1.4"),
+					std::shared_ptr<DeviceCom> adc0	= std::make_shared<SPICom>("/dev/spidev1.5"),
+					std::shared_ptr<DeviceCom> adc1	= std::make_shared<SPICom>("/dev/spidev1.6"),
+					std::shared_ptr<DeviceCom> adc2	= std::make_shared<SPICom>("/dev/spidev1.7"),
+					std::shared_ptr<DeviceCom> pot0	= std::make_shared<SPICom>("/dev/spidev1.0"),
+					std::shared_ptr<DeviceCom> pot1	= std::make_shared<SPICom>("/dev/spidev1.1"),
+					std::shared_ptr<DeviceCom> pot2	= std::make_shared<SPICom>("/dev/spidev1.2"),
+					std::shared_ptr<DeviceCom> frq	= std::make_shared<UIOCom>("/dev/uio2", 0x10000));
 	~AMACTB();
 
 	void powerOn();
@@ -143,23 +148,16 @@ public:
 	
 	LTC2666 DAC0;
 	LTC2666 DAC1;
+	LTC2333 ADC0;
+	LTC2333 ADC1;
+	LTC2333 ADC2;
+	AD5160	POT0;
+	AD5160	POT1;
+	AD5160	POT2;
 	FreqMeas FRQ;
 	
 private:
 	std::shared_ptr<DeviceCom> m_dio;
-	
-	SPICom* m_dac0;
-	SPICom* m_dac1;
-	
-	SPICom* m_adc0;
-	SPICom* m_adc1;
-	SPICom* m_adc2;
-	
-	std::shared_ptr<DeviceCom> m_frq;
-	
-
-	
-	
 };
 
 #endif // AMACTB_H_
