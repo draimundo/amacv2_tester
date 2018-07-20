@@ -1,0 +1,346 @@
+\documentclass[11pt]{article}   			% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper, left=1in, right=1in, top=1in, bottom=1in}
+                                            % ... or a4paper or a5paper or ... 
+\usepackage[parfill]{parskip}    		    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				        % Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								            % TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage[colorlinks]{hyperref}
+\usepackage{gensymb}
+\usepackage{textcomp}
+\usepackage{paralist}                       % For compactitem
+
+\usepackage{amssymb}
+\usepackage[tablegrid]{vhistory}
+
+\usepackage{lineno}
+
+\usepackage{changebar}
+
+\usepackage{amsmath}                        % For equations
+\usepackage{textgreek}                      % For in-line Greek letters
+
+\newcommand\Version{0.0}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,LO]{\rightmark}
+\fancyhead[C]{AMACv2 FVTP}
+\fancyhead[RE,RO]{v\Version}
+\rfoot{\thepage}
+\setlength{\headheight}{14pt}
+
+\newcommand\todo[1]{\textcolor{red}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{AMACv2 Functional Verification Test Plan}
+\author{Version: \Version}
+\author{}
+
+\linenumbers
+
+\begin{document}
+\maketitle
+\begin{abstract}
+
+This document enumerates features to be tested, and defines test procedures for single-chip verification of AMACv2. This document will be augmented to act as a test record. System-level and production test procedures are outside 
+the scope of this document.
+
+\end{abstract}
+
+\begin{versionhistory}
+\vhEntry{0.0}{19 July 2018}{P: A.N.}{Initial outline}
+\end{versionhistory}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Related Documents}
+
+The main SVN repository for code and documentation is located at: \\
+\href{https://svnweb.cern.ch/cern/wsvn/itkstrasic/AMACv2/}
+{https://svnweb.cern.ch/cern/wsvn/itkstrasic/AMACv2/}. Please refer to 
+\href{https://svnweb.cern.ch/cern/wsvn/itkstrasic/AMACv2/doc/README.txt}{doc/README.txt}
+for the latest version of the specification, as well as schematics,
+register map, Verilog, and verification code for the November 2017 MPW ASIC.
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AMACv2 Feature Test List}
+
+\subsection{Current Consumption}
+Measure before configuration, and after various configurations. Gather statistics from 
+several single-chip test cards.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Digital Pins}
+\subsubsection{ROPG (ring oscillator power good)}
+Output. Confirm pin goes logic high approximately 250\textmu s after power is applied.
+
+\subsubsection{LAM ("look-at-me")}
+Output. Confirm that LAM pulse is generated upon interlock if enabled in registers 60-25, bit 16. 
+Confirm multiple LAM pulses are generated upon successive interlocks that are not cleared.
+
+\subsubsection{LDx0en, LDy0en, LDx1en, LDy1en, LDx2en, LDy2en}
+Outputs. Confirm pins go logic high when corresponding bits in registers 40/41 are 
+written. Confirm pins go logic low after enabled if corresponding interlock occurs.
+
+\subsubsection{ResetB}
+Input. Confirm that logic low pulse resets AMACv2 to default condition (all registers to 
+default values, additional SETID required).
+
+\subsubsection{SSSHx, SSSHy}
+Inputs. Confirm that logic high pulse resets Endeavour communications block (register states 
+persist, additional SETID required). Validate deglitching.
+
+\subsubsection{HrstBx, HrstBy}
+Outputs. Confirm pins go logic high when corresponding bits in registers 46/47 are
+written.
+
+\subsubsection{DCDCen}
+Output. Confirm pin goes logic high when registers 42/43, bit 0 are written.
+
+\subsubsection{DCDCadj / GPO}
+Outputs. Confirm pins go logic high when corresponding bits in register 42/43 are written.
+
+\subsubsection{ID[4:0]}
+Inputs. Confirm bits can read in serial number register 31.
+
+\subsubsection{OFin}
+Input. Confirm that DCDCen is disables when OFin is asserted. Validate deglitching.
+
+\subsubsection{OFout}
+Output. Confirm pin is goes high when registers 46/47, bit 0 are written.
+
+\subsubsection{GPI}
+Input. Confirm pin state can be read in status register 0, bit 12.
+
+\subsubsection{PGOOD}
+Input. Confirm pin state can be read in status register 0, bit 8. Confirm DCDCen cannot be enabled when 
+PGOOD is logic high, if and only if this functionality is enabled by setting registers 50/51, bit 8.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Analog Pins}
+
+\subsubsection{ClkOut}
+Output. Confirm 40MHz nominally.
+
+\subsubsection{AMBG600}
+
+\subsubsection{AMBG900}
+
+\subsubsection{VDDREG1/2}
+
+\subsubsection{Shuntx, Shunty}
+
+\subsubsection{CALx, CALy}
+
+\subsubsection{NTCxp/n, NTCyp/n, NTCpbp/n}
+
+\subsubsection{Hrefx, Hrefy}
+
+\subsubsection{PTAT}
+
+\subsubsection{Cur10Vp/n}
+
+\subsubsection{Cur1Vp/n}
+
+\subsubsection{DCDCin}
+
+\subsubsection{HVret1/2}
+
+\subsubsection{HVref1/2}
+
+\subsubsection{CAL}
+
+\subsection{HVOsc0/1/2/3}
+Output. 
+\begin{compactitem}
+    \item{Measure HV oscillator drive capability (charge pump to voltage attained)}
+	\item{Measure 4 frequency settings}
+	\item{ Confirm enable/disable}
+\end{compactitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Power Pins}
+
+\subsubsection{VDDLR1/2}
+Confirm operational ranges. Confirm PoR threshold.
+
+\subsubsection{VDCDC1/2}
+Switch AMAC power from linear regulator to DCDC converter power.
+
+\subsubsection{VDDHI}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Communications Pins}
+
+\subsubsection{CMDinP/N}
+Input. Measure voltage at receive side.
+
+\subsubsection{CMDoutP/N}
+Output.
+\begin{compactitem}
+    \item{Measure current drive}
+    \item{Measure common mode of driver}
+    \item{Confirm high impedance when not transmitting (475ns window for switch-on)}
+\end{compactitem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{AM Channel Tests}
+
+\subsubsection{DCDC converter output (scaled)}
+
+\subsubsection{Linear regulator output (scaled)}
+
+\subsubsection{DCDC converter input (scaled)}
+
+\subsubsection{Regulated VDD}
+
+\subsubsection{AMBG600/AMBG900}
+
+\subsubsection{CAL from EoS}
+
+\subsubsection{CALx/y from DAC}
+
+\subsubsection{Shuntx/y from DAC}
+
+\subsubsection{NTCx/y/pb}
+
+\subsubsection{Hrefx/y from hybrids}
+
+\subsubsection{DCDC input current}
+
+\subsubsection{DCDC output current}
+
+\subsubsection{HV current return monitor}
+
+\subsubsection{die temp (PTAT)}
+
+\subsubsection{MUX functionality}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{DAC Functionality}
+TDB: bais bits, dynamic range.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{AM functionality}
+
+\subsubsection{Enable/disable}
+
+\subsubsection{Default value}
+
+\subsubsection{Overflow value}
+
+\subsubsection{Full 10-bit range 0-1023}
+
+\subsubsection{Values below zero}
+
+\subsubsection{Analog noise injection / flag limit tolerance, dither, ramp latch time}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Digital Functions}
+
+\subsubsection{Resets}
+\begin{compactitem}
+    \item{Commanded hard reset}
+    \item{Commanded soft reset}
+\end{compactitem}
+
+\subsubsection{WARN}
+
+\subsubsection{Flags}
+\begin{compactitem}
+    \item{Flag limit setting}
+    \item{Synthetic flags}
+    \item{Flag latch}
+    \item{Flag clear}
+    \item{Flag validation: 2,3,4 ramp cycles}
+    \item{Edge cases: value below zero, comparator never fires}
+    \item{Confirm all flags mapped to corresponding limit registers}
+\end{compactitem}
+
+\subsubsection{Interlock}
+\begin{compactitem}
+    \item{Enable/disable/clear}
+    \item{Confirm all states of state machine are exercised}
+    \item{Confirm all interlocks are mapped to corresponding channels, high and low limit}
+	\item{More than one LDO interlock programmed}
+	\item{Synthetc flag interlocks}
+\end{compactitem}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Endeavour}
+\begin{compactitem}
+    \item{Invalid commands: headers, COMMID, packet size, bitwidth, EoS frequency tolerance}
+    \item{Pseudorandom data}
+    \item{Check sequence numbers}
+    \item{Check CRC validation}
+    \item{Violate SETID quiescent time}
+    \item{Send command while busy}
+    \item{PADID and eFuse matching, wildcard IDs}
+    \item{Effect of hard/soft/SSSH reset}
+    \item{R/W all registers}
+    \item{READNEXT}
+\end{compactitem}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Parametric Tests}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Irradiation Tests}
+Test system infrastructure functionality to be confirmed (long cable tests for TID tests, 
+test board temperature monitoring and control, etc.).
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AMACv2 Test Plan}
+
+\subsection{Power-up}
+This power-up sequence in not intended to be the default use case. Single-chip bringup only.
+\begin{compactitem}
+    \item{Apply VDDLR}
+    \item{Measure AMACv2 current before configuration}
+	\item{Measure AMACv2 VDDREG, AMBG600, AMBG900. Gather statistics on multiple MPW chips.}
+    \item{Measure ROPG pin}
+    \item{Measure RO frequency on RO pin}
+    \item{Send SETID}
+    \item{Read PADID from serial number register 31}
+    \item{PGODD pin: read status register 0}
+    \item{Calibrate RO, AMBG600/AMBG900/VDDREG, AM bandgap, record calibration values (histograms)}
+    \item{Read a AM register and see the default value}
+    \item{Calibrate AM: zero cal, ramp slope, BG fine tune}
+    \item{Measure current after config}
+    \item{Put voltage on CAL and read back}
+    \item{Test other channels}
+    \item{DAC calibration, compare with AM measurement}
+\end{compactitem}
+
+\subsection{Digital Functional Tests}
+All detailed procedures for test items above to be specified here.
+
+\subsection{Analog Functional Tests}
+TBD: CAL, Hrefx/y: input offset variation as a function of voltage, linearity
+
+\subsection{Radiation Tolerance}
+
+\subsubsection{TID}
+
+\subsubsection{SEU}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{AMACv2 Test Record}
+Results of above tests to be recorded here.
+
+\end{document}

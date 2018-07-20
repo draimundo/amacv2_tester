@@ -1,0 +1,16 @@
+AMACv2 Test and Control Board Errata:
+
+-Silk near jumpers: 
+--Change PT6 to read “AMV2 CONNECT 7&8 and ID CONNECT 2&4”
+
+-Power: 
+--RT138, RB67 from 100R to 0R
+--Change the following from 10k to NS (this allows FPGA to control regulator enables):
+--RB68 (VDDLR)
+--RT136 (VDCDC)
+--RT8 (VP5)
+--RT12 (2V5)
+--RT13 (AVDD5)
+--RT16 (AVCC)
+--RB39 (AVEE)
+--RT59 (VN5)
