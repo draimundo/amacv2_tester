@@ -32,6 +32,10 @@ class AMACv2Field{
 			m_fieldName = "";
 		};
 		
+		bool canBeWrittenField(){
+			return (m_rw != WO);
+		}
+		
 		void initReg(uint32_t* cfg, rw_t rw, uint32_t defaultVal, uint8_t width, uint8_t offset, uint8_t regNbr, std::string fieldName){
 			m_cfg = cfg;
 			m_rw = rw;
@@ -41,18 +45,29 @@ class AMACv2Field{
 			m_regNbr = regNbr;
 			m_mask = (uint32_t) (((1 << m_width) - 1) << m_offset);
 			m_fieldName = fieldName;
+			if(m_rw != RO){
+				this->write(m_defaultVal);
+			}
 		}
 		
 		uint32_t read() const{
-			if((m_rw != RO)&&(m_rw != RW)){
+			if(m_rw == WO){
 				std::cerr << " --> Error: Write-only register \"" << m_fieldName <<"\""<< std::endl;
 				return 0;
 			}
 			return ((m_cfg[m_regNbr] & m_mask) >> m_offset);
 		}
 		
+		uint32_t readRaw() const{
+			if(m_rw == WO){
+				std::cerr << " --> Error: Write-only register \"" << m_fieldName <<"\""<< std::endl;
+				return 0;
+			}
+			return m_cfg[m_regNbr];
+		}
+		
 		void write(const uint32_t& cfgBits){
-			if((m_rw != WO)&&(m_rw != RW)){
+			if(m_rw == RO){
 				std::cerr << " --> Error: Read-only register \"" << m_fieldName <<"\""<< std::endl;
 				return;
 			}
@@ -60,22 +75,16 @@ class AMACv2Field{
 		}
 		
 		void writeRaw(const uint32_t& cfgBits){
-			if((m_rw != WO)&&(m_rw != RW)){
+			if(m_rw == RO){
 				std::cerr << " --> Error: Read-only register \"" << m_fieldName <<"\""<< std::endl;
 				return;
 			}
 			m_cfg[m_regNbr] = cfgBits;
 		}
 		
-		uint32_t readRaw(){
-			if((m_rw != RO)&&(m_rw != RW)){
-				std::cerr << " --> Error: Read-only register \"" << m_fieldName <<"\""<< std::endl;
-				return 0;
-			}
-			return m_cfg[m_regNbr];
-		}
+
 		
-		uint8_t addr(){
+		uint8_t addr() const{
 			return m_regNbr;
 		}
 };
@@ -86,12 +95,11 @@ class AMACv2Reg{
 		
 	public:
 		static const unsigned numRegs = 171;
-    uint16_t cfg[numRegs];
+    uint32_t cfg[numRegs];
 	
 		AMACv2Reg(){
 			this->init();
 		};
-		
 		uint32_t getField(AMACv2Field AMACv2Reg::* ref){
 			return (this->*ref).read();
 		}
@@ -102,6 +110,10 @@ class AMACv2Reg{
 				std::cerr << " --> Error: Could not find register \""<< fieldName << "\"" << std::endl;
 			}
 			return 0;
+		}
+		
+		uint32_t getReg(AMACv2Field AMACv2Reg::* ref){
+			return (this->*ref).readRaw();
 		}
 		
 		void setField(AMACv2Field AMACv2Reg::* ref, uint32_t value){
@@ -116,6 +128,10 @@ class AMACv2Reg{
 			return;
 		}
 		
+		void setReg(AMACv2Field AMACv2Reg::* ref, uint32_t value){
+			(this->*ref).writeRaw(value);
+		}
+		
 		uint8_t getAddr(AMACv2Field AMACv2Reg::* ref){
 			return (this->*ref).addr();
 		}
@@ -126,6 +142,10 @@ class AMACv2Reg{
 				std::cerr << " --> Error: Could not find register \""<< fieldName << "\"" << std::endl;
 			}
 			return 0;
+		}
+		
+		bool canBeWritten(AMACv2Field AMACv2Reg::* ref){
+			return (this->*ref).canBeWrittenField();
 		}
 
 		std::map<std::string, AMACv2Field AMACv2Reg::*> regMap;
@@ -228,12 +248,12 @@ class AMACv2Reg{
 		AMACv2Field CntSetHV1en;
 		AMACv2Field CntSetHV0frq;
 		AMACv2Field CntSetHV0en;
-		AMACv2Field CntSetHyLDO2;
-		AMACv2Field CntSetHyLDO1;
-		AMACv2Field CntSetHyLDO0;
-		AMACv2Field CntSetHxLDO2;
-		AMACv2Field CntSetHxLDO1;
-		AMACv2Field CntSetHxLDO0;
+		AMACv2Field CntSetHyLDO2en;
+		AMACv2Field CntSetHyLDO1en;
+		AMACv2Field CntSetHyLDO0en;
+		AMACv2Field CntSetHxLDO2en;
+		AMACv2Field CntSetHxLDO1en;
+		AMACv2Field CntSetHxLDO0en;
 		AMACv2Field CntSetWARN;
 		// 41 - CntSetC
 		AMACv2Field CntSetCHV3frq;
@@ -244,12 +264,12 @@ class AMACv2Reg{
 		AMACv2Field CntSetCHV1en;
 		AMACv2Field CntSetCHV0frq;
 		AMACv2Field CntSetCHV0en;
-		AMACv2Field CntSetCHyLDO2;
-		AMACv2Field CntSetCHyLDO1;
-		AMACv2Field CntSetCHyLDO0;
-		AMACv2Field CntSetCHxLDO2;
-		AMACv2Field CntSetCHxLDO1;
-		AMACv2Field CntSetCHxLDO0;
+		AMACv2Field CntSetCHyLDO2en;
+		AMACv2Field CntSetCHyLDO1en;
+		AMACv2Field CntSetCHyLDO0en;
+		AMACv2Field CntSetCHxLDO2en;
+		AMACv2Field CntSetCHxLDO1en;
+		AMACv2Field CntSetCHxLDO0en;
 		AMACv2Field CntSetCWARN;
 		// 42 - DCDCen
 		AMACv2Field DCDCAdj;
@@ -322,48 +342,51 @@ class AMACv2Reg{
 		AMACv2Field NTCy0SenseRange;
 		AMACv2Field NTCx0Cal;
 		AMACv2Field NTCx0SenseRange;
-		// 58 - LvCurCal - TODO
-		AMACv2Field DCDCoutOffset;
-		AMACv2Field DCDCzeroCal;
-		AMACv2Field DCDCoutN;
-		AMACv2Field DCDCoutP;
-		AMACv2Field DCDCinZeroCal;
-		AMACv2Field DCDCoutShort;
+		// 58 - LvCurCal
+		AMACv2Field DCDCoOffset;
+		AMACv2Field DCDCoZeroReading;
+		AMACv2Field DCDCoP;
+		AMACv2Field DCDCoN;
+		AMACv2Field DCDCiZeroReading;
+		AMACv2Field DCDCiRangeSW;
+		AMACv2Field DCDCiOffset;
+		AMACv2Field DCDCiP;
+		AMACv2Field DCDCiN;
 		// 60 - HxICcfg
 		AMACv2Field HxLAM;
 		AMACv2Field HxFlagsLatch;
 		AMACv2Field HxFlagsLogic;
-		AMACv2Field HxFlayValid;
+		AMACv2Field HxFlagValid;
 		AMACv2Field HxFlagsValidConf;
 		// 61 - HyICcfg
 		AMACv2Field HyLAM;
 		AMACv2Field HyFlagsLatch;
 		AMACv2Field HyFlagsLogic;
-		AMACv2Field HyFlayValid;
+		AMACv2Field HyFlagValid;
 		AMACv2Field HyFlagsValidConf;
 		// 62 - HV0ICcfg
 		AMACv2Field HV0LAM;
 		AMACv2Field HV0FlagsLatch;
 		AMACv2Field HV0FlagsLogic;
-		AMACv2Field HV0FlayValid;
+		AMACv2Field HV0FlagValid;
 		AMACv2Field HV0FlagsValidConf;
 		// 63 - HV2ICcfg
 		AMACv2Field HV2LAM;
 		AMACv2Field HV2FlagsLatch;
 		AMACv2Field HV2FlagsLogic;
-		AMACv2Field HV2FlayValid;
+		AMACv2Field HV2FlagValid;
 		AMACv2Field HV2FlagsValidConf;
 		// 64 - DCDCICcfg
 		AMACv2Field DCDCLAM;
 		AMACv2Field DCDCFlagsLatch;
 		AMACv2Field DCDCFlagsLogic;
-		AMACv2Field DCDCFlayValid;
+		AMACv2Field DCDCFlagValid;
 		AMACv2Field DCDCFlagsValidConf;
 		// 65 - WRNICcfg
 		AMACv2Field WRNLAM;
 		AMACv2Field WRNFlagsLatch;
 		AMACv2Field WRNFlagsLogic;
-		AMACv2Field WRNFlayValid;
+		AMACv2Field WRNFlagValid;
 		AMACv2Field WRNFlagsValidConf;
 		// 70 - HxTlut
 		AMACv2Field HxTlut;

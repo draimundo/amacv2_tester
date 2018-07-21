@@ -1,12 +1,11 @@
 #ifndef SPICOM_H
 #define SPICOM_H
 
+#include "DeviceCom.h"
+
 #include <string>
 #include <vector>
-
 #include <linux/spi/spidev.h>
-
-#include "DeviceCom.h"
 
 class SPICom : public DeviceCom
 {

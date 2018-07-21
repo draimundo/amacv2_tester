@@ -1,8 +1,6 @@
 #include "LTC2333.h"
 
-LTC2333::LTC2333(SPICom* spi)
-{ 
-  m_spi = spi;
+LTC2333::LTC2333(std::shared_ptr<DeviceCom> dev) : m_dev(dev){
   init();
 }
 
@@ -35,7 +33,7 @@ std::vector<unsigned int> LTC2333::setNextConversion(unsigned int chan, unsigned
 
   return formatConversionResult(data);
 
-}
+  }
 
 std::vector<unsigned int> LTC2333::setUpToThreeConversions(std::vector<std::pair<unsigned int, unsigned int>> vec){
 
@@ -63,8 +61,8 @@ std::vector<unsigned int> LTC2333::setUpToThreeConversions(std::vector<std::pair
   // 24-bit array for the values we'll read out
   uint8_t data[m_nBytesData];
 
-  // Now read the input registers, and pass the data array along to fill it
-  m_spi->read_reg(input_vec, data, m_nBytesData);
+  // Now read the input register, and pass the data array along to fill it
+  m_dev->read_reg(input, data, nBytesData);
 
   return formatConversionResult(data);
 
@@ -80,7 +78,7 @@ std::vector<unsigned int> LTC2333::readPreviousConversion(){
   uint8_t data[m_nBytesData];
 
   // Now read the input register, and pass the data array along to fill it
-  m_spi->read_reg(input, data, m_nBytesData);
+  m_dev->read_reg(input, data, nBytesData);
 
   return formatConversionResult(data);
 

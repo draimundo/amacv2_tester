@@ -1,8 +1,8 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Tue Jul  3 13:35:25 2018
---Host        : oceanpiglet running 64-bit CentOS Linux release 7.2.1511 (Core)
+--Date        : Fri Jul 20 18:28:18 2018
+--Host        : carl-pc running 64-bit CentOS Linux release 7.5.1804 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
 --Purpose     : IP block netlist
@@ -136,41 +136,41 @@ architecture STRUCTURE of TopLevel_wrapper is
     HVOSC0 : in STD_LOGIC;
     CLKOUT : in STD_LOGIC;
     HVOSC3 : in STD_LOGIC;
-    LAM : in STD_LOGIC;
-    DCDCadj : in STD_LOGIC;
-    DCDCen : in STD_LOGIC;
-    OFout : in STD_LOGIC;
-    RO_PG_O : in STD_LOGIC;
-    GPO : in STD_LOGIC;
-    HrstBy : in STD_LOGIC;
-    HrstBx : in STD_LOGIC;
-    LDy2en : in STD_LOGIC;
-    LDx2en : in STD_LOGIC;
-    LDy1en : in STD_LOGIC;
-    LDx1en : in STD_LOGIC;
-    LDy0en : in STD_LOGIC;
-    LDx0en : in STD_LOGIC;
-    PGOOD : out STD_LOGIC;
-    SSSHx : out STD_LOGIC;
-    SSSHy : out STD_LOGIC;
-    GPI : out STD_LOGIC;
-    OFin : out STD_LOGIC;
-    ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
-    LV_EN_2V5 : out STD_LOGIC;
-    LV_EN_VP5 : out STD_LOGIC;
-    LV_EN_VN5 : out STD_LOGIC;
-    LV_EN_AVDD5 : out STD_LOGIC;
-    LV_EN_AVEE : out STD_LOGIC;
-    LV_EN_AVCC : out STD_LOGIC;
-    ADC_CNV : out STD_LOGIC;
-    HVSW_MUX_EN : out STD_LOGIC;
-    MPM_MUX_EN : out STD_LOGIC;
-    MPM_MUX : out STD_LOGIC_VECTOR ( 2 downto 0 );
     CMD_OUT_P : in STD_LOGIC;
     CMD_OUT_N : in STD_LOGIC;
     CMD_IN_P : out STD_LOGIC;
     CMD_IN_N : out STD_LOGIC;
+    OFin : out STD_LOGIC;
+    ADC_CNV : out STD_LOGIC;
+    MPM_MUX_EN : out STD_LOGIC;
+    MPM_MUX : out STD_LOGIC_VECTOR ( 2 downto 0 );
+    HVSW_MUX_EN : out STD_LOGIC;
+    LV_EN_AVCC : out STD_LOGIC;
+    LV_EN_AVEE : out STD_LOGIC;
+    LV_EN_AVDD5 : out STD_LOGIC;
+    LV_EN_VN5 : out STD_LOGIC;
+    LV_EN_VP5 : out STD_LOGIC;
+    LV_EN_2V5 : out STD_LOGIC;
+    ID : out STD_LOGIC_VECTOR ( 4 downto 0 );
+    GPI : out STD_LOGIC;
+    SSSHy : out STD_LOGIC;
+    HrstBy : in STD_LOGIC;
+    HrstBx : in STD_LOGIC;
+    LDy2en : in STD_LOGIC;
+    LDy1en : in STD_LOGIC;
+    LDx1en : in STD_LOGIC;
+    LDy0en : in STD_LOGIC;
+    PGOOD : out STD_LOGIC;
+    LDx0en : in STD_LOGIC;
+    LDx2en : in STD_LOGIC;
+    SSSHx : out STD_LOGIC;
     RESETB : out STD_LOGIC;
+    RO_PG_O : in STD_LOGIC;
+    OFout : in STD_LOGIC;
+    DCDCen : in STD_LOGIC;
+    DCDCadj : in STD_LOGIC;
+    GPO : in STD_LOGIC;
+    LAM : in STD_LOGIC;
     LD_EN_VDDRL : out STD_LOGIC;
     LD_EN_VDCDC : out STD_LOGIC;
     LVL_TRANS_EN : out STD_LOGIC;

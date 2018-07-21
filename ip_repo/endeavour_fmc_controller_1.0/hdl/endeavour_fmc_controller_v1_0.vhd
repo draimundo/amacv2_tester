@@ -110,10 +110,17 @@ architecture arch_imp of endeavour_fmc_controller_v1_0 is
             serialout : out std_logic
         );
     end component endeavour_master;
-		
+	
+	component TopLevel_clk_wiz_0_0_clk_wiz is
+	   port (
+	       clk_out1 : out std_logic;
+	       clk_in1 : in std_logic
+	   );
+	end component TopLevel_clk_wiz_0_0_clk_wiz;
   --
     -- signal declarations
-    signal clock          : std_logic;
+    signal clock100MHz    : std_logic;
+    signal clock80MHz     : std_logic;
     signal reset          : std_logic;
     signal serial0        : std_logic;
     signal serial1        : std_logic;
@@ -193,11 +200,17 @@ endeavour_fmc_controller_v1_0_S00_AXI_inst : endeavour_fmc_controller_v1_0_S00_A
     busy        <= axi_status(0);
     datavalid   <= axi_status(1);
         --
-    clock       <= s00_axi_aclk;
-      
+    clock100MHz       <= s00_axi_aclk;
+    
+    inst_TopLevel_clk_wiz_0_0_clk_wiz : TopLevel_clk_wiz_0_0_clk_wiz
+    port map(
+        clk_out1 => clock80MHz,
+        clk_in1 => clock100MHz
+    );
+    
     inst_endeavour_master : endeavour_master
       port map (
-        clock     => clock,
+        clock     => clock80MHz,
         reset     => reset,
         nbitsin   => to_integer(unsigned(axi_nbitsin)),
         datain    => axi_datain,

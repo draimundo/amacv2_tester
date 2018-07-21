@@ -33,7 +33,7 @@ The contents of the repository are organized as follows:
 # Memory Map
 The address space is divded among the different IP blocks used in the top-level firmware entity.
 
-## Digital I/O (0x43C10000 - 0x43C1FFFF)
+## Digital I/O (0x43C10000 - 0x43C1FFFF `/dev/uio0`)
 The digital IO IP block simply maps AXI registers to the simple (needing no processing) inputs/outputs used by the AMACv2 and the testbench. The 3 registers are used as follows:
 
 `slv_reg0` is used to monitor the AMACv2 outputs:
@@ -60,7 +60,7 @@ The digital IO IP block simply maps AXI registers to the simple (needing no proc
 | byte 1     | `HVSW_MUX_EN` | `MPM_MUX_EN`  | `LVL_TRANS_EN` | `Hvret_SW`  | `LD_EN_VDCDC` | `MUX_SEL2` | `MUX_SEL1`    | `MUX_SEL0`    |
 | byte 2   | -        | -        | -         | -        | -        | -         | `HVref_HGND_SW`        | `FPGA_EFUSE_PULSE`   |
 | byte 3   | -        | -        | -         | -        | -        | -         | -        | -        |
-## Endeavour (0x43C10000 - 0x43C1FFFF)
+## Endeavour (0x43C10000 - 0x43C1FFFF `/dev/uio1`)
 
 ## Frequency Measurement (0x43C20000 - 0x43C2FFFF `/dev/uio2`)
 The frequency measurement bloc is a simple synchronous (to *clk_i*) counter, which reacts on edges (if the signal is slow enough to be detected), with outputs *hi_n_o* and *lo_n_o* counting rising respectively falling edges and also measures the duty cycle of the input signal *frq_i*, with *hi_t_o* incrementing everytime *frq_i* is high and *clk_i* rises. The different *\*_flg_o* outputs monitor the registers, and are active high if an overflow is detected. On the input side, *ts_cnt_i* sets the number of clock cycles during which the measurement is done. *freeze_i*, active high, freezes the ouput registers (the measurement continues in the background) and *nrst_i*, active low, resets the bloc.

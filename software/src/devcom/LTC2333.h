@@ -2,14 +2,15 @@
 #define LTC2333_H
 
 #include "ADCDevice.h"
-#include "SPICom.h"
+#include "DeviceCom.h"
 #include <vector>
 #include <iostream>
+#include <memory>
 
 class LTC2333 : public ADCDevice
 {
 public:
-  LTC2333(SPICom* spi);
+  LTC2333(std::shared_ptr<DeviceCom> dev);
   ~LTC2333();
 
   void init();
@@ -54,7 +55,7 @@ public:
   std::vector<unsigned int> readPreviousConversion();
 
 private:
-  SPICom* m_spi;
+  std::shared_ptr<DeviceCom> m_dev;
 
   const unsigned int m_chanMax = 0x7;
   const unsigned int m_spanMax = 0x7;

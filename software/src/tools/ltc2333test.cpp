@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
   try
     {
       // Create the communication object
-      std::shared_ptr<SPICom> dev=std::make_shared<SPICom>(device);
+      std::shared_ptr<DeviceCom> dev=std::make_shared<SPICom>(device);
 
       std::cout << "about to create LTC2333" << std::endl;
-      std::shared_ptr<LTC2333> ltc = std::make_shared<LTC2333>(dev.get());
+      std::shared_ptr<LTC2333> ltc = std::make_shared<LTC2333>(dev);
 
       std::cout << "about to setNextConversion(4, 3)" << std::endl;
       ltc->setNextConversion(0x4,0x3);

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <iomanip>
 
-AD5160::AD5160(std::shared_ptr<SPICom> spi) : m_spi(spi){
+AD5160::AD5160(std::shared_ptr<DeviceCom> dev) : m_dev(dev){
 	this->setResistance(m_regMax);
 }
 
@@ -21,7 +21,7 @@ void AD5160::setResistance(uint8_t regVal){
 		return;	
 	}
 	m_regVal = regVal;
-	m_spi->write_data(m_regVal);
+	m_dev->write_data(m_regVal);
 }
 
 uint8_t AD5160::getResistance(){

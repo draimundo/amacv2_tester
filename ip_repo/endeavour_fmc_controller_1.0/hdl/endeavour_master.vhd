@@ -34,7 +34,7 @@ entity endeavour_master is
     reset       : in  std_logic;
 
     -- control signals
-    nbitsin     : in  integer range 0 to 63;    
+    nbitsin     : in  integer range 0 to 63;
     datain      : in  std_logic_vector(63 downto 0);
     send        : in  std_logic;
     busy        : out std_logic;
@@ -42,7 +42,7 @@ entity endeavour_master is
     nbitsout    : out integer range 0 to 63;
     dataout     : out std_logic_vector(63 downto 0);
     datavalid   : out std_logic;
-    error       : out std_logic;    
+    error       : out std_logic;
 
     -- serial signals
     serialin    : in  std_logic;
@@ -51,20 +51,46 @@ entity endeavour_master is
 end entity endeavour_master;
 
 architecture behavioural of endeavour_master is
-  type fsm_wr_t is (idle, senddata, sendbit, sendgap);
+
+  -- required pause between words
+  constant TICKS_QUIESCENT : integer := 75;    
+
+  -- minimum, middle and maximum widths of "ZERO"
+  -- middle is used for Tx
+  -- min and max is used for Rx
+  constant TICKS_DIT_MIN : integer :=   6;
+  constant TICKS_DIT_MID : integer :=  14;
+  constant TICKS_DIT_MAX : integer :=  22;
+
+  -- minimum, middle and maximum widths of "ONE"
+  -- middle is used for Tx
+  -- min and max is used for Rx
+  constant TICKS_DAH_MIN : integer :=  29;
+  constant TICKS_DAH_MID : integer :=  76;
+  constant TICKS_DAH_MAX : integer := 124;
+
+  -- minimum, middle and maximum widths of gap between bits
+  -- middle is used for Tx
+  -- min and max is used for Rx
+  constant TICKS_BITGAP_MIN : integer :=  11;
+  constant TICKS_BITGAP_MID : integer :=  43;
+  constant TICKS_BITGAP_MAX : integer :=  75;
+
+  type fsm_wr_t is (idle, senddata, sendbit, sendgap, sendendgap);
   signal fsm_wr : fsm_wr_t := idle;
 
   type fsm_rd_t is (idle, waitbit, readbit, waitgap);
   signal fsm_rd : fsm_rd_t := idle;
-  
+
   signal reg_nbitsin    : integer range 0 to 63         := 0;  
   signal reg_datain     : std_logic_vector(63 downto 0) := (others => '0');
   signal reg_busy       : std_logic;
 
-  signal reg_nbitsout   : integer range 0 to 63         := 0;  
+  signal reg_nbitsout   : integer range 0 to 63         := 0;
   signal reg_dataout    : std_logic_vector(63 downto 0) := (others => '0');
   signal reg_datavalid  : std_logic;
   signal reg_error      : std_logic;
+
 begin
   busy          <= reg_busy;
   datavalid     <= reg_datavalid;
@@ -78,10 +104,10 @@ begin
   --  
   process (clock)
     variable writebit   : std_logic;
-    variable counter    : integer range 0 to 127        := 0;
+    variable counter    : integer range 0 to 511        := 0;
   begin
     if rising_edge(clock) then
-      if reset='1' then
+      if reset = '1' then
         fsm_wr                  <= idle;
         reg_nbitsin             <= 0;
         reg_datain              <= (others => '0');
@@ -93,7 +119,7 @@ begin
           when idle =>
             serialout           <= '0';
 
-            if send='1' then
+            if send = '1' then
               -- latch data to send
               reg_datain        <= datain;
               reg_nbitsin       <= nbitsin;
@@ -105,37 +131,52 @@ begin
             end if;
 
           when senddata =>
-            if reg_nbitsin=0 then
-              fsm_wr            <= idle;
+            reg_busy            <= '1';
+            if reg_nbitsin = 0 then
+              serialout         <= '0';
+              counter           := TICKS_QUIESCENT;
+              fsm_wr            <= sendendgap;
             else
               writebit          := reg_datain(reg_nbitsin-1);
               reg_nbitsin       <= reg_nbitsin - 1;
-              if writebit='0' then
-                counter         := 14;
+              if writebit = '0' then
+                counter         := TICKS_DIT_MID;
               else
-                counter         := 76;
+                counter         := TICKS_DAH_MID;
               end if;
               fsm_wr            <= sendbit;
             end if;
 
           when sendbit =>
-            if counter=0 then
-              fsm_wr    <= sendgap;
-              serialout <= '0';
-              counter   := 43;
+            reg_busy            <= '1';
+            if counter = 0 then
+              fsm_wr            <= sendgap;
+              serialout         <= '0';
+              counter           := TICKS_BITGAP_MID;
             else
-              fsm_wr    <= sendbit;
-              serialout <= '1';
-              counter   := counter-1;
+              fsm_wr            <= sendbit;
+              serialout         <= '1';
+              counter           := counter-1;
             end if;
 
           when sendgap =>
-            serialout <= '0';            
-            if counter=0 then
-              fsm_wr    <= senddata;
+            reg_busy            <= '1';
+            serialout           <= '0';
+            if counter = 0 then
+              fsm_wr            <= senddata;
             else
-              fsm_wr    <= sendgap;
-              counter   := counter-1;
+              fsm_wr            <= sendgap;
+              counter           := counter-1;
+            end if;
+
+         when sendendgap =>
+            reg_busy            <= '1';
+            serialout           <= '0';
+            if counter = 0 then
+              fsm_wr            <= idle;
+            else
+              fsm_wr            <= sendendgap;
+              counter           := counter-1;
             end if;
 
           when others =>
@@ -162,7 +203,7 @@ begin
       else
         case fsm_rd is
           when idle =>
-            if serialin='1' then
+            if serialin = '1' then
               counter           := 1;
               reg_nbitsout      <= 0;
               reg_dataout       <= (others => '0');
@@ -182,9 +223,9 @@ begin
             end if;
 
           when readbit =>
-            if    ( 6 < counter) and (counter <  22) then
+            if    (TICKS_DIT_MIN < counter) and (counter < TICKS_DIT_MAX) then
               reg_dataout       <= reg_dataout(62 downto 0) & '0';
-            elsif (29 < counter) and (counter < 124) then
+            elsif (TICKS_DAH_MIN < counter) and (counter < TICKS_DAH_MIN) then
               reg_dataout       <= reg_dataout(62 downto 0) & '1';
             else
               reg_dataout       <= reg_dataout(62 downto 0) & 'U';
@@ -200,7 +241,7 @@ begin
               fsm_rd            <= waitbit;
             else
               counter           := counter + 1;
-              if counter>75 then
+              if counter > TICKS_QUIESCENT then
                 reg_datavalid   <= '1';
                 fsm_rd          <= idle;
               end if;
@@ -214,4 +255,4 @@ begin
   end process;
   
 end behavioural;
-  
+

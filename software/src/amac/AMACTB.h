@@ -3,7 +3,12 @@
 
 #include <memory>
 #include <cstdint>
-#include "UIOCom.h"
+
+#include "DeviceCom.h"
+#include "LTC2666.h" 	//DAC
+#include "LTC2333.h" 	//ADC
+#include "AD5160.h"		//SPI potentiometer
+#include "FreqMeas.h"	//FreqMeas bloc
 
 enum direction_t{IN, OUT};
 struct io_t {
@@ -36,7 +41,16 @@ enum class HVref_t{HVref, HGND};
 
 class AMACTB {
 public:
-	AMACTB(std::shared_ptr<DeviceCom> uio);
+	AMACTB(	std::shared_ptr<DeviceCom> dio	= std::make_shared<UIOCom>("/dev/uio0", 0x10000),
+					std::shared_ptr<DeviceCom> dac0	= std::make_shared<SPICom>("/dev/spidev1.3"),
+					std::shared_ptr<DeviceCom> dac1	= std::make_shared<SPICom>("/dev/spidev1.4"),
+					std::shared_ptr<DeviceCom> adc0	= std::make_shared<SPICom>("/dev/spidev1.5"),
+					std::shared_ptr<DeviceCom> adc1	= std::make_shared<SPICom>("/dev/spidev1.6"),
+					std::shared_ptr<DeviceCom> adc2	= std::make_shared<SPICom>("/dev/spidev1.7"),
+					std::shared_ptr<DeviceCom> pot0	= std::make_shared<SPICom>("/dev/spidev1.0"),
+					std::shared_ptr<DeviceCom> pot1	= std::make_shared<SPICom>("/dev/spidev1.1"),
+					std::shared_ptr<DeviceCom> pot2	= std::make_shared<SPICom>("/dev/spidev1.2"),
+					std::shared_ptr<DeviceCom> frq	= std::make_shared<UIOCom>("/dev/uio2", 0x10000));
 	~AMACTB();
 
 	void powerOn();
@@ -62,10 +76,10 @@ public:
 	const io_t HrstBy			 = {7, 0x0, IN};
 	const io_t LAM				 = {8, 0x0, IN};
 	const io_t GPO				 = {9, 0x0, IN};
-	const io_t DCDCadj			 = {10, 0x0, IN};
+	const io_t DCDCadj		 = {10, 0x0, IN};
 	const io_t DCDCEn			 = {11, 0x0, IN};
 	const io_t Ofout			 = {12, 0x0, IN};
-	const io_t RO_PG_O			 = {13, 0x0, IN};
+	const io_t RO_PG_O		 = {13, 0x0, IN};
 	//TB outputs - AMAC inputs
 	const io_t SSSHx			 = {0, 0x1, OUT};
 	const io_t SSSHy			 = {1, 0x1, OUT};
@@ -132,9 +146,18 @@ public:
 	const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2};
 	const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2};
 	
+	LTC2666 DAC0;
+	LTC2666 DAC1;
+	LTC2333 ADC0;
+	LTC2333 ADC1;
+	LTC2333 ADC2;
+	AD5160	POT0;
+	AD5160	POT1;
+	AD5160	POT2;
+	FreqMeas FRQ;
+	
 private:
-
-	std::shared_ptr<DeviceCom> m_uio;
+	std::shared_ptr<DeviceCom> m_dio;
 };
 
 #endif // AMACTB_H_
