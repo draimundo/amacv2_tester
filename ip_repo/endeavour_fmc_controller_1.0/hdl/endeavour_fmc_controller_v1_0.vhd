@@ -95,6 +95,18 @@ architecture arch_imp of endeavour_fmc_controller_v1_0 is
     end component endeavour_fmc_controller_v1_0_S00_AXI;
     		
     component endeavour_master is
+        generic (
+          TICKS_QUIESCENT : integer := 75;    
+          TICKS_DIT_MIN : integer :=   6;
+          TICKS_DIT_MID : integer :=  14;
+          TICKS_DIT_MAX : integer :=  22;
+          TICKS_DAH_MIN : integer :=  29;
+          TICKS_DAH_MID : integer :=  76;
+          TICKS_DAH_MAX : integer := 124;
+          TICKS_BITGAP_MIN : integer :=  11;
+          TICKS_BITGAP_MID : integer :=  43;
+          TICKS_BITGAP_MAX : integer :=  75
+          );
         port (
             clock     : in  std_logic;
             reset     : in  std_logic;
@@ -111,13 +123,14 @@ architecture arch_imp of endeavour_fmc_controller_v1_0 is
         );
     end component endeavour_master;
 	
-	component TopLevel_clk_wiz_0_0_clk_wiz is
-	   port (
-	       clk_out1 : out std_logic;
-	       clk_in1 : in std_logic
-	   );
-	end component TopLevel_clk_wiz_0_0_clk_wiz;
-  --
+    component TopLevel_clk_wiz_0_0_clk_wiz is
+      port (
+        clk_out1 : out std_logic;
+        clk_in1 : in std_logic
+        );
+    end component TopLevel_clk_wiz_0_0_clk_wiz;
+
+    --    
     -- signal declarations
     signal clock100MHz    : std_logic;
     signal clock80MHz     : std_logic;
@@ -209,6 +222,18 @@ endeavour_fmc_controller_v1_0_S00_AXI_inst : endeavour_fmc_controller_v1_0_S00_A
     );
     
     inst_endeavour_master : endeavour_master
+      generic map (
+        TICKS_QUIESCENT => 150,    
+        TICKS_DIT_MIN   =>  12,
+        TICKS_DIT_MID   =>  28,
+        TICKS_DIT_MAX   =>  44,
+        TICKS_DAH_MIN   =>  58,
+        TICKS_DAH_MID   => 152,
+        TICKS_DAH_MAX   => 248,
+        TICKS_BITGAP_MIN=>  22,
+        TICKS_BITGAP_MID=>  86,
+        TICKS_BITGAP_MAX=> 150
+        );
       port map (
         clock     => clock80MHz,
         reset     => reset,

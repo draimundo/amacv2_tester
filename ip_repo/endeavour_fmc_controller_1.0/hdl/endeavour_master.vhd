@@ -29,6 +29,31 @@ use ieee.std_logic_1164.all;
 -- error - Inidicates an error condition during serialization of serialin. Currently only the length of a pulse must be in the specified number of clock cycles.
 ----
 entity endeavour_master is
+  generic (
+    -- required pause between words
+    TICKS_QUIESCENT : integer := 75;    
+
+    -- minimum, middle and maximum widths of "ZERO"
+    -- middle is used for Tx
+    -- min and max is used for Rx
+    TICKS_DIT_MIN : integer :=   6;
+    TICKS_DIT_MID : integer :=  14;
+    TICKS_DIT_MAX : integer :=  22;
+
+    -- minimum, middle and maximum widths of "ONE"
+    -- middle is used for Tx
+    -- min and max is used for Rx
+    TICKS_DAH_MIN : integer :=  29;
+    TICKS_DAH_MID : integer :=  76;
+    TICKS_DAH_MAX : integer := 124;
+
+    -- minimum, middle and maximum widths of gap between bits
+    -- middle is used for Tx
+    -- min and max is used for Rx
+    TICKS_BITGAP_MIN : integer :=  11;
+    TICKS_BITGAP_MID : integer :=  43;
+    TICKS_BITGAP_MAX : integer :=  75
+  );
   port (
     clock       : in  std_logic;
     reset       : in  std_logic;
@@ -51,30 +76,6 @@ entity endeavour_master is
 end entity endeavour_master;
 
 architecture behavioural of endeavour_master is
-
-  -- required pause between words
-  constant TICKS_QUIESCENT : integer := 75;    
-
-  -- minimum, middle and maximum widths of "ZERO"
-  -- middle is used for Tx
-  -- min and max is used for Rx
-  constant TICKS_DIT_MIN : integer :=   6;
-  constant TICKS_DIT_MID : integer :=  14;
-  constant TICKS_DIT_MAX : integer :=  22;
-
-  -- minimum, middle and maximum widths of "ONE"
-  -- middle is used for Tx
-  -- min and max is used for Rx
-  constant TICKS_DAH_MIN : integer :=  29;
-  constant TICKS_DAH_MID : integer :=  76;
-  constant TICKS_DAH_MAX : integer := 124;
-
-  -- minimum, middle and maximum widths of gap between bits
-  -- middle is used for Tx
-  -- min and max is used for Rx
-  constant TICKS_BITGAP_MIN : integer :=  11;
-  constant TICKS_BITGAP_MID : integer :=  43;
-  constant TICKS_BITGAP_MAX : integer :=  75;
 
   type fsm_wr_t is (idle, senddata, sendbit, sendgap, sendendgap);
   signal fsm_wr : fsm_wr_t := idle;
