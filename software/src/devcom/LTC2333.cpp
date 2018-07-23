@@ -129,7 +129,7 @@ std::vector<unsigned int> LTC2333::formatConversionResult(uint8_t* data){
   unsigned int output_chan = (output >> 3) & m_chanMax;
 
   // Here is the 18-bit result
-  unsigned int output_result = (output >> 6) & 0x3FFFF; // 0x3FFFF = 2^18-1
+  unsigned int output_result = (output >> 6) & 0xFFFF; // 0xFFFF = 2^16-1
 
   return {output_result, output_chan, output_span};
 }
