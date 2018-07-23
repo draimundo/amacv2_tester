@@ -52,6 +52,7 @@ the scope of this document.
 
 \begin{versionhistory}
 \vhEntry{0.0}{19 July 2018}{P: A.N.}{Initial outline}
+\vhEntry{0.1}{23 July 2018}{P: V.R.}{Update AM Channel Tests}
 \end{versionhistory}
 
 \newpage
@@ -196,40 +197,378 @@ Output.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{AM Channel Tests}
+Note: Calibration of Analog Monitor \cite{AMACv2Calib} must be done before proceding with the below tests
 
 \subsubsection{DCDC converter output (scaled)}
+Read the DCDC converter output voltage on Channel 0 (See Table~\ref{tab:dcdco}). The output is scaled by \todo{$\frac{1}{2}$}.
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad Name} & {\bf Channel} & {\bf Sub-channel} & {\bf MUX select} & {\bf Value} \\
+\hline
+VDCDC & 0 & $-$ & $-$ & \todo{$\sim$750} mV\\
+\hline
+\end{tabular}
+\caption{DCDC converter output}
+\label{tab:dcdco}
+\end{center}
+\end{table}
+The output voltage can also be measured on VDCDC1 and VDCDC2 pins.
 
 \subsubsection{Linear regulator output (scaled)}
+Read the linear regulator output voltage on Channel 1 (See Table~\ref{tab:lino}). The output is scaled by \todo{$\frac{1}{2}$}.
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad Name} & {\bf Channel} & {\bf Sub-channel} & {\bf MUX select} & {\bf Value} \\
+\hline
+VDDLR & 1 & $-$ & $-$ & \todo{$\sim$700} mV\\
+\hline
+\end{tabular}
+\caption{Linear regulator output}
+\label{tab:lino}
+\end{center}
+\end{table}
+The output voltage can also be measured on VDDLR1 and VDDLR2 pins.
 
 \subsubsection{DCDC converter input (scaled)}
+Measure the input voltage to the DC/DC converter on Channel 2 ( See Table~\ref{tab:dcdci}). It is scaled by \todo{$\frac{1}{15}$}.
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad Name} & {\bf Channel} & {\bf Sub-channel} & {\bf MUX select} & {\bf Value} \\
+\hline
+DCDCin & 2 & $-$ & $-$ & \todo{$\sim$830} mV\\
+\hline
+\end{tabular}
+\caption{DCDC converter input}
+\label{tab:dcdci}
+\end{center}
+\end{table}
 
-\subsubsection{Regulated VDD}
+\subsubsection{Regulated VDD (scaled)}
+Modify Bangap reference voltage (See \cite{bandgaprefdoc}) and measure the corresponding regulated VDD voltage.
+The regulated VDD is scaled by \todo{$\frac{2}{3}$}. Table~\ref{tab:vddreg} summarizes the output details.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad Name} & {\bf Channel} & {\bf Sub-channel} & {\bf MUX select} & {\bf Value} \\
+\hline
+VDDREG & 3 & a & Reg53$<5:4>$ & \todo{$\sim$800} mV \\
+\hline
+\end{tabular}
+\caption{Regulated VDD ouput}
+\label{tab:vddreg}
+\end{center}
+\end{table}
+
+The regulated VDD voltage can also be measured on \todo{VDD1} and \todo{VDD2} pins.
 
 \subsubsection{AMBG600/AMBG900}
+\begin{compactitem}
+    \item{Read AMBG600 (See Table~\ref{tab:ambgo}). It should be $\sim$600 mV.}
+    \item{If not, tune the bangap reference output voltage using the 5 bit AM BG switches provided in Register 52 (BgCnt).}
+    \item{After tuning AMBG600 to 600 mV, Read AMBG900.}
+\end{compactitem}
+
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad Name} & {\bf Channel} & {\bf Sub-channel} & {\bf MUX select} & {\bf Value} \\
+\hline
+AM600BG & 4 & a & Reg53$<9:8>$ & $\sim$600 mV\\
+\hline
+AM900BG & 3 & c & Reg53$<5:4>$ & $\sim$900 mV\\
+\hline
+\end{tabular}
+\caption{600 mV and 900 mV AM Bandgap ouput}
+\label{tab:ambgo}
+\end{center}
+\end{table}
 
 \subsubsection{CAL from EoS}
+Read End of Stave ground reference voltage (See Table~\ref{tab:eos}).
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad Name} & {\bf Channel} & {\bf Sub-channel} & {\bf MUX select} & {\bf Range} \\
+\hline
+CAL & 4 & b & Reg53$<9:8>$ & $\sim$0 to 1 V\\
+\hline
+\end{tabular}
+\caption{EoS reference voltage}
+\label{tab:eos}
+\end{center}
+\end{table}
 
 \subsubsection{CALx/y from DAC}
+Calx/y DAC outputs are available on Channel 5a,b. (See Table~\ref{tab:calxy})
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+CALx & 5 & a & Reg53$<14:12>$ & Output of Hybrid X Calibration DAC\\
+\hline
+CALy & 5 & b & Reg53$<14:12>$ & Output of Hybrid Y Calibration DAC\\
+\hline
+\end{tabular}
+\caption{Calx/y DAC output}
+\label{tab:calxy}
+\end{center}
+\end{table}
+
+\begin{compactitem}
+    \item{Choose CALx output on Channel 5.}
+    \item{Set the 5-bit DACbias on Register $55<4:0>$ as 1111. This is the highest bias current condition for the DAC.}
+    \item{To test the mid range output value of this DAC, Set the 8 bit DAC input value for CALx on Register $54<7:0>$ to 8h7F}.
+    \item{Read the output. Output voltage should be \todo{$\sim$450} mV.}
+    \item{Set the 8 bit DAC input value for CALx on Register $54<7:0>$ as 8h00.}
+    \item{Read the output. Output voltage should be \todo{$\sim$zero}.}
+    \item{Set the 8 bit DAC input value for CALx on Register $54<7:0>$ as 8hFF.}
+    \item{Read the output. Output voltage should be \todo{$\sim$800} mV.}
+    \item{Test the DAC for different bias setting and input values.}
+    \item{Repeat the above procedure to test CALy DAC.}
+\end{compactitem}
+The output of this PMOS DAC is expected to deviate from linear near VDD. See \cite{amacv2schem} page 40 for schematic.
 
 \subsubsection{Shuntx/y from DAC}
+Shuntx/y DAC outputs are available on Channel 5c,d. (See Table~\ref{tab:shuntxy})
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+Shuntx & 5 & c & Reg53$<14:12>$ & Output of Hybrid X Shunt DAC\\
+\hline
+Shunty & 5 & d & Reg53$<14:12>$ & Output of Hybrid Y Shunt DAC\\
+\hline
+\end{tabular}
+\caption{Shuntx/y DAC output}
+\label{tab:shuntxy}
+\end{center}
+\end{table}
+
+\begin{compactitem}
+    \item{Choose Shuntx DAC output on Channel 5.}
+    \item{Set the 5-bit DACbias on Register $55<4:0>$ as 1111. This is the highest bias current condition for the DAC.}
+    \item{To test the mid range output value of this DAC, Set the 8 bit DAC input value for Shuntx on Register $54<23:16>$ to 8h7F}.
+    \item{Read the output. Output voltage should be \todo{$\sim$700} mV.}
+    \item{Set the 8 bit DAC input value for  Shuntx  on Register $54<23:16>$ as 8h00.}
+    \item{Read the output. Output voltage should be $\sim$1.17 V.}
+    \item{Set the 8 bit DAC input value for Shuntx  on Register $54<23:16>$ as 8hFF.}
+    \item{Read the output. Output voltage should be $\sim$80 mV.}
+    \item{Test the DAC for different bias setting and input values.}
+    \item{Repeat the above procedure to test Shunty DAC.}
+\end{compactitem}
+The output of this NMOS DAC is expected to deviate from linear near zero. See \cite{amacv2schem} page 40 for schematic.
 
 \subsubsection{NTCx/y/pb}
+NTC Outputs are available on Channel 7,8 and 9 for NTCx, NTCy, NTCpb. See Table~\ref{tab:ntc}.
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+NTCxp,n & 7 & $-$ & $-$ & Hybrid X NTC Temperature\\
+\hline
+NTCxp,n & 8 & $-$ & $-$ & Hybrid Y NTC Temperature\\
+\hline
+NTCpdp,n & 9 & $-$ & $-$ & Power board NTC Temperature\\
+\hline
+\end{tabular}
+\caption{NTC output}
+\label{tab:ntc}
+\end{center}
+\end{table}
+
+The 3-bit range select for NTC is mapped to register 57 (See Table~\ref{tab:ntcrange}).
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf NTC name} & {\bf Register} & {\bf Bits}\\
+\hline
+Hybrid X & 57 & 2:0\\
+\hline
+Hybrid Y & 57 & 10:8\\
+\hline
+Power board & 57 & 18:16\\
+\hline
+\end{tabular}
+\caption{NTC range selection}
+\label{tab:ntcrange}
+\end{center}
+\end{table}
+
+\begin{compactitem}
+    \item{Calibrate NTCx sensor. See \cite{AMACv2Calib}.}
+    \item{Set NTCx range select bits to 3b110.}
+    \item{Place a 10 K Ohm resistance (equivalent to the NTC resistance at room temperature) between NTCxp and NTCxn pads.}
+    \item{Read the NTC sensor output, the output should be $\sim$600 mV.}
+    \item{Vary the potentiometer resistance and the NTC range switches to test the circuit for differnt temperatures.}
+    \item{Repeat the steps for NTCy and NTCpb.}
+\end{compactitem}
 
 \subsubsection{Hrefx/y from hybrids}
+\begin{compactitem}
+\item{Apply voltage to Hrefx and Hrefy pins.}
+\item{Read the Hrefx and Hrefy voltages (See Table~\ref{tab:href}). The expected test range is $-$15 mV to 1 V.}
+\end{compactitem}
+\begin{table}[h]
+  \begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Pad} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+Hrefx & 10 & $-$ & $-$ & Hybrid X local ground\\
+\hline
+Hrefy & 11 & $-$ & $-$ & Hybrid Y local ground\\
+\hline
+\end{tabular}
+\caption{Hybrid X/Y local ground value}
+\label{tab:href}
+\end{center}
+\end{table}
 
 \subsubsection{DCDC input current}
+Outputs idcdcCMOut, idcdcVlowTP and idcdcVhighTP are multiplexed on Channel 12 (See Table~\ref{tab:idcdccm}).
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Output} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+idcdcCMOut & 12 & a & 53$<18:17>$ & Input DC DC converter output\\
+\hline
+idcdcVlowTP & 12 & b & 53$<18:17>$ & Calibration test point low\\
+\hline
+idcdcVhighTP & 12 & c & 53$<18:17>$ & Calibration test point high\\
+\hline
+\end{tabular}
+\caption{12 V DCDC input current measurement block outputs.}
+\label{tab:idcdccm}
+\end{center}
+\end{table}
+\begin{compactitem}
+    \item{Calibrate the 12 V current measurement block. See \cite{AMACv2Calib}.}
+    \item{Vary the current through Rsense series resistor from 0 to 1A, the DCDC current monitor output voltage should vary linearly fromm $\sim$100 mV to 1V.}
+\end{compactitem}
 
 \subsubsection{DCDC output current}
+Outputs odcdcCMOut, odcdcVlowTP and odcdcVhighTP are multiplexed on Channel 13 (See Table~\ref{tab:odcdccm}).
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Output} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+odcdcCMOut & 13 & a & 53$<21:20>$ & Output DC DC converter output\\
+\hline
+odcdcVlowTP & 13 & b & 53$<21:20>$ & Calibration test point low\\
+\hline
+odcdcVhighTP & 13 & c & 53$<21:20>$ & Calibration test point high\\
+\hline
+\end{tabular}
+\caption{1.5 V DCDC output current measurement block outputs.}
+\label{tab:odcdccm}
+\end{center}
+\end{table}
+
+\begin{compactitem}
+    \item{Calibrate the 1.5 V current measurement block. See \cite{AMACv2Calib}.}
+    \item{Vary the current through RSense series resistor from 0 to 4A, the DCDC current monitor output voltage should vary linearly from $\sim$100 mV to 900 mV.}
+\end{compactitem}
 
 \subsubsection{HV current return monitor}
+The HV current monitor is available on Channel 14 (See Table~\ref{tab:hvcm}) and its operating range is selected through 4 bits in Register 56$<19:16>$ (See Table~\ref{tab:hvcmrange}).
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Output} & {\bf Channel} & {\bf Sub-Channel} & {\bf MUX select} & {\bf Description}\\
+\hline
+HVret & 14 & $-$ & $-$ & Sensor HV bias return current measurent\\
+\hline
+\end{tabular}
+\caption{HV current monitor block}
+\label{tab:hvcm}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Sl no.} & {\bf Reg53$<19:16>$} & {\bf Current range}\\
+\hline
+1 & 4b0000 & 200 nA $-$ 4.5 $\mu$A\\
+\hline
+2 & 4b0001 & 270 nA $-$ 50 $\mu$A\\
+\hline
+3 & 4b0010 & 40 $\mu$A $-$ 474 $\mu$A\\
+\hline
+4 & 4b0100 & 100 $\mu$A $-$ 1 mA\\
+\hline
+5 & 4b1000 & 250 $\mu$A $-$ 5.7 mA\\
+\hline
+6 & 4b1100 & 250 $\mu$A $-$ 7.6 mA\\
+\hline
+\end{tabular}
+\caption{HV current monitor range selection}
+\label{tab:hvcmrange}
+\end{center}
+\end{table}
+
+\begin{compactitem}
+    \item{The operation range of the HV current monitor can be selected through register}
+    \item{\todo{Select} HVret1.}
+    \item{Vary the input HVret1 current from 0.01 mA - 5 mA and measure the output voltage.}
+    \item{Repeat the procedure for HVret2.}
+\end{compactitem}
 
 \subsubsection{die temp (PTAT)}
+\begin{compactitem}
+    \item{Voltage output prortional to the AMAC die temperature is provided on Channel 14.}
+    \item{Vary the temperature between $-40$ to $+50$\,\celsius and measure the output.}
+    \item{The output ranges from $\sim$375 mV to 250 mV. See \cite{diodetemp}}
+\end{compactitem}
 
 \subsubsection{MUX functionality}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\subsection{DAC Functionality}
-TDB: bais bits, dynamic range.
+Channels 3,4,5,12 and 13 are multiplexed. The MUX select bits are mapped to register 53 as shown in Table~\ref{tab:mux}).
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+{\bf Channel no.} & {\bf Register} & {\bf MUX Select}\\
+\hline
+3 & 53 & bits $<5:4>$\\
+\hline
+4 & 53 & bits $<9:8>$\\
+\hline
+5 & 53 & bits $<14:12>$\\
+\hline
+12 & 53 & bits $<17:16>$\\
+\hline
+13 & 53 & bits $<21:20>$\\
+\hline
+\end{tabular}
+\caption{MUX selection}
+\label{tab:mux}
+\end{center}
+\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \subsection{AM functionality}
@@ -342,5 +681,13 @@ TBD: CAL, Hrefx/y: input offset variation as a function of voltage, linearity
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{AMACv2 Test Record}
 Results of above tests to be recorded here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{References}
+\begin{thebibliography}{50}
+\bibitem{AMACv2Calib} AMACv2 Calibration Procedure
+\bibitem{bandgaprefdoc} Simulation of Bangap {\&} Regulator Circuit
+\bibitem{amacv2schem} AMACv2 Schematics
+\bibitem{diodetemp} Testing of Diode based Temperature Sensor
+\end{thebibliography}
 
 \end{document}
