@@ -29,7 +29,7 @@ std::vector<unsigned int> LTC2333::setNextConversion(unsigned int chan, unsigned
   uint8_t data[m_nBytesData];
 
   // Now read the input register, and pass the data array along to fill it
-  m_spi->read_reg(input, data, m_nBytesData);
+  m_dev->read_reg(input, data, m_nBytesData);
 
   return formatConversionResult(data);
 
@@ -62,7 +62,7 @@ std::vector<unsigned int> LTC2333::setUpToThreeConversions(std::vector<std::pair
   uint8_t data[m_nBytesData];
 
   // Now read the input register, and pass the data array along to fill it
-  m_dev->read_reg(input, data, nBytesData);
+  m_dev->read_reg(input_vec, data, m_nBytesData);
 
   return formatConversionResult(data);
 
@@ -78,7 +78,7 @@ std::vector<unsigned int> LTC2333::readPreviousConversion(){
   uint8_t data[m_nBytesData];
 
   // Now read the input register, and pass the data array along to fill it
-  m_dev->read_reg(input, data, nBytesData);
+  m_dev->read_reg(input, data, m_nBytesData);
 
   return formatConversionResult(data);
 
@@ -129,8 +129,7 @@ std::vector<unsigned int> LTC2333::formatConversionResult(uint8_t* data){
   unsigned int output_chan = (output >> 3) & m_chanMax;
 
   // Here is the 18-bit result
-  unsigned int output_result = (output >> 6) & 0x3FFFF; // 0x3FFFF = 2^18-1
+  unsigned int output_result = (output >> 6) & 0xFFFF; // 0xFFFF = 2^16-1
 
   return {output_result, output_chan, output_span};
-
 }

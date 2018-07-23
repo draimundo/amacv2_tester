@@ -6,7 +6,9 @@
 
 #include "DeviceCom.h"
 #include "LTC2666.h" 	//DAC
+#include "DACDevice.h"
 #include "LTC2333.h" 	//ADC
+#include "ADCDevice.h"
 #include "AD5160.h"		//SPI potentiometer
 #include "FreqMeas.h"	//FreqMeas bloc
 
@@ -17,18 +19,26 @@ struct io_t {
 	direction_t dir;
 };
 
-enum chanSpan_t{p5V, p10V, pm5V, pm10V, pm2_5V};
+enum dacChanSpan_t{p5V, p10V, pm5V, pm10V, pm2_5V};
 struct dac_t{
 	float chanMin;
 	float chanMax;
-	chanSpan_t chanSpan;
+	dacChanSpan_t dacChanSpan;
 	uint8_t	chanNbr;
 	uint8_t DACNbr;
 };
 
+// adc input channel span
+// used with default ref -> multiply 4.096 by the factor
+// div = /1.024, p = unipolar, pm = bipolar
+// ex : 	p1_25 div : range from 0V to 5V
+//				pm2_5 : range from -10.24V to 10.24V
+// for more info cf p.15 of datasheet
+enum adcChanSpan_t{p1_25div, p1_25, pm1_25div, pm1_25, p2_5div, p2_5, pm2_5div, pm2_5}; //cf p.15 of datasheet
 struct adc_t{
 	uint8_t chanNbr;
 	uint8_t ADCNbr;
+	adcChanSpan_t adcChanSpan;
 };
 
 enum mux_t{
@@ -113,38 +123,38 @@ public:
 	const io_t HVref_HGND_SW	 = {17, 0x2, 	OUT};
 	
 	//DAC outputs
-	const dac_t CAL = {.chanMin = 0, .chanMax = 1, .chanSpan = p5V, .chanNbr = 0, .DACNbr = 0};
-	const dac_t Cur1Vp = {.chanMin = 0.7, .chanMax = 1, .chanSpan = p5V, .chanNbr = 1, .DACNbr = 0};
-	const dac_t Cur10Vp = {.chanMin = 0.7, .chanMax = 1, .chanSpan = p5V, .chanNbr = 2, .DACNbr = 0};
-	const dac_t PTAT = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 3, .DACNbr = 0};
-	const dac_t VCC1 = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 4, .DACNbr = 0};
-	const dac_t HVref = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 5, .DACNbr = 0};
-	const dac_t Cur10Vp_offset = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 6, .DACNbr = 0}; //To be adapted
-	const dac_t Cur1Vp_offset = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 7, .DACNbr = 0}; //To be adapted
-	const dac_t RgOsc_Vref = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 2, .DACNbr = 1}; //To be adapted
-	const dac_t HVOsc_Vref = {.chanMin = 0.5, .chanMax = 0.8, .chanSpan = p5V, .chanNbr = 3, .DACNbr = 1}; //To be adapted
+	const dac_t CAL = {.chanMin = 0, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 0, .DACNbr = 0};
+	const dac_t Cur1Vp = {.chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 1, .DACNbr = 0};
+	const dac_t Cur10Vp = {.chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 2, .DACNbr = 0};
+	const dac_t PTAT = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DACNbr = 0};
+	const dac_t VCC1 = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DACNbr = 0};
+	const dac_t HVref = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DACNbr = 0};
+	const dac_t Cur10Vp_offset = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DACNbr = 0}; //To be adapted
+	const dac_t Cur1Vp_offset = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DACNbr = 0}; //To be adapted
+	const dac_t RgOsc_Vref = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 2, .DACNbr = 1}; //To be adapted
+	const dac_t HVOsc_Vref = {.chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DACNbr = 1}; //To be adapted
 	
 	//ADC inputs
-	const adc_t M1 = {.chanNbr = 7, .ADCNbr = 0};
-	const adc_t M2 = {.chanNbr = 6, .ADCNbr = 0};
-	const adc_t M3 = {.chanNbr = 5, .ADCNbr = 0};
-	const adc_t M4 = {.chanNbr = 4, .ADCNbr = 0};
-	const adc_t M5 = {.chanNbr = 3, .ADCNbr = 0};
-	const adc_t M6 = {.chanNbr = 2, .ADCNbr = 0};
-	const adc_t M7 = {.chanNbr = 1, .ADCNbr = 0};
-	const adc_t M8 = {.chanNbr = 0, .ADCNbr = 0};
-	const adc_t Ext_NTC_ADC1 = {.chanNbr = 0, .ADCNbr = 1};
-	const adc_t AM600BG = {.chanNbr = 2, .ADCNbr = 1};
-	const adc_t AM900BG = {.chanNbr = 3, .ADCNbr = 1};
-	const adc_t Shunty = {.chanNbr = 4, .ADCNbr = 1};
-	const adc_t Shuntx = {.chanNbr = 5, .ADCNbr = 1};
-	const adc_t CALy = {.chanNbr = 6, .ADCNbr = 1};
-	const adc_t CALx = {.chanNbr = 7, .ADCNbr = 1};
-	const adc_t AM_LVDS_CM0 = {.chanNbr = 0, .ADCNbr = 2};
-	const adc_t AM_LVDS_CM1 = {.chanNbr = 1, .ADCNbr = 2};
-	const adc_t HV_SW_Vout = {.chanNbr = 2, .ADCNbr = 2};
-	const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2};
-	const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2};
+	const adc_t M1 = {.chanNbr = 7, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M2 = {.chanNbr = 6, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M3 = {.chanNbr = 5, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M4 = {.chanNbr = 4, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M5 = {.chanNbr = 3, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M6 = {.chanNbr = 2, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M7 = {.chanNbr = 1, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t M8 = {.chanNbr = 0, .ADCNbr = 0, .adcChanSpan = p1_25div};
+	const adc_t Ext_NTC_ADC1 = {.chanNbr = 0, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t AM600BG = {.chanNbr = 2, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t AM900BG = {.chanNbr = 3, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t Shunty = {.chanNbr = 4, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t Shuntx = {.chanNbr = 5, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t CALy = {.chanNbr = 6, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t CALx = {.chanNbr = 7, .ADCNbr = 1, .adcChanSpan = p1_25div};
+	const adc_t AM_LVDS_CM0 = {.chanNbr = 0, .ADCNbr = 2, .adcChanSpan = p1_25div};
+	const adc_t AM_LVDS_CM1 = {.chanNbr = 1, .ADCNbr = 2, .adcChanSpan = p1_25div};
+	const adc_t HV_SW_Vout = {.chanNbr = 2, .ADCNbr = 2, .adcChanSpan = p1_25div};
+	const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2, .adcChanSpan = p1_25div};
+	const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2, .adcChanSpan = p1_25div};
 	
 	LTC2666 DAC0;
 	LTC2666 DAC1;
