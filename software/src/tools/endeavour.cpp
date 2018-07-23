@@ -24,7 +24,7 @@ void print_help()
 
 int main(int argc, char* argv[])
 {
-  std::string device="/dev/uio2";
+  std::string device="/dev/uio1";
   unsigned short int amacid=0x15;
 
   // Parse options
