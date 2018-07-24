@@ -233,7 +233,7 @@ endeavour_fmc_controller_v1_0_S00_AXI_inst : endeavour_fmc_controller_v1_0_S00_A
         TICKS_BITGAP_MIN=>  22,
         TICKS_BITGAP_MID=>  86,
         TICKS_BITGAP_MAX=> 150
-        );
+        )
       port map (
         clock     => clock80MHz,
         reset     => reset,
