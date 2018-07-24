@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <string.h>
 
 #include <iostream>
 #include <iomanip>
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
 	      return 1;
 	    }
 
-	  EndeavourCom::REFMODE refmode=(argv[optind+1]=="idpads")?EndeavourCom::REFMODE::IDPads:EndeavourCom::REFMODE::EfuseId;
+	  EndeavourCom::REFMODE refmode=(strcmp(argv[optind+1],"idpads")==0)?EndeavourCom::REFMODE::IDPads:EndeavourCom::REFMODE::EfuseId;
 	  unsigned int refid=std::stoul(argv[optind+2], nullptr, 0);
 
 	  end.setid(refmode,refid);
