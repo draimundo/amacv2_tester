@@ -171,11 +171,12 @@ void SPICom::read_reg(std::vector<unsigned int> addresses, uint8_t* data, unsign
   uint8_t tx[addresses.size()] = {};
 
   for(int vec_index = 0; vec_index < addresses.size(); ++vec_index){
-    unsigned int data = addresses.at(vec_index);
-    tx[vec_index] = (uint8_t)(data&0xFF);
+    unsigned int data_in = addresses.at(vec_index);
+    tx[vec_index] = (uint8_t)(data_in&0xFF);
   }
 
-  uint8_t rx[ARRAY_SIZE(tx)] = {0, };
+  //uint8_t rx[ARRAY_SIZE(tx)] = {0, };
+  uint8_t rx[len+1] = {0, };
   struct spi_ioc_transfer tr = {
     .tx_buf = (unsigned long)tx,
     .rx_buf = (unsigned long)rx,
