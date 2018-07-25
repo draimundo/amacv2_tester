@@ -14,7 +14,7 @@ AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
 		std::shared_ptr<DeviceCom> pot1,
 		std::shared_ptr<DeviceCom> pot2,
 		std::shared_ptr<DeviceCom> frq)
-  : m_dio(dio), END(0x1F, end),
+  : m_dio(dio), END(0xF, end),
     DAC0(dac0), DAC1(dac1), ADC0(adc0), ADC1(adc1), ADC2(adc2), POT0(pot0), POT1(pot1), POT2(pot2),
     FRQ(frq)
 {
