@@ -34,10 +34,33 @@ int main()
       std::cout << "AMAC ON" << std::endl;
       usleep(1E6);
 
-      // SETID
-      TB.END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
-      std::cout << "SETID" << std::endl;
-      usleep(1E6); // 1s wait for a clear send
+      try
+        {      
+          TB.END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+          std::cout << "SETID" << std::endl;
+          usleep(1E6);
+
+          unsigned int data=TB.END.read_reg(31);
+          std::cout << "Register 31: " << std::hex << data << std::endl;
+          usleep(1E6); // 1s wait for a clear send
+
+          data=TB.END.read_reg(52);
+          std::cout << "Register 52: " << std::hex << data << std::endl;
+          usleep(1E6); // 1s wait for a clear send
+
+          TB.END.write_reg(52, 0x9F9F);
+          std::cout << "BG set" << std::endl;
+          usleep(1E6); // 1s wait for a clear send
+
+          TB.END.read_reg(52);
+          data=TB.END.read_reg(52);
+          std::cout << "Register 52: " << std::hex << data << std::endl;      
+          usleep(10E6); // 1s wait for a clear send
+        }
+      catch(EndeavourComException e)
+        {
+          std::cout << e.what() << std::endl;
+        }
     }
 
   // Power off
