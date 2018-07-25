@@ -81,8 +81,12 @@ std::vector<unsigned int> LTC2333::readPreviousConversion(){
   // 24-bit array for the values we'll read out
   uint8_t data[m_nBytesData];
 
+  // Use the read_reg(vector, ...) function to avoid sending the extra 0's for now
+  std::vector<unsigned int> input_vec;
+  input_vec.push_back(input);
+
   // Now read the input register, and pass the data array along to fill it
-  m_dev->read_reg(input, data, m_nBytesData);
+  m_dev->read_reg(input_vec, data, m_nBytesData);
 
   return formatConversionResult(data);
 
