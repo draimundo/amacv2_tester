@@ -191,10 +191,10 @@ begin
   -- The FSM for receiving data from AMAC
   --
   process (clock)
-    variable counter    : integer range 0 to 127        := 0;
+    variable counter    : integer range 0 to 511        := 0;
   begin
     if rising_edge(clock) then
-      if reset='1' then
+      if reset = '1' then
         fsm_rd                  <= idle;
         reg_nbitsout            <= 0;
         reg_dataout             <= (others => '0');
@@ -217,7 +217,7 @@ begin
             end if;
 
           when waitbit =>
-            if serialin='1' then
+            if serialin = '1' then
               counter           := counter+1;
             else
               fsm_rd            <= readbit;
@@ -226,10 +226,10 @@ begin
           when readbit =>
             if    (TICKS_DIT_MIN < counter) and (counter < TICKS_DIT_MAX) then
               reg_dataout       <= reg_dataout(62 downto 0) & '0';
-            elsif (TICKS_DAH_MIN < counter) and (counter < TICKS_DAH_MIN) then
+            elsif (TICKS_DAH_MIN < counter) and (counter < TICKS_DAH_MAX) then
               reg_dataout       <= reg_dataout(62 downto 0) & '1';
             else
-              reg_dataout       <= reg_dataout(62 downto 0) & 'U';
+              reg_dataout       <= reg_dataout(62 downto 0) & '0';
               reg_error         <= '1';
             end if;
             counter             := 0;
@@ -254,6 +254,6 @@ begin
       end if;
     end if;
   end process;
-  
+
 end behavioural;
 

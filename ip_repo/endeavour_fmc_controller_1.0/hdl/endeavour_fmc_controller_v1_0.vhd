@@ -6,52 +6,55 @@ library UNISIM;
 use UNISIM.Vcomponents.all;
 
 entity endeavour_fmc_controller_v1_0 is
-	generic (
-		-- Users to add parameters here
-		-- User parameters ends
-		-- Do not modify the parameters beyond this line
+  generic (
+    -- Users to add parameters here
+    -- User parameters ends
+    -- Do not modify the parameters beyond this line
+
+    -- Parameters of Axi Slave Bus Interface S00_AXI
+    C_S00_AXI_DATA_WIDTH	: integer	:= 32;
+    C_S00_AXI_ADDR_WIDTH	: integer	:= 5
+    );
+  port (
+    -- Users to add ports here
+    busy        : out std_logic;
+    datavalid   : out std_logic;
+    error       : out std_logic;
+    CMD_IN_P    : out std_logic;
+    CMD_IN_N    : out std_logic;
+
+    CMD_OUT_P   : in std_logic;
+    CMD_OUT_N   : in std_logic;
+
+    cmd_in      : out std_logic;
+    cmd_out     : out std_logic;
+    -- User ports ends
+    -- Do not modify the ports beyond this line
 
 
-		-- Parameters of Axi Slave Bus Interface S00_AXI
-		C_S00_AXI_DATA_WIDTH	: integer	:= 32;
-		C_S00_AXI_ADDR_WIDTH	: integer	:= 5
-	);
-	port (
-		-- Users to add ports here
-        busy        : out std_logic;
-        datavalid   : out std_logic;
-        CMD_IN_P    : out std_logic;
-        CMD_IN_N    : out std_logic;
-        
-        CMD_OUT_P   : in std_logic;
-        CMD_OUT_N   : in std_logic;
-		-- User ports ends
-		-- Do not modify the ports beyond this line
-
-
-		-- Ports of Axi Slave Bus Interface S00_AXI
-		s00_axi_aclk	: in std_logic;
-		s00_axi_aresetn	: in std_logic;
-		s00_axi_awaddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
-		s00_axi_awprot	: in std_logic_vector(2 downto 0);
-		s00_axi_awvalid	: in std_logic;
-		s00_axi_awready	: out std_logic;
-		s00_axi_wdata	: in std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
-		s00_axi_wstrb	: in std_logic_vector((C_S00_AXI_DATA_WIDTH/8)-1 downto 0);
-		s00_axi_wvalid	: in std_logic;
-		s00_axi_wready	: out std_logic;
-		s00_axi_bresp	: out std_logic_vector(1 downto 0);
-		s00_axi_bvalid	: out std_logic;
-		s00_axi_bready	: in std_logic;
-		s00_axi_araddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
-		s00_axi_arprot	: in std_logic_vector(2 downto 0);
-		s00_axi_arvalid	: in std_logic;
-		s00_axi_arready	: out std_logic;
-		s00_axi_rdata	: out std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
-		s00_axi_rresp	: out std_logic_vector(1 downto 0);
-		s00_axi_rvalid	: out std_logic;
-		s00_axi_rready	: in std_logic
-	);
+    -- Ports of Axi Slave Bus Interface S00_AXI
+    s00_axi_aclk	: in std_logic;
+    s00_axi_aresetn	: in std_logic;
+    s00_axi_awaddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
+    s00_axi_awprot	: in std_logic_vector(2 downto 0);
+    s00_axi_awvalid	: in std_logic;
+    s00_axi_awready	: out std_logic;
+    s00_axi_wdata	: in std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
+    s00_axi_wstrb	: in std_logic_vector((C_S00_AXI_DATA_WIDTH/8)-1 downto 0);
+    s00_axi_wvalid	: in std_logic;
+    s00_axi_wready	: out std_logic;
+    s00_axi_bresp	: out std_logic_vector(1 downto 0);
+    s00_axi_bvalid	: out std_logic;
+    s00_axi_bready	: in std_logic;
+    s00_axi_araddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
+    s00_axi_arprot	: in std_logic_vector(2 downto 0);
+    s00_axi_arvalid	: in std_logic;
+    s00_axi_arready	: out std_logic;
+    s00_axi_rdata	: out std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
+    s00_axi_rresp	: out std_logic_vector(1 downto 0);
+    s00_axi_rvalid	: out std_logic;
+    s00_axi_rready	: in std_logic
+    );
 end endeavour_fmc_controller_v1_0;
 
 architecture arch_imp of endeavour_fmc_controller_v1_0 is
@@ -151,88 +154,116 @@ architecture arch_imp of endeavour_fmc_controller_v1_0 is
 begin
 
 -- Instantiation of Axi Bus Interface S00_AXI
-endeavour_fmc_controller_v1_0_S00_AXI_inst : endeavour_fmc_controller_v1_0_S00_AXI
-	generic map (
-		C_S_AXI_DATA_WIDTH	=> C_S00_AXI_DATA_WIDTH,
-		C_S_AXI_ADDR_WIDTH	=> C_S00_AXI_ADDR_WIDTH
-	)
-	port map (
-	    axi_control       => axi_control,
-        axi_status        => axi_status,
-        axi_nbitsin       => axi_nbitsin,
-        axi_datain        => axi_datain,
-        axi_nbitsout      => axi_nbitsout,
-        axi_dataout       => axi_dataout,
---        slave_data        => slave_data,
-		S_AXI_ACLK	=> s00_axi_aclk,
-		S_AXI_ARESETN	=> s00_axi_aresetn,
-		S_AXI_AWADDR	=> s00_axi_awaddr,
-		S_AXI_AWPROT	=> s00_axi_awprot,
-		S_AXI_AWVALID	=> s00_axi_awvalid,
-		S_AXI_AWREADY	=> s00_axi_awready,
-		S_AXI_WDATA	=> s00_axi_wdata,
-		S_AXI_WSTRB	=> s00_axi_wstrb,
-		S_AXI_WVALID	=> s00_axi_wvalid,
-		S_AXI_WREADY	=> s00_axi_wready,
-		S_AXI_BRESP	=> s00_axi_bresp,
-		S_AXI_BVALID	=> s00_axi_bvalid,
-		S_AXI_BREADY	=> s00_axi_bready,
-		S_AXI_ARADDR	=> s00_axi_araddr,
-		S_AXI_ARPROT	=> s00_axi_arprot,
-		S_AXI_ARVALID	=> s00_axi_arvalid,
-		S_AXI_ARREADY	=> s00_axi_arready,
-		S_AXI_RDATA	=> s00_axi_rdata,
-		S_AXI_RRESP	=> s00_axi_rresp,
-		S_AXI_RVALID	=> s00_axi_rvalid,
-		S_AXI_RREADY	=> s00_axi_rready
-	);
+  endeavour_fmc_controller_v1_0_S00_AXI_inst : endeavour_fmc_controller_v1_0_S00_AXI
+    generic map (
+      C_S_AXI_DATA_WIDTH	=> C_S00_AXI_DATA_WIDTH,
+      C_S_AXI_ADDR_WIDTH	=> C_S00_AXI_ADDR_WIDTH
+      )
+    port map (
+      axi_control       => axi_control,
+      axi_status        => axi_status,
+      axi_nbitsin       => axi_nbitsin,
+      axi_datain        => axi_datain,
+      axi_nbitsout      => axi_nbitsout,
+      axi_dataout       => axi_dataout,
+--            slave_data        => slave_data,
+      S_AXI_ACLK	=> s00_axi_aclk,
+      S_AXI_ARESETN	=> s00_axi_aresetn,
+      S_AXI_AWADDR	=> s00_axi_awaddr,
+      S_AXI_AWPROT	=> s00_axi_awprot,
+      S_AXI_AWVALID	=> s00_axi_awvalid,
+      S_AXI_AWREADY	=> s00_axi_awready,
+      S_AXI_WDATA	=> s00_axi_wdata,
+      S_AXI_WSTRB	=> s00_axi_wstrb,
+      S_AXI_WVALID	=> s00_axi_wvalid,
+      S_AXI_WREADY	=> s00_axi_wready,
+      S_AXI_BRESP	=> s00_axi_bresp,
+      S_AXI_BVALID	=> s00_axi_bvalid,
+      S_AXI_BREADY	=> s00_axi_bready,
+      S_AXI_ARADDR	=> s00_axi_araddr,
+      S_AXI_ARPROT	=> s00_axi_arprot,
+      S_AXI_ARVALID	=> s00_axi_arvalid,
+      S_AXI_ARREADY	=> s00_axi_arready,
+      S_AXI_RDATA	=> s00_axi_rdata,
+      S_AXI_RRESP	=> s00_axi_rresp,
+      S_AXI_RVALID	=> s00_axi_rvalid,
+      S_AXI_RREADY	=> s00_axi_rready
+      );
 
-	-- Add user logic here
-	  reset         <= axi_control(0);
-	-- Differential buffers for AMAC communication
-    CMD_IN_buf_inst : OBUFDS
-        generic map(
-            IOSTANDARD => "LVDS_25"
-        )
-        port map(
-            I   => serial0,
-            O   => CMD_IN_P,
-            OB  => CMD_IN_N
-        );
-    
-    CMD_OUT_buf_inst : IBUFDS
-        generic map(
-            IOSTANDARD => "LVDS_25"
-        )
-        port map(
-            I   => CMD_OUT_P,
-            IB  => CMD_OUT_N,
-            O   => serial1
-        );
-        
-    busy        <= axi_status(0);
-    datavalid   <= axi_status(1);
-        --
-    clock100MHz       <= s00_axi_aclk;
-    
-    inst_TopLevel_clk_wiz_0_0_clk_wiz : TopLevel_clk_wiz_0_0_clk_wiz
+-- Add user logic here
+  reset         <= axi_control(0);
+  -- Differential buffers for AMAC communication
+  CMD_IN_buf_inst : OBUFDS
+    generic map(
+      IOSTANDARD => "LVDS_25"
+      )
     port map(
-        clk_out1 => clock80MHz,
-        clk_in1 => clock100MHz
-    );
+      I   => serial0,
+      O   => CMD_IN_P,
+      OB  => CMD_IN_N
+      );
+    
+  CMD_OUT_buf_inst : IBUFDS
+    generic map(
+      IOSTANDARD => "LVDS_25"
+      )
+    port map(
+      I   => CMD_OUT_P,
+      IB  => CMD_OUT_N,
+      O   => serial1
+      );
+
+  cmd_in        <= serial0;
+  cmd_out       <= serial1;
+  
+  
+  busy        <= axi_status(0);
+  datavalid   <= axi_status(1);
+  error       <= axi_status(2);
+  --
+  clock100MHz       <= s00_axi_aclk;
+  clock80MHz        <= clock100MHz;
+    
+    --inst_TopLevel_clk_wiz_0_0_clk_wiz : TopLevel_clk_wiz_0_0_clk_wiz
+    --port map(
+    --    clk_out1 => clock80MHz,
+    --    clk_in1 => clock100MHz
+    --);
     
     inst_endeavour_master : endeavour_master
       generic map (
-        TICKS_QUIESCENT => 150,    
-        TICKS_DIT_MIN   =>  12,
-        TICKS_DIT_MID   =>  28,
-        TICKS_DIT_MAX   =>  44,
-        TICKS_DAH_MIN   =>  58,
-        TICKS_DAH_MID   => 152,
-        TICKS_DAH_MAX   => 248,
-        TICKS_BITGAP_MIN=>  22,
-        TICKS_BITGAP_MID=>  86,
-        TICKS_BITGAP_MAX=> 150
+        --TICKS_QUIESCENT => 150,    
+        --TICKS_DIT_MIN   =>  12,
+        --TICKS_DIT_MID   =>  28,
+        --TICKS_DIT_MAX   =>  44,
+        --TICKS_DAH_MIN   =>  58,
+        --TICKS_DAH_MID   => 152,
+        --TICKS_DAH_MAX   => 248,
+        --TICKS_BITGAP_MIN=>  22,
+        --TICKS_BITGAP_MID=>  86,
+        --TICKS_BITGAP_MAX=> 150
+        -- Adrian values, 40 MHz
+        --TICKS_QUIESCENT =>  72,
+        --TICKS_DIT_MIN   =>   4,
+        --TICKS_DIT_MID   =>  10,
+        --TICKS_DIT_MAX   =>  20,
+        --TICKS_DAH_MIN   =>  24,
+        --TICKS_DAH_MID   =>  50,
+        --TICKS_DAH_MAX   => 120,
+        --TICKS_BITGAP_MIN=>   8,
+        --TICKS_BITGAP_MID=>  24,
+        --TICKS_BITGAP_MAX=>  72
+        -- Adrian values, 100 MHz
+        TICKS_QUIESCENT => 180,
+        TICKS_DIT_MIN   =>  10,
+        TICKS_DIT_MID   =>  25,
+        TICKS_DIT_MAX   =>  50,
+        TICKS_DAH_MIN   =>  60,
+        TICKS_DAH_MID   => 125,
+        TICKS_DAH_MAX   => 300,
+        TICKS_BITGAP_MIN=>  20,
+        TICKS_BITGAP_MID=>  60,
+        TICKS_BITGAP_MAX=> 180
         )
       port map (
         clock     => clock80MHz,

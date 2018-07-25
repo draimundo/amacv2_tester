@@ -1,7 +1,7 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Fri Jul 20 18:28:18 2018
+--Date        : Tue Jul 24 13:56:13 2018
 --Host        : carl-pc running 64-bit CentOS Linux release 7.5.1804 (Core)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper

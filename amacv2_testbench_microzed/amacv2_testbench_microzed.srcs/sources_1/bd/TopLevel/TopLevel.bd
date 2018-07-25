@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xE93CBFF5B112A232" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="None" bd:tool_version="2018.2" bd:top="TopLevel" bd:version="1.00.a">
+<bd:repository xmlns:bd="http://www.xilinx.com/bd" bd:BoundaryCRC="0xE93CBFF57489D52C" bd:device="xc7z020clg400-1" bd:isValidated="true" bd:synthFlowMode="None" bd:tool_version="2018.2" bd:top="TopLevel" bd:version="1.00.a">
 
   <spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
     <spirit:vendor>xilinx.com</spirit:vendor>
@@ -518,12 +518,12 @@
           <spirit:configurableElementValue spirit:referenceId="PCW_CPU_CPU_6X4X_MAX_RANGE">667</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_CRYSTAL_PERIPHERAL_FREQMHZ">33.333333</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_APU_PERIPHERAL_FREQMHZ">667</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_QSPI_PERIPHERAL_FREQMHZ">200.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_QSPI_PERIPHERAL_FREQMHZ">200</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_SDIO_PERIPHERAL_FREQMHZ">25</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_UART_PERIPHERAL_FREQMHZ">50</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_TTC_PERIPHERAL_FREQMHZ">50</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_FPGA0_PERIPHERAL_FREQMHZ">100</spirit:configurableElementValue>
-          <spirit:configurableElementValue spirit:referenceId="PCW_FPGA1_PERIPHERAL_FREQMHZ">100</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_FPGA1_PERIPHERAL_FREQMHZ">40</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_FPGA2_PERIPHERAL_FREQMHZ">33.333333</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_FPGA3_PERIPHERAL_FREQMHZ">50</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_ACT_APU_PERIPHERAL_FREQMHZ">666.666687</spirit:configurableElementValue>
@@ -820,6 +820,7 @@
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_axi_quad_spi_0_0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="C_USE_STARTUP">0</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="C_NUM_SS_BITS">8</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="C_SCK_RATIO">4</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="C_FIFO_DEPTH">16</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="C_S_AXI4_ID_WIDTH">0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
@@ -849,7 +850,7 @@
       </spirit:componentInstance>
       <spirit:componentInstance>
         <spirit:instanceName>endeavour_fmc_contro_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="user" spirit:name="endeavour_fmc_controller" spirit:vendor="xilinx.com" spirit:version="1.0"/>
+        <spirit:componentRef spirit:library="endeavour" spirit:name="endeavour_fmc_controller" spirit:vendor="lbl.gov" spirit:version="1.0"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">TopLevel_endeavour_fmc_contro_0_0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
@@ -942,32 +943,15 @@
         <spirit:name>Net</spirit:name>
         <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="peripheral_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_quad_spi_0" spirit:portRef="s_axi_aresetn"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="s00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M00_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M01_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M02_ARESETN"/>
         <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M03_ARESETN"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="s00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="s00_axi_aresetn"/>
         <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="s00_axi_aresetn"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
-        <spirit:name>processing_system7_0_FCLK_CLK0</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK0"/>
-        <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="slowest_sync_clk"/>
-        <spirit:internalPortReference spirit:componentRef="axi_quad_spi_0" spirit:portRef="ext_spi_clk"/>
-        <spirit:internalPortReference spirit:componentRef="axi_quad_spi_0" spirit:portRef="s_axi_aclk"/>
-        <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="s00_axi_aclk"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M00_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M01_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M02_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M03_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="s00_axi_aclk"/>
-        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="s00_axi_aclk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>amacv2_digital_io_0_Ofin</spirit:name>
@@ -1140,11 +1124,6 @@
         <spirit:externalPortReference spirit:portRef="LVL_TRANS_EN"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>amacv2_digital_io_0_FPGA_EFUSE_PULSE</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="FPGA_EFUSE_PULSE"/>
-        <spirit:externalPortReference spirit:portRef="FPGA_EFUSE_PULSE"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>amacv2_digital_io_0_HVref_HGND_SW</spirit:name>
         <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="HVref_HGND_SW"/>
         <spirit:externalPortReference spirit:portRef="HVref_HGND_SW"/>
@@ -1153,6 +1132,48 @@
         <spirit:name>amacv2_digital_io_0_HVret_SW</spirit:name>
         <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="HVret_SW"/>
         <spirit:externalPortReference spirit:portRef="HVret_SW"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_contro_0_datavalid</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="datavalid"/>
+        <spirit:externalPortReference spirit:portRef="LED1"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_contro_0_busy</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="busy"/>
+        <spirit:externalPortReference spirit:portRef="LED0"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>amacv2_digital_io_0_FPGA_EFUSE_PULSE</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="FPGA_EFUSE_PULSE"/>
+        <spirit:externalPortReference spirit:portRef="FPGA_EFUSE_PULSE"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_contro_0_error</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="error"/>
+        <spirit:externalPortReference spirit:portRef="LED2"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>endeavour_fmc_contro_0_cmd_out</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="cmd_out"/>
+        <spirit:externalPortReference spirit:portRef="LED3"/>
+      </spirit:adHocConnection>
+      <spirit:adHocConnection>
+        <spirit:name>processing_system7_0_FCLK_CLK0</spirit:name>
+        <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK0"/>
+        <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="S00_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="rst_ps7_0_100M" spirit:portRef="slowest_sync_clk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_quad_spi_0" spirit:portRef="ext_spi_clk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_quad_spi_0" spirit:portRef="s_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M02_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M00_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="amacv2_digital_io_0" spirit:portRef="s00_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M01_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="axi_interconnect_0" spirit:portRef="M03_ACLK"/>
+        <spirit:internalPortReference spirit:componentRef="freq_meas_0" spirit:portRef="s00_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="s00_axi_aclk"/>
       </spirit:adHocConnection>
     </spirit:adHocConnections>
     <spirit:hierConnections>
