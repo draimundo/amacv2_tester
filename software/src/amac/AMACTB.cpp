@@ -4,71 +4,73 @@
 #include "AMACTB.h"
 
 AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
-								std::shared_ptr<DeviceCom> end,
-								std::shared_ptr<DeviceCom> dac0,
-								std::shared_ptr<DeviceCom> dac1,
-								std::shared_ptr<DeviceCom> adc0,
-								std::shared_ptr<DeviceCom> adc1,
-								std::shared_ptr<DeviceCom> adc2,
-								std::shared_ptr<DeviceCom> pot0,
-								std::shared_ptr<DeviceCom> pot1,
-								std::shared_ptr<DeviceCom> pot2,
-								std::shared_ptr<DeviceCom> frq) :
-								m_dio(dio),
-								END(0x1F, end),
-								DAC0(dac0),
-								DAC1(dac1),
-								ADC0(adc0),
-								ADC1(adc1),
-								ADC2(adc2),
-								POT0(pot0),
-								POT1(pot1),
-								POT2(pot2),
-								FRQ(frq){
-	
-	this->powerOn();
-
-}
+		std::shared_ptr<DeviceCom> end,
+		std::shared_ptr<DeviceCom> dac0,
+		std::shared_ptr<DeviceCom> dac1,
+		std::shared_ptr<DeviceCom> adc0,
+		std::shared_ptr<DeviceCom> adc1,
+		std::shared_ptr<DeviceCom> adc2,
+		std::shared_ptr<DeviceCom> pot0,
+		std::shared_ptr<DeviceCom> pot1,
+		std::shared_ptr<DeviceCom> pot2,
+		std::shared_ptr<DeviceCom> frq)
+  : m_dio(dio), END(0x1F, end),
+    DAC0(dac0), DAC1(dac1), ADC0(adc0), ADC1(adc1), ADC2(adc2), POT0(pot0), POT1(pot1), POT2(pot2),
+    FRQ(frq)
+{ }
 
 AMACTB::~AMACTB()
 { }
 
-void AMACTB::powerOn(){ //active = working (NOT off/low power)
-	this->setIO(this->LD_EN_VDDRL,true);		//LT3022, active high
-	this->setIO(this->LV_EN_2V5,true);			//LT3092, active high
-	this->setIO(this->LV_EN_VP5,true);			//LT3092, active high
-	this->setIO(this->LV_EN_VN5,true); 			//LT3015 for VEE5, active high
-	this->setIO(this->LV_EN_AVDD5,true);		//LT3092, active high
-	this->setIO(this->LV_EN_AVEE,true); 		//LT3015, active high
-	this->setIO(this->LV_EN_AVCC,true);			//LT3092, active high
-	this->setIO(this->LD_EN_VDCDC,true);		//LT3022, active high
-	this->setIO(this->LVL_TRANS_EN,false); 		//sn74avc8t245, active low
-	this->setIO(this->MPM_MUX_EN,true);			//ADG1608, active high
-	this->setIO(this->HVSW_MUX_EN,true);		//ADG1609, active high
-	//this->setIO(this->FPGA_EFUSE_PULSE,true);	//Not implemented func?
-
+void AMACTB::powerOn()
+{ //active = working (NOT off/low power)
+  this->setIO(this->LV_EN_2V5,true);	        //LT3092, active high
+  this->setIO(this->LV_EN_VP5,true);		//LT3092, active high
+  this->setIO(this->LV_EN_VN5,true); 		//LT3015 for VEE5, active high
+  this->setIO(this->LV_EN_AVDD5,true);		//LT3092, active high
+  this->setIO(this->LV_EN_AVEE,true); 		//LT3015, active high
+  this->setIO(this->LV_EN_AVCC,true);		//LT3092, active high
+  this->setIO(this->LVL_TRANS_EN,false); 	//sn74avc8t245, active low
+  this->setIO(this->MPM_MUX_EN,true);		//ADG1608, active high
+  this->setIO(this->HVSW_MUX_EN,true);		//ADG1609, active high
+  //this->setIO(this->FPGA_EFUSE_PULSE,true);	//Not implemented func?
 }
 
-void AMACTB::powerOff(){
-	this->setIO(this->LD_EN_VDDRL,false);		//LT3022, active high
-	this->setIO(this->LV_EN_2V5,false);			//LT3092, active high
-	this->setIO(this->LV_EN_VP5,false);			//LT3092, active high
-	this->setIO(this->LV_EN_VN5,false); 			//LT3015 for VEE5, active high
-	this->setIO(this->LV_EN_AVDD5,false);		//LT3092, active high
-	this->setIO(this->LV_EN_AVEE,false); 		//LT3015, active high
-	this->setIO(this->LV_EN_AVCC,false);			//LT3092, active high
-	this->setIO(this->LD_EN_VDCDC,false);		//LT3022, active high
-	this->setIO(this->LVL_TRANS_EN,~false); 		//sn74avc8t245, active low
-	this->setIO(this->MPM_MUX_EN,false);			//ADG1608, active high
-	this->setIO(this->HVSW_MUX_EN,false);		//ADG1609, active high
+void AMACTB::powerOff()
+{
+  this->setIO(this->LD_EN_VDDRL,false);		//LT3022, active high
+  this->setIO(this->LV_EN_2V5,false);		//LT3092, active high
+  this->setIO(this->LV_EN_VP5,false);		//LT3092, active high
+  this->setIO(this->LV_EN_VN5,false); 		//LT3015 for VEE5, active high
+  this->setIO(this->LV_EN_AVDD5,false);		//LT3092, active high
+  this->setIO(this->LV_EN_AVEE,false); 		//LT3015, active high
+  this->setIO(this->LV_EN_AVCC,false);		//LT3092, active high
+  this->setIO(this->LD_EN_VDCDC,false);		//LT3022, active high
+  this->setIO(this->LVL_TRANS_EN,true); 	//sn74avc8t245, active low
+  this->setIO(this->MPM_MUX_EN,false);		//ADG1608, active high
+  this->setIO(this->HVSW_MUX_EN,false);		//ADG1609, active high
+}
+
+void AMACTB::powerAMACOn()
+{
+  setIO(LD_EN_VDDRL,true);		// AMAC LDO
+  setIO(LD_EN_VDCDC,true);		// AMAC DCDC
+  setDAC(VDD1V2_ADJ, 1.2);                   // Enable level shifter after AMAC is powered on
+}
+
+void AMACTB::powerAMACOff()
+{
+  setDAC(VDD1V2_ADJ, 0);                   // Enable level shifter after AMAC is powered on
+  setIO(LD_EN_VDDRL,false);		// AMAC LDO
+  setIO(LD_EN_VDCDC,false);		// AMAC DCDC
 }
 
 void AMACTB::selHVrefChannel(HVref_t sel){
-	this->setIO(this->HVref_HGND_SW,(sel == HVref_t::HVref)?false:true); //could have directly used the enum
+  this->setIO(this->HVref_HGND_SW,(sel == HVref_t::HVref)?false:true); //could have directly used the enum
 }
 
 void AMACTB::selHVretChannel(HVret_t sel){
-	this->setIO(this->HVret_SW,(sel == HVret_t::HVret1)?false:true);	
+  this->setIO(this->HVret_SW,(sel == HVret_t::HVret1)?false:true);	
 }
 
 void AMACTB::selMUXChannel(mux_t mux_sel){
@@ -130,4 +132,53 @@ bool AMACTB::readIO(io_t pin){
 bool AMACTB::readIO(uint8_t reg, uint32_t regOffset){
 	uint32_t data = m_dio->read_reg(regOffset);
 	return (bool)(data & regOffset);
+}
+
+void AMACTB::setDAC(dac_t pin, float voltage)
+{
+  // if(voltage > pin.chanMax){
+  //   std::cout << "Overvoltage, channel max is " << pin.chanMax << "V, while set voltage is " << voltage << "V."  << std::endl;
+  //   return;
+  // } else if(voltage > pin.chanMax){
+  //   std::cout << "Undervoltage, channel min is " << pin.chanMin << "V, while set voltage is " << voltage << "V."  << std::endl;
+  //   return;
+  // }
+  float adj_voltage = voltage / pin.mult_fac; //adjust to voltage divider
+  std::cout << "adj_voltage = " << adj_voltage << std::endl;
+  uint16_t counts;
+  switch(pin.dacChanSpan){
+  case p5V :
+    counts = (adj_voltage/5) * DAC_FSR;
+    break;
+  case p10V :
+    counts = (adj_voltage/10) * DAC_FSR;
+    std::cout << "+10V Range not supported yet"  << std::endl;
+    return;
+  case pm5V :
+    counts = (adj_voltage + 5)/10 * DAC_FSR;
+    std::cout << "+-5V Range not supported yet"  << std::endl;
+    return;
+  case pm10V :
+    counts = (adj_voltage + 10)/20 * DAC_FSR;
+    std::cout << "+-10V Range not supported yet"  << std::endl;
+    return;
+  case pm2_5V :
+    counts = (adj_voltage + 2.5)/5 * DAC_FSR;
+    std::cout << "+-2.5V Range not supported yet"  << std::endl;
+    return;
+  default:
+    break;
+  }
+  std::cout << "counts = " << counts << std::endl;
+  pin.DAC->writeUpdateChan(pin.chanNbr, counts);	
+  return;
+}
+
+void AMACTB::setIDPads(uint8_t id)
+{
+  setIO(ID0,(id>>0)&1);
+  setIO(ID1,(id>>1)&1);
+  setIO(ID2,(id>>2)&1);
+  setIO(ID3,(id>>3)&1);
+  setIO(ID4,(id>>4)&1);
 }

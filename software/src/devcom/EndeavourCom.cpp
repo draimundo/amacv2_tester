@@ -98,7 +98,7 @@ void EndeavourCom::write_reg(unsigned int address, unsigned int data)
 {
   unsigned long long int databits=0;
 
-  //{3’b111, amacid[4:0], addr[7:0], data[31:0], crc[7:0]}
+  //{3'b111, amacid[4:0], addr[7:0], data[31:0], crc[7:0]}
 
   // WRITE - 3'b110
   databits<<=3;
@@ -150,7 +150,7 @@ unsigned int EndeavourCom::read_reg(unsigned int address)
 {
   unsigned long long int databits=0;
 
-  //{3’b101, amacid[4:0], addr[7:0]}
+  //{3'b101, amacid[4:0], addr[7:0]}
 
   // READ - 3'b101
   databits<<=3;

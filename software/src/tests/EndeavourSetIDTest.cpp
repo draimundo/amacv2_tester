@@ -4,26 +4,46 @@
 #include <iomanip>
 #include <vector>
 
-int main(){
-	AMACTB TB;
-	
-	TB.powerOff();
-	std::cout << "Power off" << std::endl;
-	usleep(1E6); // 1s wait for a clean power down
-	
-//POWER ON
-	TB.powerOn();
-	usleep(1E6); // 1s wait for a clean power up
-	std::cout << "Power on" << std::endl;
-	
-//SETID
-	TB.END.setid(EndeavourCom::REFMODE::IDPads, 0xF);
-	usleep(1E6); // 1s wait for a clear send
-	
-//POWER OFF
-	TB.powerOff();
-	std::cout << "Power off" << std::endl;
-	usleep(1E6); // 1s wait for a clean power down
+int main()
+{
+  AMACTB TB;
 
-return 0;
+  // Power off
+  TB.powerOff();
+  std::cout << "Power OFF" << std::endl;
+  usleep(1E6); // 1s wait for a clean power down
+	
+  // Power on
+  TB.powerOn();
+  usleep(1E6); // 1s wait for a clean power up
+  std::cout << "Power ON" << std::endl;
+
+  // Configure I/O pads
+  TB.setIDPads(0x1F);
+  TB.setIO(TB.ResetB, true);
+
+  while(true)
+    {
+      // Power off AMAC
+      TB.powerAMACOff();
+      std::cout << "AMAC OFF" << std::endl;
+      usleep(1E6);
+
+      // Power on AMAC
+      TB.powerAMACOn();
+      std::cout << "AMAC ON" << std::endl;
+      usleep(1E6);
+
+      // SETID
+      TB.END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+      std::cout << "SETID" << std::endl;
+      usleep(1E6); // 1s wait for a clear send
+    }
+
+  // Power off
+  TB.powerOff();
+  std::cout << "Power OFF" << std::endl;
+  usleep(1E6); // 1s wait for a clean power down
+
+  return 0;
 }

@@ -14,6 +14,7 @@ public:
 
   void sendData(unsigned long long int data, unsigned int size);
 
+  bool isError();
   bool isDataValid();
   void readData(unsigned long long int& data, unsigned int& size);
 

@@ -7,6 +7,9 @@ EndeavourRaw::EndeavourRaw(std::shared_ptr<DeviceCom> fpgaCom)
 void EndeavourRaw::reset()
 { m_fpgaCom->write_reg(0, 0x1); }
 
+bool EndeavourRaw::isError()
+{ return (m_fpgaCom->read_reg(0)>>2)&1; }
+
 bool EndeavourRaw::isDataValid()
 {
   return (m_fpgaCom->read_reg(0)>>1)&1;
