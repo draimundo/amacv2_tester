@@ -254,10 +254,10 @@ void AMACv2Reg::init()
   // 55 - DACbias
   DACbias.initReg(m_cfg, RW, 0xD, 5, 0, 55, "DACbias"); regMap["DACbias"] = &AMACv2Reg::DACbias;
   // 56 - AMACcnt
-  HVcurGain.initReg(m_cfg, RW, 0, 4, 16, 56, "HVcurGain"); regMap["HVcurGain"] = &AMACv2Reg::HVcurGain;
-  DRcomMode.initReg(m_cfg, RW, 0, 2, 12, 56, "DRcomMode"); regMap["DRcomMode"] = &AMACv2Reg::DRcomMode;
-  DRcurr.initReg(m_cfg, RW, 4, 3, 8, 56, "DRcurr"); regMap["DRcurr"] = &AMACv2Reg::DRcurr;
-  RingOscFrq.initReg(m_cfg, RW, 4, 3, 0, 56, "RingOscFrq"); regMap["RingOscFrq"] = &AMACv2Reg::RingOscFrq;
+  HVcurGain .initReg(m_cfg, RW, 0, 4, 16, 56, "HVcurGain" ); regMap["HVcurGain" ] = &AMACv2Reg::HVcurGain;
+  DRcomMode .initReg(m_cfg, RW, 0, 2, 12, 56, "DRcomMode" ); regMap["DRcomMode" ] = &AMACv2Reg::DRcomMode;
+  DRcurr    .initReg(m_cfg, RW, 4, 3,  8, 56, "DRcurr"    ); regMap["DRcurr"    ] = &AMACv2Reg::DRcurr;
+  RingOscFrq.initReg(m_cfg, RW, 4, 3,  0, 56, "RingOscFrq"); regMap["RingOscFrq"] = &AMACv2Reg::RingOscFrq;
   // 57 - NTC
   NTCpbCal.initReg(m_cfg, RW, 0, 1, 19, 57, "NTCpbCal"); regMap["NTCpbCal"] = &AMACv2Reg::NTCpbCal;
   NTCpbSenseRange.initReg(m_cfg, RW, 4, 3, 16, 57, "NTCpbSenseRange"); regMap["NTCpbSenseRange"] = &AMACv2Reg::NTCpbSenseRange;

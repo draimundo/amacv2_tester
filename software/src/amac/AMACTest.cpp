@@ -4,6 +4,7 @@
 #include <iomanip>
 
 #include <unistd.h>
+#include <math.h>
 
 #include "EndeavourComException.h"
 
@@ -26,7 +27,12 @@ void AMACTest::dumpRegisters()
 
 void AMACTest::runBERvsClock()
 {
-  runBER();
+  for(uint freqset=0;freqset<pow(2,3);freqset++)
+    {
+      std::cout << "Setting frequency setting to " << freqset << std::endl;
+      m_amactb->END.wrField(&AMACv2Reg::RingOscFrq, freqset);
+      runBER();
+    }
 }
 
 float AMACTest::runBER()
@@ -51,7 +57,7 @@ float AMACTest::runBER()
 	      std::cout << "Write: 0x" << std::hex << valin << ", Read: " << valout << std::dec << std::endl;
 	    }
 	}
-      catch(EndeavourComException e)
+      catch(EndeavourComException &e)
 	{
 	  std::cout << "EndeavourComException" << std::endl;
 	  std::cout << e.what() << std::endl;
