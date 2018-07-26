@@ -11,7 +11,7 @@
 #include "ADCDevice.h"
 #include "AD5160.h"		//SPI potentiometer
 #include "FreqMeas.h"	//FreqMeas bloc
-#include "EndeavourCom.h"
+#include "AMAC.h"
 
 enum direction_t{IN, OUT};
 struct io_t {
@@ -70,7 +70,7 @@ public:
      DEVICES
      ====================================== */
 
-  EndeavourCom END;
+  AMAC END;
   LTC2666 DAC0;
   LTC2666 DAC1;
   LTC2333 ADC0;
