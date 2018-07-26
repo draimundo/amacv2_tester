@@ -5,14 +5,22 @@
 #include "AMACTB.h"
 #include <unistd.h>
 
-int main(){
-	std::cout << "Hello world!" << std::endl;
-	std::shared_ptr<DeviceCom> uio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
-	AMACTB TB (uio);
-	TB.powerOff();
-	std::cout << "Power off" << std::endl;
-	usleep(1E6); // 1s wait for a clear power up
-	TB.powerOn();
-	std::cout << "Power on" << std::endl;
-	return 0;
+int main()
+{
+  std::shared_ptr<DeviceCom> uio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
+  AMACTB TB (uio);
+
+
+  // Power testbench
+  TB.powerOn();
+  std::cout << "Power on" << std::endl;
+
+  // Configure I/O pads
+  TB.setIDPads(0x1F);
+  TB.setIO(TB.ResetB, true);
+
+  // Power on AMAC
+  TB.powerAMACOn();
+
+  return 0;
 }
