@@ -50,6 +50,12 @@ public:
   // Reads out previous conversion result
   std::vector<LTC2333Outputs> getADC();
 
+  // Calls previous two functions for a single channel, with default span of 0 
+  // (but can set it as an option). 
+  //
+  // **Note that currently only a single channel works for setADC anyway!!
+  LTC2333Outputs setAndReadChan(uint8_t chan, uint8_t span = 0);
+
 private:
   std::shared_ptr<DeviceCom> m_dev;
   std::shared_ptr<DeviceCom> m_dio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
