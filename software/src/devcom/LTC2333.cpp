@@ -77,8 +77,8 @@ std::vector<unsigned int> LTC2333::formatConversionResult(uint8_t* data){
 void LTC2333::setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings){
   uint8_t nBytesIn = inputSettings.size();
   if(nBytesIn > 16){
-    std::cout << "LTC2333::setDAC ERROR too many chan/span" << std::endl;
-    std::cout << "Exiting setDAC" << std::endl;
+    std::cout << "LTC2333::setADC ERROR too many chan/span" << std::endl;
+    std::cout << "Exiting setADC" << std::endl;
     return;
   }
   std::cout << "nbytesIn: " << unsigned(nBytesIn) << std::endl;
@@ -94,8 +94,8 @@ void LTC2333::setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings){
     // Check that chan and span are in range
     if( !checkValidInput(chan, span) ){
       // ERROR and maybe return
-      std::cout << "LTC2333::setDAC ERROR invalid chan/span" << std::endl;
-      std::cout << "Exiting setDAC" << std::endl;
+      std::cout << "LTC2333::setADC ERROR invalid chan/span" << std::endl;
+      std::cout << "Exiting setADC" << std::endl;
       return;
     }
 
