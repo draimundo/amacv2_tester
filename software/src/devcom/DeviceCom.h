@@ -14,7 +14,7 @@ public:
 
 	virtual unsigned int read_reg(unsigned int address) = 0;
 	virtual void read_reg(unsigned int address, uint8_t* data, unsigned int len) = 0;
-	virtual void read_reg(std::vector<unsigned int> addresses, uint8_t* data, unsigned int len) = 0;
+	virtual void read_reg(uint8_t* data_in, uint8_t* data_out, unsigned int len) = 0;
 };
 
 #endif // DEVICECOM_H

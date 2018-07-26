@@ -12,6 +12,7 @@
 #include "AD5160.h"		//SPI potentiometer
 #include "FreqMeas.h"	//FreqMeas bloc
 #include "EndeavourCom.h"
+#include "EndeavourComException.h"
 
 enum direction_t{IN, OUT};
 struct io_t {
