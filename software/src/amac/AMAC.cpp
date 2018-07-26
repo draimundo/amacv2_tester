@@ -1,48 +1,54 @@
 #include "AMAC.h"
 
-// AMAC::AMAC() : AMACv2Reg(){
-	
-// }
+#include <unistd.h>
 
-AMAC::AMAC(unsigned short amacid, std::shared_ptr<DeviceCom> fpgaCom) : AMACv2Reg(), EndeavourCom(amacid, fpgaCom){
-	for (auto const& p : regMap){ //set all amac registers according to default values
-		if(canBeWritten(p.second)){
-			syncReg(p.second);
-		}
-	}
-}
+AMAC::AMAC(unsigned short amacid, std::shared_ptr<DeviceCom> fpgaCom)
+  : EndeavourCom(amacid, fpgaCom), AMACv2Reg()
+{ }
 
 AMAC::~AMAC(){}
 
-void AMAC::wrEndeavourReg(uint32_t address, uint32_t data){
-	this->write_reg(address, data);
-}
-uint32_t AMAC::rdEndeavourReg(uint32_t address){
-	return this->read_reg(address);
+void AMAC::init()
+{
+  // Set AMAC ID
+  EndeavourCom::setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+  usleep(10);
+
+  // Read AMAC registers into memory
+  uint data;
+  for(uint reg=0;reg<AMACv2Reg::numRegs;reg++)
+    {
+      data=(reg==0)?read_reg(reg):readnext_reg();
+      setReg(reg, data);
+      usleep(10);
+    }
+  
+  // for (auto const& p : regMap)
+  //   { //set all amac registers according to default values
+  //     if(canBeWritten(p.second))
+  // 	syncReg(p.second);
+  //   }  
 }
 
-void AMAC::wrVirtualField(AMACv2Field AMACv2Reg::* ref, uint32_t data){
-	setField(ref, data);
+void AMAC::syncReg(AMACv2Field AMACv2Reg::* ref)
+{
+  EndeavourCom::write_reg(getAddr(ref), (this->*ref).readRaw());
 }
-void AMAC::wrVirtualReg(AMACv2Field AMACv2Reg::* ref, uint32_t data){
-	setReg(ref, data);
-}
-uint32_t AMAC::rdVirtualField(AMACv2Field AMACv2Reg::* ref){
-	return getField(ref);
-}
-uint32_t AMAC::rdVirtualReg(AMACv2Field AMACv2Reg::* ref){
-	return getReg(ref);
+void AMAC::wrField(AMACv2Field AMACv2Reg::* ref, uint32_t data)
+{
+  setField(ref, data);
+  EndeavourCom::write_reg(getAddr(ref), (this->*ref).readRaw());
 }
 
-void AMAC::syncReg(AMACv2Field AMACv2Reg::* ref){
-	wrEndeavourReg(getAddr(ref), (this->*ref).readRaw());
+uint32_t AMAC::rdField(AMACv2Field AMACv2Reg::* ref)
+{
+  uint32_t ret = EndeavourCom::read_reg(getAddr(ref));
+  (this->*ref).writeRaw(ret);
+  return getField(ref);
 }
-void AMAC::wrField(AMACv2Field AMACv2Reg::* ref, uint32_t data){
-	wrVirtualField(ref, data);
-	wrEndeavourReg(getAddr(ref), (this->*ref).readRaw());
-}
-uint32_t AMAC::rdField(AMACv2Field AMACv2Reg::* ref){
-	uint32_t ret = rdEndeavourReg(getAddr(ref));
-	wrVirtualReg(ref, ret);
-	return rdVirtualField(ref);
+
+void AMAC::write_reg(unsigned int address, unsigned int data)
+{
+  setReg(address, data);
+  EndeavourCom::write_reg(address, data);
 }

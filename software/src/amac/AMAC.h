@@ -4,29 +4,22 @@
 #include "AMACreg.h"
 #include "EndeavourCom.h"
 
-class AMAC : public EndeavourCom, public AMACv2Reg {
-private:
-	void wrEndeavourReg(uint32_t address, uint32_t data);
-	uint32_t rdEndeavourReg(uint32_t address);
-	
+class AMAC : public EndeavourCom, public AMACv2Reg
+{
 public:
-	//AMAC(); // no harware
-
-	AMAC(unsigned short amacid, std::shared_ptr<DeviceCom> fpgaCom); // with hardware
-	
+  AMAC(unsigned short amacid, std::shared_ptr<DeviceCom> fpgaCom); // with hardware	
   ~AMAC();
-	
-	void wrVirtualField(AMACv2Field AMACv2Reg::* ref, uint32_t data);
-	void wrVirtualReg(AMACv2Field AMACv2Reg::* ref, uint32_t data);
-	uint32_t rdVirtualField(AMACv2Field AMACv2Reg::* ref);
-	uint32_t rdVirtualReg(AMACv2Field AMACv2Reg::* ref);
-	
-	void syncReg(AMACv2Field AMACv2Reg::* ref);
-	void wrField(AMACv2Field AMACv2Reg::* ref, uint32_t data);
-	void wrReg(AMACv2Field AMACv2Reg::* ref, uint32_t data);
-	uint32_t rdField(AMACv2Field AMACv2Reg::* ref);
-	uint32_t rdReg(AMACv2Field AMACv2Reg::* ref);
-	
+
+  void init();
+
+  virtual void write_reg(unsigned int address, unsigned int data);
+
+  void wrField(AMACv2Field AMACv2Reg::* ref, uint32_t data);
+  uint32_t rdField(AMACv2Field AMACv2Reg::* ref);
+
+private:
+  void syncReg(AMACv2Field AMACv2Reg::* ref);
+
 };
 
 #endif // AMAC_H_
