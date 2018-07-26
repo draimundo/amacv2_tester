@@ -21,13 +21,14 @@ struct io_t {
 };
 
 enum dacChanSpan_t{p5V, p10V, pm5V, pm10V, pm2_5V};
-struct dac_t{
-	float mult_fac;
-	float chanMin;
-	float chanMax;
-	dacChanSpan_t dacChanSpan;
-	uint8_t	chanNbr;
-	LTC2666* DAC;
+struct dac_t
+{
+  float mult_fac;
+  float chanMin;
+  float chanMax;
+  dacChanSpan_t dacChanSpan;
+  uint8_t	chanNbr;
+  LTC2666* DAC;
 };
 
 // adc input channel span
@@ -170,7 +171,7 @@ public:
   const dac_t RgOsc_Vref = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC1}; //To be adapted
   const dac_t HVOsc_Vref = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC1}; //To be adapted
   const dac_t VDCDC_ADJ = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC1}; //To be adapted
-  const dac_t VDDHI_ADJ = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC1}; //To be adapted
+  const dac_t VDDHI_ADJ = {.mult_fac = 3.4/(3.4+1.6), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC1}; //To be adapted
   const dac_t VDDRL_ADJ = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC1}; //To be adapted
   const dac_t VDD1V2_ADJ = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC1}; //To be adapted
 	
