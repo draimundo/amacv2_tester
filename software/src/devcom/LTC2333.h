@@ -3,9 +3,17 @@
 
 #include "ADCDevice.h"
 #include "DeviceCom.h"
+#include "UIOCom.h"
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <unistd.h>
+
+struct LTC2333Outputs{
+  uint16_t result;
+  uint8_t chan;
+  uint8_t span;
+};
 
 class LTC2333 : public ADCDevice
 {
@@ -42,21 +50,30 @@ public:
   // intended and (b) I'm not sure if this already initiates the read of 
   // *this* conversion. We'll have to play with this on the bench once the
   // board is built
-  std::vector<unsigned int> setNextConversion(unsigned int chan, unsigned int span);
+//std::vector<unsigned int> setNextConversion(unsigned int chan, unsigned int span);
 
   // We can specify up to three conversions for each read. This only
   // returns the previous conversion result, and three subsequent reads are needed
   // to extract the results
   //
   // Input is a vector of size up to three containing (chan, span) pairs
-  std::vector<unsigned int> setUpToThreeConversions(std::vector<std::pair<unsigned int, unsigned int>> vec);
+//std::vector<unsigned int> setUpToThreeConversions(std::vector<std::pair<unsigned int, unsigned int>> vec);
 
   // Sends dummy signal and reads out previous conversion result
-  std::vector<unsigned int> readPreviousConversion();
+//std::vector<unsigned int> readPreviousConversion();
 
+  // Send up to 16-bytes of channel and span ADC conversions
+//std::vector<LTC2333Outputs> sendABunchOfChanSpan(std::vector<std::pair<uint8_t,uint8_t>> inputVec);
+
+	void setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings);
+	std::vector<LTC2333Outputs> getADC();
 private:
   std::shared_ptr<DeviceCom> m_dev;
-
+	std::shared_ptr<DeviceCom> m_dio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
+	bool m_init = false;
+	uint8_t m_nBytesIn;
+	std::vector<std::pair<uint8_t,uint8_t>> m_inputSettings;
+	
   const unsigned int m_chanMax = 0x7;
   const unsigned int m_spanMax = 0x7;
 

@@ -17,6 +17,8 @@ SPICom::SPICom(const std::string& device)
   m_fd = open(device.c_str(), O_RDWR);
   if(m_fd < 0)
     throw ComIOException("SPICom cannot open "+device+": "+strerror(errno));
+	
+	SPICom::setBitsPerWord(0);
 }
 
 SPICom::~SPICom()
@@ -143,8 +145,7 @@ unsigned int SPICom::read_reg(unsigned int address)
   return rx[1];
 }
 
-void SPICom::read_reg(unsigned int address, uint8_t* data, unsigned int len)
-{
+void SPICom::read_reg(unsigned int address, uint8_t* data, unsigned int len){
   int ret;
 
   uint8_t tx[len+1] = {0x0};
@@ -164,29 +165,16 @@ void SPICom::read_reg(unsigned int address, uint8_t* data, unsigned int len)
     data[i-1]=rx[i];
 }
 
-void SPICom::read_reg(std::vector<unsigned int> addresses, uint8_t* data, unsigned int len)
-{
-  int ret;
+void SPICom::read_reg(uint8_t* data_in, uint8_t* data_out, unsigned int len){
+	struct spi_ioc_transfer tr;
+	memset((void *)&tr, 0, sizeof(struct spi_ioc_transfer));
+	tr.tx_buf = (uint64_t)data_in;
+	tr.rx_buf = (uint64_t)data_out;
+	tr.len = len;
+	//tr.bits_per_word = 8, //shouldn't be necessary, as it is set in the constructor
 
-  uint8_t tx[addresses.size()] = {};
-
-  for(int vec_index = 0; vec_index < addresses.size(); ++vec_index){
-    unsigned int data_in = addresses.at(vec_index);
-    tx[vec_index] = (uint8_t)(data_in&0xFF);
-  }
-
-  //uint8_t rx[ARRAY_SIZE(tx)] = {0, };
-  uint8_t rx[len+1] = {0, };
-  struct spi_ioc_transfer tr = {
-    .tx_buf = (unsigned long)tx,
-    .rx_buf = (unsigned long)rx,
-    .len = ARRAY_SIZE(tx),
-  };
-
-  ret = ioctl(m_fd, SPI_IOC_MESSAGE(1), &tr);
-  if (ret < 1)
+  int ret = ioctl(m_fd, SPI_IOC_MESSAGE(1), &tr);
+  if (ret < 0){
     throw ComIOException("SPICom transfer error");
-
-  for(uint i=1;i<len+1;i++)
-    data[i-1]=rx[i];
+  }
 }

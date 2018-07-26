@@ -144,7 +144,6 @@ void AMACTB::setDAC(dac_t pin, float voltage)
   //   return;
   // }
   float adj_voltage = voltage / pin.mult_fac; //adjust to voltage divider
-
   uint16_t counts;
   switch(pin.dacChanSpan){
   case p5V :
