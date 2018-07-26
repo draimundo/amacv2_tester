@@ -25,7 +25,6 @@ public:
   void reset();
 
   // Sets next conversion result for specified channel and span, and
-  // reads out previous conversion result.
   //
   // Return value is a vector of length three, containing:
   // index 0: 18-bit conversion result
@@ -45,35 +44,19 @@ public:
   // 6: +/-2.5*V_refbuf/1.024
   // 7: +/-2.5*V_refbuf
   //
-  // FIXME: one drawback here right now is that the command sent is followed
-  // by 24-bits worth of 0's, which means (a) this might be slower than
-  // intended and (b) I'm not sure if this already initiates the read of 
-  // *this* conversion. We'll have to play with this on the bench once the
-  // board is built
-//std::vector<unsigned int> setNextConversion(unsigned int chan, unsigned int span);
+  // inputSettings is a pair of (channel, span)
+  void setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings);
 
-  // We can specify up to three conversions for each read. This only
-  // returns the previous conversion result, and three subsequent reads are needed
-  // to extract the results
-  //
-  // Input is a vector of size up to three containing (chan, span) pairs
-//std::vector<unsigned int> setUpToThreeConversions(std::vector<std::pair<unsigned int, unsigned int>> vec);
+  // Reads out previous conversion result
+  std::vector<LTC2333Outputs> getADC();
 
-  // Sends dummy signal and reads out previous conversion result
-//std::vector<unsigned int> readPreviousConversion();
-
-  // Send up to 16-bytes of channel and span ADC conversions
-//std::vector<LTC2333Outputs> sendABunchOfChanSpan(std::vector<std::pair<uint8_t,uint8_t>> inputVec);
-
-	void setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings);
-	std::vector<LTC2333Outputs> getADC();
 private:
   std::shared_ptr<DeviceCom> m_dev;
-	std::shared_ptr<DeviceCom> m_dio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
-	bool m_init = false;
-	uint8_t m_nBytesIn;
-	std::vector<std::pair<uint8_t,uint8_t>> m_inputSettings;
-	
+  std::shared_ptr<DeviceCom> m_dio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
+  bool m_init = false;
+  uint8_t m_nBytesIn;
+  std::vector<std::pair<uint8_t,uint8_t>> m_inputSettings;
+
   const unsigned int m_chanMax = 0x7;
   const unsigned int m_spanMax = 0x7;
 
