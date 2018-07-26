@@ -81,7 +81,7 @@ void LTC2333::setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings){
     std::cout << "Exiting setADC" << std::endl;
     return;
   }
-  std::cout << "nbytesIn: " << unsigned(nBytesIn) << std::endl;
+  //std::cout << "nbytesIn: " << unsigned(nBytesIn) << std::endl;
   uint8_t tx[nBytesIn] = {0, };
 
   for(unsigned int i = 0; i < nBytesIn; ++i){
@@ -101,7 +101,7 @@ void LTC2333::setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings){
 
     // Format our 8-bit word of cmd code, chan, and span
     tx[i] = (uint8_t) formatCommand(chan, span);
-    std::cout << "tx[" << i << "] is " << std::hex << unsigned(tx[i]) << std::endl;
+    //std::cout << "tx[" << i << "] is " << std::hex << unsigned(tx[i]) << std::endl;
     m_init = true;
   }
 
@@ -149,11 +149,8 @@ std::vector<LTC2333Outputs> LTC2333::getADC(){
     LTC2333Outputs output_i;
     // 16 bit conversion result
     output_i.result = (rx[i] << 8) | (rx[i+1] );
-    std::cout << "output_i.result " << (unsigned) output_i.result << " for i = " << i << std::endl;
     output_i.chan = (rx[i+2] >> 3) & m_chanMax;
-    std::cout << "output_i.chan " << (unsigned) output_i.chan << " for i = " << i << std::endl;
     output_i.span = rx[i+2] & m_spanMax;
-    std::cout << "output_i.span " << (unsigned) output_i.span << " for i = " << i << std::endl;
     outputs.push_back(output_i);
   }
   return outputs;
