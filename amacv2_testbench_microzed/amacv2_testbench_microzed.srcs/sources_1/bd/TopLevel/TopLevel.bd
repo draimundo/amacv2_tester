@@ -1154,11 +1154,6 @@
         <spirit:externalPortReference spirit:portRef="LED2"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
-        <spirit:name>endeavour_fmc_contro_0_cmd_out</spirit:name>
-        <spirit:internalPortReference spirit:componentRef="endeavour_fmc_contro_0" spirit:portRef="cmd_out"/>
-        <spirit:externalPortReference spirit:portRef="LED3"/>
-      </spirit:adHocConnection>
-      <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_CLK0</spirit:name>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="FCLK_CLK0"/>
         <spirit:internalPortReference spirit:componentRef="processing_system7_0" spirit:portRef="M_AXI_GP0_ACLK"/>

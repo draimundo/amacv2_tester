@@ -77,6 +77,9 @@ end entity endeavour_master;
 
 architecture behavioural of endeavour_master is
 
+  signal reg_serialin1  : std_logic;
+  signal reg_serialin   : std_logic;
+
   type fsm_wr_t is (idle, senddata, sendbit, sendgap, sendendgap);
   signal fsm_wr : fsm_wr_t := idle;
 
@@ -100,6 +103,22 @@ begin
   nbitsout      <= reg_nbitsout;
   dataout       <= reg_dataout;
 
+  --
+  -- Register serialin on clock
+  --  
+  process (clock)
+  begin
+    if rising_edge(clock) then
+      if reset = '1' then
+        reg_serialin1   <= '0';
+        reg_serialin    <= '0';
+      else
+        reg_serialin1   <= serialin;
+        reg_serialin    <= reg_serialin1;
+      end if;
+    end if;
+  end process;
+  
   --
   -- The FSM for writing data to AMAC
   --  
@@ -204,7 +223,7 @@ begin
       else
         case fsm_rd is
           when idle =>
-            if serialin = '1' then
+            if reg_serialin = '1' then
               counter           := 1;
               reg_nbitsout      <= 0;
               reg_dataout       <= (others => '0');
@@ -217,27 +236,29 @@ begin
             end if;
 
           when waitbit =>
-            if serialin = '1' then
+            if reg_serialin = '1' then
               counter           := counter+1;
             else
-              fsm_rd            <= readbit;
+              fsm_rd          <= readbit;
             end if;
 
           when readbit =>
             if    (TICKS_DIT_MIN < counter) and (counter < TICKS_DIT_MAX) then
               reg_dataout       <= reg_dataout(62 downto 0) & '0';
+              reg_nbitsout      <= reg_nbitsout + 1;
+              reg_error         <= '0';
             elsif (TICKS_DAH_MIN < counter) and (counter < TICKS_DAH_MAX) then
               reg_dataout       <= reg_dataout(62 downto 0) & '1';
+              reg_nbitsout      <= reg_nbitsout + 1;                                          
+              reg_error         <= '0';
             else
-              reg_dataout       <= reg_dataout(62 downto 0) & '0';
               reg_error         <= '1';
             end if;
             counter             := 0;
-            reg_nbitsout        <= reg_nbitsout + 1;
             fsm_rd              <= waitgap;
 
           when waitgap =>
-            if serialin = '1' then
+            if reg_serialin = '1' then
               counter           := 1;
               fsm_rd            <= waitbit;
             else
