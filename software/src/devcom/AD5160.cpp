@@ -30,7 +30,6 @@ void AD5160::setResistance(float rOhm){
   // R_WB = our value
 
   uint8_t regValCounts = (rOhm - m_R_W) * (256. / m_R_AB);
-  std::cout << "regValCounts is " << (unsigned) regValCounts << "while expected value is " << rOhm << std::endl;
 
   setResistance(regValCounts);
 }
