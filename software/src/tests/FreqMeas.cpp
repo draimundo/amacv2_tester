@@ -1,8 +1,12 @@
 #include "AMACTB.h"
+#include "AMAC.h"
+#include "AMACTest.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <iomanip>
 #include <vector>
+
 int main()
 {
   std::shared_ptr<AMACTB> TB=std::make_shared<AMACTB>();
