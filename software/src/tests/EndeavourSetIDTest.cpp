@@ -1,4 +1,7 @@
 #include "AMACTB.h"
+
+#include "EndeavourComException.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <iomanip>
@@ -52,7 +55,6 @@ int main()
           std::cout << "BG set" << std::endl;
           usleep(1E6); // 1s wait for a clear send
 
-          TB.END.read_reg(52);
           data=TB.END.read_reg(52);
           std::cout << "Register 52: " << std::hex << data << std::endl;      
           usleep(10E6); // 1s wait for a clear send
