@@ -38,12 +38,14 @@ void AMAC::wrField(AMACv2Field AMACv2Reg::* ref, uint32_t data)
 {
   setField(ref, data);
   EndeavourCom::write_reg(getAddr(ref), (this->*ref).readRaw());
+  usleep(10);
 }
 
 uint32_t AMAC::rdField(AMACv2Field AMACv2Reg::* ref)
 {
-  uint32_t ret = EndeavourCom::read_reg(getAddr(ref));
-  (this->*ref).writeRaw(ret);
+  uint32_t ret = EndeavourCom::read_reg(getAddr(ref));  
+  setReg(getAddr(ref), ret);
+  usleep(10);
   return getField(ref);
 }
 
@@ -51,4 +53,5 @@ void AMAC::write_reg(unsigned int address, unsigned int data)
 {
   setReg(address, data);
   EndeavourCom::write_reg(address, data);
+  usleep(10);
 }
