@@ -75,7 +75,7 @@ int main()
   std::cout << "ch15: " << TB->END.rdField(&AMACv2Reg::Ch15Value) << std::endl;
   
   // Power off
-  //TB->powerOff();
+  TB->powerOff();
   std::cout << "Power OFF" << std::endl;
   usleep(1E6); // 1s wait for a clean power down
 
