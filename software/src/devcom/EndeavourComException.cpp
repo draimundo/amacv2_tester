@@ -1,7 +1,7 @@
 #include "EndeavourComException.h"
 
 EndeavourComException::EndeavourComException(const std::string& msg)
-  : m_msg(msg)
+  : m_msg("EndeavourCom: "+msg)
 { }
 
 EndeavourComException::EndeavourComException(const char *format, ...)
@@ -13,8 +13,8 @@ EndeavourComException::EndeavourComException(const char *format, ...)
   vsnprintf( buffer, 256, format, args );
   va_end( args );
 
-  m_msg=buffer;
+  m_msg=std::string("EndeavourCom: ")+buffer;
 }
 
 const char* EndeavourComException::what() const throw()
-{ return ("EndeavourComException: "+m_msg).c_str(); }
+{ return m_msg.c_str(); }
