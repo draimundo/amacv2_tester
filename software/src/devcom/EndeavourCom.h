@@ -21,6 +21,7 @@ public:
 
   virtual void write_reg(unsigned int address, unsigned int data);
   virtual unsigned int read_reg(unsigned int address);
+  virtual unsigned int readnext_reg();
 	
   //implemented in DeviceCom
   virtual void write_reg(std::vector<unsigned int> data_vec){};

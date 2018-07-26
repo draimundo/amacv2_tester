@@ -24,7 +24,7 @@ void EndeavourCom::setid(REFMODE mode, unsigned int refid)
 {
   unsigned long long int databits=0;
 
-  //{3’b110, 5’b11111, 3’b111, newamacid[4:0], 4’b1111, efuseid[19:0], 3’b111, idpads[4:0], crc[7:0]}
+  //{3'b110, 5'b11111, 3'b111, newamacid[4:0], 4'b1111, efuseid[19:0], 3'b111, idpads[4:0], crc[7:0]}
 
   // SETID - 3'b110
   databits<<=3;
@@ -185,6 +185,51 @@ unsigned int EndeavourCom::read_reg(unsigned int address)
   unsigned short int retaddress=(read_data>>32)&0xFF;
   if(retaddress!=address)
     throw EndeavourComException("READ recieved wrong address: 0x%08X (expected %08X)",retaddress,address);
+
+  unsigned short int seqnum=(read_data>>40)&0b111;
+  if(m_enableSeqNum && seqnum!=m_seqnum)
+    throw EndeavourComException("READ recieved wrong sequence: %d (expected %d)",seqnum,m_seqnum);
+
+  unsigned short int amacid=(read_data>>43)&0b11111;
+  if(amacid!=m_amacid)
+    throw EndeavourComException("READ recieved wrong amacid: %d (expected %d)",amacid,m_amacid);
+
+  return data;
+}
+
+unsigned int EndeavourCom::readnext_reg()
+{
+  unsigned long long int databits=0;
+
+  //{3'b100, amacid[4:0]}
+
+  // READNEXT - 3'b100
+  databits<<=3;
+  databits|=0b100;
+
+  // amacid[4:0]
+  databits<<=5;
+  databits|=(m_amacid&0x1F);
+
+  // send data
+  m_raw->sendData(databits, 8);
+  m_seqnum++;
+
+  // wait for response ( poll :( )
+  while(!m_raw->isDataValid()) { continue; }
+
+  // Parse the response
+  unsigned long long int read_data;
+  unsigned int read_nbits;
+  m_raw->readData(read_data,read_nbits);
+  //std::cout << m_raw->isDataValid() << " " << read_nbits << " " << std::hex << read_data << std::dec << std::endl;
+
+  if(read_nbits!=48)
+    throw EndeavourComException("READ recieved wrong number of bits: %d (expected 48)",read_nbits);
+
+  unsigned int data=read_data&0xFFFFFFFF;
+
+  //unsigned short int retaddress=(read_data>>32)&0xFF;
 
   unsigned short int seqnum=(read_data>>40)&0b111;
   if(m_enableSeqNum && seqnum!=m_seqnum)

@@ -21,6 +21,7 @@ void print_help()
   std::cout << " setid idpads/efuse internalid: set amacid for internalid efuse or idpads" << std::endl;
   std::cout << " write address data: write data to address " << std::endl;
   std::cout << " read address: read address " << std::endl;
+  std::cout << " readnext: read next register " << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -109,7 +110,19 @@ int main(int argc, char* argv[])
 	  unsigned int read=end.read_reg(address);
 	  std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << read << std::endl;
 	}
-    }
+      else if(command=="readnext")
+	{
+	  // Need one more
+	  if(argc<=(optind+0))
+	    {
+	      print_help();
+	      return 1;
+	    }
+
+	  unsigned int read=end.readnext_reg();
+	  std::cout << "0x" << std::hex << std::setw(8) << std::setfill('0') << read << std::endl;
+	}
+   }
   catch(EndeavourComException e)
     {
       std::cout << e.what() << std::endl;
