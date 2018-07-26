@@ -235,10 +235,10 @@ void AMACv2Reg::init()
   ReqDCDCPGOODC.initReg(m_cfg, RW, 1, 1, 8, 51, "ReqDCDCPGOODC"); regMap["ReqDCDCPGOODC"] = &AMACv2Reg::ReqDCDCPGOODC;
   DCDCenToPwrAMACC.initReg(m_cfg, RW, 0, 1, 0, 51, "DCDCenToPwrAMACC"); regMap["DCDCenToPwrAMACC"] = &AMACv2Reg::DCDCenToPwrAMACC;
   // 52 - BgCnt
-  AMbgen.initReg(m_cfg, RW, 0, 1, 15, 52, "AMbgen"); regMap["AMbgen"] = &AMACv2Reg::AMbgen;
-  AMbg.initReg(m_cfg, RW, 0, 5, 8, 52, "AMbg"); regMap["AMbg"] = &AMACv2Reg::AMbg;
-  VDDbgen.initReg(m_cfg, RW, 0, 1, 7, 52, "VDDbgen"); regMap["VDDbgen"] = &AMACv2Reg::VDDbgen;
-  VDDbg.initReg(m_cfg, RW, 0, 5, 0, 52, "VDDbg"); regMap["VDDbg"] = &AMACv2Reg::VDDbg;
+  AMbgen .initReg(m_cfg, RW, 0, 1, 15, 52, "AMbgen" ); regMap["AMbgen" ] = &AMACv2Reg::AMbgen;
+  AMbg   .initReg(m_cfg, RW, 0, 5,  8, 52, "AMbg"   ); regMap["AMbg"   ] = &AMACv2Reg::AMbg;
+  VDDbgen.initReg(m_cfg, RW, 0, 1,  7, 52, "VDDbgen"); regMap["VDDbgen"] = &AMACv2Reg::VDDbgen;
+  VDDbg  .initReg(m_cfg, RW, 0, 5,  0, 52, "VDDbg"  ); regMap["VDDbg"  ] = &AMACv2Reg::VDDbg;
   // 53 - AMcnt
   AMintCalib.initReg(m_cfg, RW, 0, 4, 24, 53, "AMintCalib"); regMap["AMintCalib"] = &AMACv2Reg::AMintCalib;
   Ch13Mux.initReg(m_cfg, RW, 0, 2, 20, 53, "Ch13Mux"); regMap["Ch13Mux"] = &AMACv2Reg::Ch13Mux;
