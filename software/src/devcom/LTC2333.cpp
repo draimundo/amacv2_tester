@@ -114,16 +114,9 @@ void LTC2333::setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings){
 std::vector<LTC2333Outputs> LTC2333::getADC(){
 
   if(!m_init){
-    std::vector<std::pair<uint8_t, uint8_t>> vec;
-    //vec.push_back(std::make_pair(0,0));
-    // vec.push_back(std::make_pair(1,0));
-    vec.push_back(std::make_pair(2,0));
-    // vec.push_back(std::make_pair(3,0));
-    // vec.push_back(std::make_pair(4,0));
-    // vec.push_back(std::make_pair(5,0));
-    // vec.push_back(std::make_pair(6,0));
-    // vec.push_back(std::make_pair(7,0));
-    LTC2333::setADC(vec);
+    std::cout << "LTC2333::getADC ERROR no previously initiated conversion to read!" << std::endl;
+    std::cout << "Exiting getADC" << std::endl;
+    return {};
   }
 
   //Set ADC_CNV pin
