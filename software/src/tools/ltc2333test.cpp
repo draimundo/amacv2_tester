@@ -20,18 +20,18 @@ int main(int argc, char* argv[])
 	
   tb.powerOn();
   tb.powerAMACOn();
-	std::vector<std::pair<uint8_t, uint8_t>> vec;
-	//vec.push_back(std::make_pair(0,0));
-	//vec.push_back(std::make_pair(1,0));
-	vec.push_back(std::make_pair(2,0));
-	//vec.push_back(std::make_pair(3,0));
-	//vec.push_back(std::make_pair(4,0));
-	//vec.push_back(std::make_pair(5,0));
-	//vec.push_back(std::make_pair(6,0));
-	//vec.push_back(std::make_pair(7,0));
-	tb.ADC0.setADC(vec);
-	usleep(3E6);
-	tb.ADC0.setADC(vec);
+  std::vector<std::pair<uint8_t, uint8_t>> vec;
+  //vec.push_back(std::make_pair(0,0));
+  //vec.push_back(std::make_pair(1,0));
+  vec.push_back(std::make_pair(2,0));
+  //vec.push_back(std::make_pair(3,0));
+  //vec.push_back(std::make_pair(4,0));
+  //vec.push_back(std::make_pair(5,0));
+  //vec.push_back(std::make_pair(6,0));
+  //vec.push_back(std::make_pair(7,0));
+  tb.ADC0.setADC(vec);
+  usleep(3E6);
+  tb.ADC0.setADC(vec);
   try
     {
       // Create the communication object

@@ -15,6 +15,12 @@ void LTC2333::init(){
 
 void LTC2333::reset(){
 
+  // NOTE: we have seen on initial usage of the SPI bus that we sometimes have
+  // 24 clock edges instead of the expected 8 clock edges. If this persists, we should
+  // call setADC(vec) on each reset, and potentially similarly for the DAC and 
+  // potentiometer code (if deemed to be needed / to be affecting anything).
+  // We expect that this just sends garbage which is never used, however.
+
 }
 
 bool LTC2333::checkValidInput(unsigned int chan, unsigned int span){
@@ -153,3 +159,14 @@ std::vector<LTC2333Outputs> LTC2333::getADC(){
   return outputs;
 }
 
+
+LTC2333Outputs LTC2333::setAndReadChan(uint8_t chan, uint8_t span){
+
+  std::vector<std::pair<uint8_t,uint8_t>> vec;
+  vec.push_back( std::make_pair(chan, span) );
+
+  // initializes the conversion
+  setADC(vec);
+
+  return getADC().at(0);
+}
