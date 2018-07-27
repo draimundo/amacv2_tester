@@ -184,7 +184,8 @@ void AMACTB::setIDPads(uint8_t id){
 float AMACTB::getADC(adc_t pin){
   if(pin.mux != NOMUX){
     selMUXChannel(pin.mux);
-    setIO(ADC_CNV, true);
+    setIO(MPM_MUX_EN, true);
+    usleep(10E3);
   }
   
   uint16_t res = pin.ADC->setAndReadChan(pin.chanNbr, pin.adcChanSpan).result;
@@ -217,7 +218,8 @@ float AMACTB::getADC(adc_t pin){
     default:
       break;
   }
-  if(pin.mux != NOMUX) setIO(ADC_CNV, false);
+  if(pin.mux != NOMUX) setIO(MPM_MUX_EN, false);
+    
   return (ret / ADC_FSR * ADC_REFBUF / pin.mult_fac); // scale result
 }
 
