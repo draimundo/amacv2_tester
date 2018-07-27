@@ -55,10 +55,10 @@ public:
   //
   // **Note that currently only a single channel works for setADC anyway!!
   LTC2333Outputs setAndReadChan(uint8_t chan, uint8_t span = 0);
-
+  
 private:
+  std::shared_ptr<DeviceCom> m_dio	= std::make_shared<UIOCom>("/dev/uio0", 0x10000);
   std::shared_ptr<DeviceCom> m_dev;
-  std::shared_ptr<DeviceCom> m_dio = std::make_shared<UIOCom>("/dev/uio0", 0x10000);
   bool m_init = false;
   uint8_t m_nBytesIn;
   std::vector<std::pair<uint8_t,uint8_t>> m_inputSettings;

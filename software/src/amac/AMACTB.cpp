@@ -2,7 +2,7 @@
 #include <iomanip>
 
 #include "AMACTB.h"
-
+ 
 AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
 		std::shared_ptr<DeviceCom> end,
 		std::shared_ptr<DeviceCom> dac0,
@@ -17,7 +17,11 @@ AMACTB::AMACTB(	std::shared_ptr<DeviceCom> dio,
   : m_dio(dio), END(0xF, end),
     DAC0(dac0), DAC1(dac1), ADC0(adc0), ADC1(adc1), ADC2(adc2), POT0(pot0), POT1(pot1), POT2(pot2),
     FRQ(frq)
-{ }
+{
+
+}
+
+
 
 AMACTB::~AMACTB()
 { }
@@ -75,7 +79,7 @@ void AMACTB::selHVretChannel(HVret_t sel){
 
 void AMACTB::selMUXChannel(mux_t mux_sel){
 	uint32_t mux_data = m_dio->read_reg(0x2);
-	uint32_t mask = MUX_SEL2.bit | MUX_SEL1.bit | MUX_SEL0.bit;
+	uint32_t mask = (1 << MUX_SEL2.bit) | (1 << MUX_SEL1.bit) | (1 << MUX_SEL0.bit);
 	uint8_t val = 0;
 	switch(mux_sel){
 		case HVCtrl0:
@@ -98,7 +102,7 @@ void AMACTB::selMUXChannel(mux_t mux_sel){
 			break;
 		default: val = 0;
 	}
-	mux_data = (mux_data & ~mask) | (val << MUX_SEL0.bit); // supposing the 3 stay grouped
+	mux_data = (mux_data & ~mask) | (val << MUX_SEL0.bit); // supposing the 3 stay grouped in future implementations
 	m_dio->write_reg(MUX_SEL0.reg, mux_data);	
 }
 
@@ -134,8 +138,7 @@ bool AMACTB::readIO(uint8_t reg, uint32_t regOffset){
 	return (bool)(data & regOffset);
 }
 
-void AMACTB::setDAC(dac_t pin, float voltage)
-{
+void AMACTB::setDAC(dac_t pin, float voltage){
   // if(voltage > pin.chanMax){
   //   std::cout << "Overvoltage, channel max is " << pin.chanMax << "V, while set voltage is " << voltage << "V."  << std::endl;
   //   return;
@@ -170,11 +173,51 @@ void AMACTB::setDAC(dac_t pin, float voltage)
   return;
 }
 
-void AMACTB::setIDPads(uint8_t id)
-{
+void AMACTB::setIDPads(uint8_t id){
   setIO(ID0,(id>>0)&1);
   setIO(ID1,(id>>1)&1);
   setIO(ID2,(id>>2)&1);
   setIO(ID3,(id>>3)&1);
   setIO(ID4,(id>>4)&1);
 }
+
+float AMACTB::getADC(adc_t pin){
+  if(pin.mux != NOMUX){
+    selMUXChannel(pin.mux);
+    setIO(ADC_CNV, true);
+  }
+  
+  uint16_t res = pin.ADC->setAndReadChan(pin.chanNbr, pin.adcChanSpan).result;
+  float ret;
+  switch(pin.adcChanSpan){
+    case p1_25div:
+      ret = ((float)res)*1.25/1.024;
+      break;
+    case p1_25:
+      ret = ((float)res)*1.25;
+      break;
+    case pm1_25div:
+      ret = ((float)((int16_t)res))*2.5/1.024;
+      break;
+    case pm1_25:
+      ret = ((float)((int16_t)res))*2.5;
+      break;
+    case p2_5div:
+      ret = ((float)res)*2.5/1.024;
+      break;
+    case p2_5:
+      ret = ((float)res)*2.5;
+      break;
+    case pm2_5div:
+      ret = ((float)((int16_t)res))*5.0/1.024;
+      break;
+    case pm2_5:
+      ret = ((float)((int16_t)res))*5.0;
+      break;
+    default:
+      break;
+  }
+  if(pin.mux != NOMUX) setIO(ADC_CNV, false);
+  return (ret / ADC_FSR * ADC_REFBUF / pin.mult_fac); // scale result
+}
+
