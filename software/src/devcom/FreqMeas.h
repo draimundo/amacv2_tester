@@ -14,11 +14,8 @@ public:
 	FreqMeasInst(){
 		m_id = 0;
 		m_hi_n = 0;
-		m_hi_flg = 0;
 		m_lo_n = 0;
-		m_lo_flg = 0;
 		m_hi_t = 0;
-		m_t_flg = 0;
 		m_dev = NULL;
 	}
 	~FreqMeasInst(){};
@@ -27,25 +24,19 @@ public:
 	void reset_inst(bool active = true);
 	void freeze_inst(bool active = true);
 	void start_inst();
+  uint32_t get_ts_cnt_inst();
 	void set_ts_cnt_inst(uint32_t ts_cnt = 10000);
 	void read_inst();
-	uint32_t get_ts_cnt_inst();
 	
-	const uint16_t& hi_n = m_hi_n;
-	const bool& hi_flg = m_hi_flg;
-	const uint16_t& lo_n = m_lo_n;
-	const bool& lo_flg = m_lo_flg;
+	const uint32_t& hi_n = m_hi_n;
+	const uint32_t& lo_n = m_lo_n;
 	const uint32_t& hi_t = m_hi_t;
-	const bool& t_flg = m_t_flg;
 
 private:
 	uint8_t m_id;
 	uint16_t m_hi_n;
-	bool m_hi_flg;
 	uint16_t m_lo_n;
-	bool m_lo_flg;
 	uint32_t m_hi_t;
-	bool m_t_flg;
 	std::shared_ptr<DeviceCom> m_dev;
 };
 
@@ -55,8 +46,6 @@ public:
 		this->init();
 	}
 	~FreqMeas(){};
-	
-
 	
 	void reset(FreqMeasInst FreqMeas::* ref, bool active = true){
 		(this->*ref).reset_inst(active);
@@ -142,23 +131,10 @@ public:
 		return 0;
 	}
 	
-	
-	bool get_hi_flg(FreqMeasInst FreqMeas::* ref){
-		return (this->*ref).hi_flg;
-	}
-	bool get_hi_flg(std::string str){
-		if(regMap.find(str) != regMap.end()){
-			return(this->*regMap[str]).hi_flg;
-		} else {
-			std::cerr << " --> Error: Could not find register \""<< str << "\"" << std::endl;
-		}
-		return true;
-	}
-	
-	uint16_t get_lo_n(FreqMeasInst FreqMeas::* ref){
+	uint32_t get_lo_n(FreqMeasInst FreqMeas::* ref){
 		return (this->*ref).lo_n;
 	}
-	uint16_t get_lo_n(std::string str){
+	uint32_t get_lo_n(std::string str){
 		if(regMap.find(str) != regMap.end()){
 			return(this->*regMap[str]).lo_n;
 		} else {
@@ -167,18 +143,6 @@ public:
 		return 0;
 	}
 		
-	bool get_lo_flg(FreqMeasInst FreqMeas::* ref){
-		return (this->*ref).lo_flg;
-	}
-	bool get_lo_flg(std::string str){
-		if(regMap.find(str) != regMap.end()){
-			return(this->*regMap[str]).lo_flg;
-		} else {
-			std::cerr << " --> Error: Could not find register \""<< str << "\"" << std::endl;
-		}
-		return true;
-	}
-	
 	uint32_t get_hi_t(FreqMeasInst FreqMeas::* ref){
 		return (this->*ref).hi_t;
 	}
@@ -191,20 +155,8 @@ public:
 		return 0;
 	}
 	
-	bool get_t_flg(FreqMeasInst FreqMeas::* ref){
-		return (this->*ref).t_flg;
-	}
-	bool get_t_flg(std::string str){
-		if(regMap.find(str) != regMap.end()){
-			return(this->*regMap[str]).t_flg;
-		} else {
-			std::cerr << " --> Error: Could not find register \""<< str << "\"" << std::endl;
-		}
-		return true;
-	}
-	
 	float get_frq(FreqMeasInst FreqMeas::* ref){
-		return (float)(get_hi_n(ref)/get_ts_cnt(ref))*m_bClkHz;
+		return ((float)get_hi_n(ref)/get_ts_cnt(ref))*m_bClkHz;
 	}
 	float get_frq(std::string str){
 		if(regMap.find(str) != regMap.end()){
