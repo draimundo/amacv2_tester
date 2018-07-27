@@ -144,7 +144,7 @@ void AMACTB::setDAC(dac_t pin, float voltage)
   //   return;
   // }
   float adj_voltage = voltage / pin.mult_fac; //adjust to voltage divider
-  std::cout << "adj_voltage = " << adj_voltage << std::endl;
+
   uint16_t counts;
   switch(pin.dacChanSpan){
   case p5V :
@@ -169,7 +169,7 @@ void AMACTB::setDAC(dac_t pin, float voltage)
   default:
     break;
   }
-  std::cout << "counts = " << counts << std::endl;
+
   pin.DAC->writeUpdateChan(pin.chanNbr, counts);	
   return;
 }
