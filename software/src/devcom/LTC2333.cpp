@@ -102,12 +102,12 @@ void LTC2333::setADC(std::vector<std::pair<uint8_t,uint8_t>> inputSettings){
     // Format our 8-bit word of cmd code, chan, and span
     tx[i] = (uint8_t) formatCommand(chan, span);
     //std::cout << "tx[" << i << "] is " << std::hex << unsigned(tx[i]) << std::endl;
-    m_init = true;
   }
 
   m_inputSettings = inputSettings;
   m_nBytesIn = nBytesIn;
   m_dev->read_reg(tx, NULL, nBytesIn);
+  m_init = true;
   usleep(m_nBytesIn); //sleep for tx
 }
 
@@ -119,7 +119,7 @@ std::vector<LTC2333Outputs> LTC2333::getADC(){
     return {};
   }
 
-  //Set ADC_CNV pin
+  //Set ADC_CNV pin FIXME remove hardcoding
   uint32_t data = m_dio->read_reg(0x2); 
   uint32_t mask = (uint32_t)(1 << 7);
   data = (data & ~mask) | (true << 7);
@@ -129,6 +129,7 @@ std::vector<LTC2333Outputs> LTC2333::getADC(){
   mask = (uint32_t)(1 << 7);
   data = (data & ~mask) | (false << 7);
   m_dio->write_reg(0x2, data);
+  
   usleep(1); //wait for conversion to finish
   uint8_t rx[3*m_nBytesIn] = {0, }; 
   uint8_t  dummy [3*m_nBytesIn] = {0, };
@@ -154,9 +155,8 @@ LTC2333Outputs LTC2333::setAndReadChan(uint8_t chan, uint8_t span){
 
   std::vector<std::pair<uint8_t,uint8_t>> vec;
   vec.push_back( std::make_pair(chan, span) );
-
   // initializes the conversion
   setADC(vec);
-
+  //usleep(100); //for good measure
   return getADC().at(0);
 }

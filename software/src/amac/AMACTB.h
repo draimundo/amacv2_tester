@@ -31,7 +31,11 @@ struct dac_t{
 	LTC2666* DAC;
 };
 
-// adc input channel span
+enum mux_t{
+	HVCtrl0, HVCtrl1, HVCtrl2, HVCtrl3,
+	AVCC, AVDD5, VCC5, VDD2V5, AVEE, VEE5, VDD1V2, NOMUX};
+
+ // adc input channel span
 // used with default ref -> multiply 4.096 by the factor
 // div = /1.024, p = unipolar, pm = bipolar
 // ex : 	p1_25 div : range from 0V to 5V
@@ -39,15 +43,13 @@ struct dac_t{
 // for more info cf p.15 of datasheet
 enum adcChanSpan_t{p1_25div, p1_25, pm1_25div, pm1_25, p2_5div, p2_5, pm2_5div, pm2_5}; //cf p.15 of datasheet
 struct adc_t{
+  float mult_fac;
+  mux_t mux;
 	uint8_t chanNbr;
-	uint8_t ADCNbr;
 	adcChanSpan_t adcChanSpan;
-};
-
-enum mux_t{
-	HVCtrl0, HVCtrl1, HVCtrl2, HVCtrl3,
-	AVCC, AVDD5, VCC5, VDD2V5, AVEE, VEE5, VDD1V2};
-
+  LTC2333* ADC;
+}; 
+  
 enum class HVret_t{HVret1, HVret2};
 
 enum class HVref_t{HVref, HGND};
@@ -154,7 +156,7 @@ public:
      DAC CONTROL
      ====================================== */
 	
-  const uint16_t DAC_FSR = 0xFFFF; //=2^16
+  const uint16_t DAC_FSR = 0xFFFF; //=2^16-1
   void setDAC(dac_t pin, float voltage);
 	
   //DAC outputs
@@ -178,32 +180,47 @@ public:
   /* ======================================
      ADC CONTROL
      ====================================== */
-	
-		
+     
+	const uint16_t ADC_FSR = 0xFFFF; //=2^16-1
+  const float ADC_REFBUF = 4.096;
+  float getADC(adc_t pin);
   //ADC inputs
-  const adc_t M1 = {.chanNbr = 7, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M2 = {.chanNbr = 6, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M3 = {.chanNbr = 5, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M4 = {.chanNbr = 4, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M5 = {.chanNbr = 3, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M6 = {.chanNbr = 2, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M7 = {.chanNbr = 1, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t M8 = {.chanNbr = 0, .ADCNbr = 0, .adcChanSpan = p1_25div};
-  const adc_t Ext_NTC_ADC1 = {.chanNbr = 0, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t AM600BG = {.chanNbr = 2, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t AM900BG = {.chanNbr = 3, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t Shunty = {.chanNbr = 4, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t Shuntx = {.chanNbr = 5, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t CALy = {.chanNbr = 6, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t CALx = {.chanNbr = 7, .ADCNbr = 1, .adcChanSpan = p1_25div};
-  const adc_t AM_LVDS_CM0 = {.chanNbr = 0, .ADCNbr = 2, .adcChanSpan = p1_25div};
-  const adc_t AM_LVDS_CM1 = {.chanNbr = 1, .ADCNbr = 2, .adcChanSpan = p1_25div};
-  const adc_t HV_SW_Vout = {.chanNbr = 2, .ADCNbr = 2, .adcChanSpan = p1_25div};
-  const adc_t HVret1 = {.chanNbr = 6, .ADCNbr = 2, .adcChanSpan = p1_25div};
-  const adc_t HVret2 = {.chanNbr = 7, .ADCNbr = 2, .adcChanSpan = p1_25div};
-   
-
+  const adc_t M1 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 7, .adcChanSpan = p1_25div, .ADC = &ADC0};
+  const adc_t AM_VDD_V = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 6, .adcChanSpan = p1_25div, .ADC = &ADC0};
+  const adc_t AM_VDDLR_A = {.mult_fac = -1, .mux = NOMUX, .chanNbr = 5, .adcChanSpan = pm1_25div, .ADC = &ADC0};
+  const adc_t AM_VDDLR_V = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 4, .adcChanSpan = p1_25div, .ADC = &ADC0};
+  const adc_t AM_VDCDC_A = {.mult_fac = -1, .mux = NOMUX, .chanNbr = 3, .adcChanSpan = pm1_25div, .ADC = &ADC0};
+  const adc_t AM_VDCDC_V = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 2, .adcChanSpan = p1_25div, .ADC = &ADC0};
+  const adc_t AM_VDD_HI_A = {.mult_fac = -1, .mux = NOMUX, .chanNbr = 1, .adcChanSpan = pm1_25div, .ADC = &ADC0};
+  const adc_t AM_VDD_HI_V = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 0, .adcChanSpan = p1_25div, .ADC = &ADC0};
+    
+  const adc_t Ext_NTC_ADC1 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 0, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  //channel 1 of ADC1?
+  const adc_t AM600BG = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 2, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  const adc_t AM900BG = {.mult_fac = 1, .mux = NOMUX,.chanNbr = 3, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  const adc_t Shunty = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 4, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  const adc_t Shuntx = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 5, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  const adc_t CALy = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 6, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  const adc_t CALx = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 7, .adcChanSpan = p1_25div, .ADC = &ADC1};
+  
+  const adc_t AM_LVDS_CM0 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 0, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t AM_LVDS_CM1 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 1, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t HV_SW_Vout = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 2, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t AVCC_V = {.mult_fac = 1, .mux = AVCC, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
+  const adc_t AVDD5_V = {.mult_fac = 1, .mux = AVDD5, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
+  const adc_t VCC5_V = {.mult_fac = 1, .mux = VCC5, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
+  const adc_t VDD2V5_V = {.mult_fac = 1, .mux = VDD2V5, .chanNbr = 3, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t AVEE_V = {.mult_fac = 1, .mux = AVEE, .chanNbr = 3, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t VEE5_V = {.mult_fac = 1, .mux = VEE5, .chanNbr = 3, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t VDD1V2_V = {.mult_fac = 1, .mux = VDD1V2, .chanNbr = 3, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t AVCC_A = {.mult_fac = -0.02, .mux = NOMUX, .chanNbr = 4, .adcChanSpan = pm1_25div, .ADC = &ADC2};
+  const adc_t VCC5_A = {.mult_fac = -0.02, .mux = NOMUX, .chanNbr = 5, .adcChanSpan = pm1_25div, .ADC = &ADC2};
+  const adc_t HVret1 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 6, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t HVret2 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 7, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  
 	
+  
+  
 private:
   std::shared_ptr<DeviceCom> m_dio;
 };
