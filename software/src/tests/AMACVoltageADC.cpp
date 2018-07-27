@@ -40,7 +40,9 @@ int main()
 
   // Cal line
   TB->END.wrField(&AMACv2Reg::Ch4Mux, 1);
-  test.runVoltageADC("CAL",&AMACv2Reg::Ch4Value, TB->CAL);
+  test.runVoltageADC("CAL"  ,&AMACv2Reg::Ch4Value , TB->CAL);
+  test.runVoltageADC("Hrefx",&AMACv2Reg::Ch10Value, TB->CAL);
+  test.runVoltageADC("Hrefy",&AMACv2Reg::Ch11Value, TB->CAL);
 
   // Power off
   TB->powerOff();
