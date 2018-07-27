@@ -12,7 +12,7 @@ entity freq_meas_v1_0 is
 
 		-- Parameters of Axi Slave Bus Interface S00_AXI
 		C_S00_AXI_DATA_WIDTH	: integer	:= 32;
-		C_S00_AXI_ADDR_WIDTH	: integer	:= 6
+		C_S00_AXI_ADDR_WIDTH	: integer	:= 7
 	);
 	port (
 		-- Users to add ports here
@@ -56,7 +56,7 @@ architecture arch_imp of freq_meas_v1_0 is
 	component freq_meas_v1_0_S00_AXI is
 		generic (
 		C_S_AXI_DATA_WIDTH	: integer	:= 32;
-		C_S_AXI_ADDR_WIDTH	: integer	:= 6
+		C_S_AXI_ADDR_WIDTH	: integer	:= 7
 		);
 		port (
 		
