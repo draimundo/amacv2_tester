@@ -1,8 +1,8 @@
 --Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
---Tool Version: Vivado v.2018.2 (lin64) Build 2258646 Thu Jun 14 20:02:38 MDT 2018
---Date        : Wed Jul 25 16:23:25 2018
---Host        : carl-pc running 64-bit CentOS Linux release 7.5.1804 (Core)
+--Tool Version: Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
+--Date        : Fri Jul 27 11:00:17 2018
+--Host        : HEP-PC running 64-bit Service Pack 1  (build 7601)
 --Command     : generate_target TopLevel_wrapper.bd
 --Design      : TopLevel_wrapper
 --Purpose     : IP block netlist
@@ -127,10 +127,7 @@ architecture STRUCTURE of TopLevel_wrapper is
     spi_rtl_ss_i : in STD_LOGIC_VECTOR ( 7 downto 0 );
     spi_rtl_ss_o : out STD_LOGIC_VECTOR ( 7 downto 0 );
     spi_rtl_ss_t : out STD_LOGIC;
-    LED2 : out STD_LOGIC;
     LED3 : out STD_LOGIC;
-    LED1 : out STD_LOGIC;
-    LED0 : out STD_LOGIC;
     HVOSC2 : in STD_LOGIC;
     HVOSC1 : in STD_LOGIC;
     HVOSC0 : in STD_LOGIC;
@@ -174,9 +171,12 @@ architecture STRUCTURE of TopLevel_wrapper is
     LD_EN_VDDRL : out STD_LOGIC;
     LD_EN_VDCDC : out STD_LOGIC;
     LVL_TRANS_EN : out STD_LOGIC;
-    FPGA_EFUSE_PULSE : out STD_LOGIC;
     HVref_HGND_SW : out STD_LOGIC;
-    HVret_SW : out STD_LOGIC
+    HVret_SW : out STD_LOGIC;
+    LED1 : out STD_LOGIC;
+    LED0 : out STD_LOGIC;
+    FPGA_EFUSE_PULSE : out STD_LOGIC;
+    LED2 : out STD_LOGIC
   );
   end component TopLevel;
   component IOBUF is

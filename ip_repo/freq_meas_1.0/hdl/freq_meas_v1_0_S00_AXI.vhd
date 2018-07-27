@@ -12,7 +12,7 @@ entity freq_meas_v1_0_S00_AXI is
 		-- Width of S_AXI data bus
 		C_S_AXI_DATA_WIDTH	: integer	:= 32;
 		-- Width of S_AXI address bus
-		C_S_AXI_ADDR_WIDTH	: integer	:= 6
+		C_S_AXI_ADDR_WIDTH	: integer	:= 7
 	);
 	port (
 		-- Users to add ports here
@@ -93,15 +93,12 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
             frq_i : in std_logic; -- input signal to be measured
             clk_i  : in std_logic; --AXI clock
     
-            --First 32bits output register - Edge Measurment data
-            hi_n_o  : out std_logic_vector (14 downto 0); --nb of detected transitions to high
-            hi_flg_o  : out std_logic; -- overflow warning flag
-            lo_n_o  : out std_logic_vector (14 downto 0);
-            lo_flg_o  : out std_logic; -- overflow warning flag
-            --Second 32bits output register - Duty Cycle data
-            hi_t_o  : out std_logic_vector (30 downto 0); --time high
-            t_flg_o : out std_logic; -- overflow warning flag
-            
+            --First 32bits output register - High Edge Measurment data
+            hi_n_o  : out std_logic_vector (31 downto 0); --nb of detected transitions to high
+            --Second 32bits output register - Low Edge Measurment data
+            lo_n_o  : out std_logic_vector (31 downto 0);
+            --Third 32bits output register - Duty Cycle data
+            hi_t_o  : out std_logic_vector (31 downto 0); --time high
             --32bits input register - Control
             ts_cnt_i : in std_logic_vector(29 downto 0); --wanted analysis timespan
             freeze_i : in std_logic; --freeze register - measurement continues - active HI
@@ -128,7 +125,7 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
 	-- ADDR_LSB = 2 for 32 bits (n downto 2)
 	-- ADDR_LSB = 3 for 64 bits (n downto 3)
 	constant ADDR_LSB  : integer := (C_S_AXI_DATA_WIDTH/32)+ 1;
-	constant OPT_MEM_ADDR_BITS : integer := 3;
+	constant OPT_MEM_ADDR_BITS : integer := 4;
 	------------------------------------------------
 	---- Signals for user logic register space example
 	--------------------------------------------------
@@ -148,6 +145,11 @@ architecture arch_imp of freq_meas_v1_0_S00_AXI is
     signal slv_reg12   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg13   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     signal slv_reg14   :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal slv_reg15	:std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal slv_reg16    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal slv_reg17    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal slv_reg18    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+    signal slv_reg19    :std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
     
 	signal slv_reg_rden	: std_logic;
 	signal slv_reg_wren	: std_logic;
@@ -253,23 +255,28 @@ begin
             slv_reg0 <= (others => '0');
 --            slv_reg1 <= (others => '0');
 --            slv_reg2 <= (others => '0');
-            slv_reg3 <= (others => '0');
---            slv_reg4 <= (others => '0');
+--            slv_reg3 <= (others => '0');
+            slv_reg4 <= (others => '0');
 --            slv_reg5 <= (others => '0');
-            slv_reg6 <= (others => '0');
+--            slv_reg6 <= (others => '0');
 --            slv_reg7 <= (others => '0');
---            slv_reg8 <= (others => '0');
-            slv_reg9 <= (others => '0');
+            slv_reg8 <= (others => '0');
+--            slv_reg9 <= (others => '0');
 --            slv_reg10 <= (others => '0');
 --            slv_reg11 <= (others => '0');
             slv_reg12 <= (others => '0');
 --            slv_reg13 <= (others => '0');
 --            slv_reg14 <= (others => '0');
+--            slv_reg15 <= (others => '0');
+            slv_reg16 <= (others => '0');
+--            slv_reg17 <= (others => '0');
+--            slv_reg18 <= (others => '0');
+--            slv_reg19 <= (others => '0');
 	    else
 	      loc_addr := axi_awaddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
 	      if (slv_reg_wren = '1') then
 	        case loc_addr is
-                when b"0000" =>
+                when b"00000" =>
                     for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
                         if ( S_AXI_WSTRB(byte_index) = '1' ) then
                         -- Respective byte enables are asserted as per write strobes                   
@@ -277,54 +284,59 @@ begin
                             slv_reg0(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
                         end if;
                     end loop;
-                when b"0011" =>
-                        for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
-                            if ( S_AXI_WSTRB(byte_index) = '1' ) then
+               when b"00100" =>
+                    for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
+                      if ( S_AXI_WSTRB(byte_index) = '1' ) then
+                        -- Respective byte enables are asserted as per write strobes                   
+                        -- slave registor 4
+                        slv_reg4(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                      end if;
+                    end loop;
+               when b"01000" =>
+                    for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
+                      if ( S_AXI_WSTRB(byte_index) = '1' ) then
+                        -- Respective byte enables are asserted as per write strobes                   
+                        -- slave registor 8
+                        slv_reg8(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                      end if;
+                    end loop;
+                when b"01100" =>
+                    for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
+                        if ( S_AXI_WSTRB(byte_index) = '1' ) then
+                        -- Respective byte enables are asserted as per write strobes                   
+                        -- slave registor 0
+                            slv_reg12(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                        end if;
+                    end loop;
+                when b"10000" =>
+                    for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
+                        if ( S_AXI_WSTRB(byte_index) = '1' ) then
                             -- Respective byte enables are asserted as per write strobes                   
-                            -- slave registor 0
-                                slv_reg3(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
-                            end if;
-                        end loop;
-                when b"0110" =>
-                            for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
-                                if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                                -- Respective byte enables are asserted as per write strobes                   
-                                -- slave registor 0
-                                    slv_reg6(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
-                                end if;
-                            end loop;
-                when b"1001" =>
-                                for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
-                                    if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                                    -- Respective byte enables are asserted as per write strobes                   
-                                    -- slave registor 0
-                                        slv_reg9(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
-                                    end if;
-                                end loop;
-                when b"1100" =>
-                                for byte_index in 0 to (C_S_AXI_DATA_WIDTH/8-1) loop
-                                    if ( S_AXI_WSTRB(byte_index) = '1' ) then
-                                    -- Respective byte enables are asserted as per write strobes                   
-                                    -- slave registor 0
-                                        slv_reg12(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
-                                    end if;
-                                end loop;
+                            -- slave registor 16
+                            slv_reg16(byte_index*8+7 downto byte_index*8) <= S_AXI_WDATA(byte_index*8+7 downto byte_index*8);
+                        end if;
+                    end loop;
 	          when others =>
 	            slv_reg0 <= slv_reg0;
 --                slv_reg1 <= slv_reg1;
 --                slv_reg2 <= slv_reg2;
-                slv_reg3 <= slv_reg3;
---                slv_reg4 <= slv_reg4;
+--                slv_reg3 <= slv_reg3;
+                slv_reg4 <= slv_reg4;
 --                slv_reg5 <= slv_reg5;
-                slv_reg6 <= slv_reg6;
+--                slv_reg6 <= slv_reg6;
 --                slv_reg7 <= slv_reg7;
---                slv_reg8 <= slv_reg8;
-                slv_reg9 <= slv_reg9;
+                slv_reg8 <= slv_reg8;
+--                slv_reg9 <= slv_reg9;
 --                slv_reg10 <= slv_reg10;
 --                slv_reg11 <= slv_reg11;
                 slv_reg12 <= slv_reg12;
 --                slv_reg13 <= slv_reg13;
 --                slv_reg14 <= slv_reg14;
+--	            slv_reg15 <= slv_reg15;
+                slv_reg16 <= slv_reg16;
+--                slv_reg17 <= slv_reg17;
+--                slv_reg18 <= slv_reg18;
+--                slv_reg19 <= slv_reg19;
 	        end case;
 	      end if;
 	    end if;
@@ -412,44 +424,53 @@ begin
 	-- and the slave is ready to accept the read address.
 	slv_reg_rden <= axi_arready and S_AXI_ARVALID and (not axi_rvalid) ;
 
-    process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, slv_reg8, slv_reg9, slv_reg10, slv_reg11, slv_reg12, slv_reg13, slv_reg14, axi_araddr, S_AXI_ARESETN, slv_reg_rden)
-    variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
+    process (slv_reg0, slv_reg1, slv_reg2, slv_reg3, slv_reg4, slv_reg5, slv_reg6, slv_reg7, slv_reg8, slv_reg9, slv_reg10, slv_reg11, slv_reg12, slv_reg13, slv_reg14, slv_reg15, slv_reg16, slv_reg17, slv_reg18, slv_reg19, axi_araddr, S_AXI_ARESETN, slv_reg_rden)    variable loc_addr :std_logic_vector(OPT_MEM_ADDR_BITS downto 0);
     begin
         -- Address decoding for reading registers
         loc_addr := axi_araddr(ADDR_LSB + OPT_MEM_ADDR_BITS downto ADDR_LSB);
         case loc_addr is
-          when b"0000" =>
-            reg_data_out <= slv_reg0;
-          when b"0001" =>
-            reg_data_out <= slv_reg1;
-          when b"0010" =>
-            reg_data_out <= slv_reg2;
-          when b"0011" =>
-            reg_data_out <= slv_reg3;
-          when b"0100" =>
-            reg_data_out <= slv_reg4;
-          when b"0101" =>
-            reg_data_out <= slv_reg5;
-          when b"0110" =>
-            reg_data_out <= slv_reg6;
-          when b"0111" =>
-            reg_data_out <= slv_reg7;
-          when b"1000" =>
-            reg_data_out <= slv_reg8;
-          when b"1001" =>
-            reg_data_out <= slv_reg9;
-          when b"1010" =>
-            reg_data_out <= slv_reg10;
-          when b"1011" =>
-            reg_data_out <= slv_reg11;
-          when b"1100" =>
-              reg_data_out <= slv_reg12;
-          when b"1101" =>
-              reg_data_out <= slv_reg13;
-          when b"1110" =>
-              reg_data_out <= slv_reg14;
-          when others =>
-            reg_data_out  <= (others => '0');
+            when b"00000" =>
+                reg_data_out <= slv_reg0;
+            when b"00001" =>
+                reg_data_out <= slv_reg1;
+            when b"00010" =>
+                reg_data_out <= slv_reg2;
+            when b"00011" =>
+                reg_data_out <= slv_reg3;
+            when b"00100" =>
+                reg_data_out <= slv_reg4;
+            when b"00101" =>
+                reg_data_out <= slv_reg5;
+            when b"00110" =>
+                reg_data_out <= slv_reg6;
+            when b"00111" =>
+                reg_data_out <= slv_reg7;
+            when b"01000" =>
+                reg_data_out <= slv_reg8;
+            when b"01001" =>
+                reg_data_out <= slv_reg9;
+            when b"01010" =>
+                reg_data_out <= slv_reg10;
+            when b"01011" =>
+                reg_data_out <= slv_reg11;
+            when b"01100" =>
+                reg_data_out <= slv_reg12;
+            when b"01101" =>
+                reg_data_out <= slv_reg13;
+            when b"01110" =>
+                reg_data_out <= slv_reg14;
+            when b"01111" =>
+                reg_data_out <= slv_reg15;
+            when b"10000" =>
+                reg_data_out <= slv_reg16;
+            when b"10001" =>
+                reg_data_out <= slv_reg17;
+            when b"10010" =>
+                reg_data_out <= slv_reg18;
+            when b"10011" =>
+                reg_data_out <= slv_reg19;
+            when others =>
+                reg_data_out  <= (others => '0');
         end case;
     end process; 
 
@@ -479,80 +500,56 @@ begin
     port map (
 		frq_i => frq0_i,
         clk_i  => S_AXI_ACLK,
-    
-        --First 32bits output register - Edge Measurment data
-        hi_n_o  => slv_reg1(14 downto 0),
-        hi_flg_o  => slv_reg1(15),
-        lo_n_o  => slv_reg1(30 downto 16),
-        lo_flg_o  => slv_reg1(31),
-        --Second 32bits output register - Duty Cycle data
-        hi_t_o  => slv_reg2(30 downto 0),
-        t_flg_o => slv_reg2(31),
         
-        --32bits input register - Control
+        hi_n_o  => slv_reg1(31 downto 0),
+        lo_n_o  => slv_reg2(31 downto 0),
+        hi_t_o  => slv_reg3(31 downto 0),
+        
         ts_cnt_i => slv_reg0(29 downto 0),
         freeze_i => slv_reg0(30),
         nrst_i => slv_reg0(31)
     );
-        
+    
     freq_meas_inst_1 : freq_meas_comp_v1_0
     port map (
         frq_i => frq1_i,
         clk_i  => S_AXI_ACLK,
         
-        --First 32bits output register - Edge Measurment data
-        hi_n_o  => slv_reg4(14 downto 0),
-        hi_flg_o  => slv_reg4(15),
-        lo_n_o  => slv_reg4(30 downto 16),
-        lo_flg_o  => slv_reg4(31),
-        --Second 32bits output register - Duty Cycle data
-        hi_t_o  => slv_reg5(30 downto 0),
-        t_flg_o => slv_reg5(31),
+        hi_n_o  => slv_reg5(31 downto 0),
+        lo_n_o  => slv_reg6(31 downto 0),
+        hi_t_o  => slv_reg7(31 downto 0),
         
-        --32bits input register - Control
-        ts_cnt_i => slv_reg3(29 downto 0),
-        freeze_i => slv_reg3(30),
-        nrst_i => slv_reg3(31)
+        ts_cnt_i => slv_reg4(29 downto 0),
+        freeze_i => slv_reg4(30),
+        nrst_i => slv_reg4(31)
     );
-        
+    
     freq_meas_inst_2 : freq_meas_comp_v1_0
     port map (
         frq_i => frq2_i,
         clk_i  => S_AXI_ACLK,
         
-        --First 32bits output register - Edge Measurment data
-        hi_n_o  => slv_reg7(14 downto 0),
-        hi_flg_o  => slv_reg7(15),
-        lo_n_o  => slv_reg7(30 downto 16),
-        lo_flg_o  => slv_reg7(31),
-        --Second 32bits output register - Duty Cycle data
-        hi_t_o  => slv_reg8(30 downto 0),
-        t_flg_o => slv_reg8(31),
+        hi_n_o  => slv_reg9(31 downto 0),
+        lo_n_o  => slv_reg10(31 downto 0),
+        hi_t_o  => slv_reg11(31 downto 0),
         
-        --32bits input register - Control
-        ts_cnt_i => slv_reg6(29 downto 0),
-        freeze_i => slv_reg6(30),
-        nrst_i => slv_reg6(31)
+        ts_cnt_i => slv_reg8(29 downto 0),
+        freeze_i => slv_reg8(30),
+        nrst_i => slv_reg8(31)
     );
-        
+    
     freq_meas_inst_3 : freq_meas_comp_v1_0
     port map (
         frq_i => frq3_i,
         clk_i  => S_AXI_ACLK,
         
-        --First 32bits output register - Edge Measurment data
-        hi_n_o  => slv_reg10(14 downto 0),
-        hi_flg_o  => slv_reg10(15),
-        lo_n_o  => slv_reg10(30 downto 16),
-        lo_flg_o  => slv_reg10(31),
-        --Second 32bits output register - Duty Cycle data
-        hi_t_o  => slv_reg11(30 downto 0),
-        t_flg_o => slv_reg11(31),
+        hi_n_o  => slv_reg13(31 downto 0),
+        lo_n_o  => slv_reg14(31 downto 0),
+        hi_t_o  => slv_reg15(31 downto 0),
         
-        --32bits input register - Control
-        ts_cnt_i => slv_reg9(29 downto 0),
-        freeze_i => slv_reg9(30),
-        nrst_i => slv_reg9(31)
+        ts_cnt_i => slv_reg12(29 downto 0),
+        freeze_i => slv_reg12(30),
+        nrst_i => slv_reg12(31)
     );
     
     freq_meas_inst_4 : freq_meas_comp_v1_0
@@ -560,21 +557,14 @@ begin
         frq_i => frq4_i,
         clk_i  => S_AXI_ACLK,
         
-        --First 32bits output register - Edge Measurment data
-        hi_n_o  => slv_reg13(14 downto 0),
-        hi_flg_o  => slv_reg13(15),
-        lo_n_o  => slv_reg13(30 downto 16),
-        lo_flg_o  => slv_reg13(31),
-        --Second 32bits output register - Duty Cycle data
-        hi_t_o  => slv_reg14(30 downto 0),
-        t_flg_o => slv_reg14(31),
+        hi_n_o  => slv_reg17(31 downto 0),
+        lo_n_o  => slv_reg18(31 downto 0),
+        hi_t_o  => slv_reg19(31 downto 0),
         
-        --32bits input register - Control
-        ts_cnt_i => slv_reg12(29 downto 0),
-        freeze_i => slv_reg12(30),
-        nrst_i => slv_reg12(31)
+        ts_cnt_i => slv_reg16(29 downto 0),
+        freeze_i => slv_reg16(30),
+        nrst_i => slv_reg16(31)
     );
-        
 	-- User logic ends
 
 end arch_imp;
