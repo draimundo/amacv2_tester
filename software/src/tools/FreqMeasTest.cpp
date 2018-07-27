@@ -22,11 +22,8 @@ int main(){
 		dev.freeze("HVOSC0", false);
 		usleep(2E6);
 		std::cout << "\nhi_n " << dev.get_hi_n("HVOSC0") << std::endl;
-		std::cout << "hi_flg " << dev.get_hi_flg("HVOSC0") << std::endl;
 		std::cout << "lo_n " << dev.get_lo_n("HVOSC0") << std::endl;
-		std::cout << "lo_flg " << dev.get_lo_flg("HVOSC0") << std::endl;
 		std::cout << "hi_t " << dev.get_hi_t("HVOSC0") << std::endl;
-		std::cout << "t_flg " << dev.get_t_flg("HVOSC0") << std::endl;
 
 		std::cout << "Measured frequency: " << dev.get_frq("HVOSC0") << "Hz" << std::endl;
 
