@@ -203,17 +203,8 @@ public:
 		return true;
 	}
 	
-	float get_frq(FreqMeasInst FreqMeas::* ref){
-		return (float)(get_hi_n(ref)/get_ts_cnt(ref))*m_bClkHz;
-	}
-	float get_frq(std::string str){
-		if(regMap.find(str) != regMap.end()){
-			return get_frq(regMap.find(str)->second);
-		} else {
-			std::cerr << " --> Error: Could not find register \""<< str << "\"" << std::endl;
-		}
-		return 0.0;
-	}
+	float get_frq(FreqMeasInst FreqMeas::* ref);
+	float get_frq(const std::string& str);
 	
 	std::map<std::string, FreqMeasInst FreqMeas::*> regMap; //To control them all directly
 	

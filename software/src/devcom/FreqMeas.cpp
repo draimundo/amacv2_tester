@@ -56,3 +56,16 @@ void FreqMeas::init(){
 	CLKOUT.init_inst(m_dev, 4); regMap["CLKOUT"] = &FreqMeas::CLKOUT;
 }
 
+float FreqMeas::get_frq(FreqMeasInst FreqMeas::* ref)
+{
+  return ((float)get_hi_n(ref)/get_ts_cnt(ref))*m_bClkHz;
+}
+
+float FreqMeas::get_frq(const std::string& str)
+{
+  if(regMap.find(str) != regMap.end())
+    return get_frq(regMap.find(str)->second);
+  else
+    std::cerr << " --> Error: Could not find register \""<< str << "\"" << std::endl;
+  return 0.0;
+}
