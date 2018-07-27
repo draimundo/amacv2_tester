@@ -74,7 +74,14 @@ void EndeavourCom::setid(REFMODE mode, unsigned int refid)
   m_seqnum++;
 
   // wait for response ( poll :( )
-  while(!m_raw->isDataValid()) { continue; }
+  uint tryidx=0;
+  for(tryidx=0;tryidx<10;tryidx++)
+    {
+      if(m_raw->isDataValid()) break;
+      usleep(10);
+    }
+  if(tryidx==10)
+    throw EndeavourComException("SETID timeout");
 
   // Parse the response
   unsigned long long int read_data;
@@ -126,7 +133,14 @@ void EndeavourCom::write_reg(unsigned int address, unsigned int data)
   m_seqnum++;
 
   // wait for response ( poll :( )
-  while(!m_raw->isDataValid()) { continue; }
+  uint tryidx=0;
+  for(tryidx=0;tryidx<10;tryidx++)
+    {
+      if(m_raw->isDataValid()) break;
+      usleep(10);
+    }
+  if(tryidx==10)
+    throw EndeavourComException("SETID timeout");
 
   // Parse the response
   unsigned long long int read_data;
@@ -169,7 +183,14 @@ unsigned int EndeavourCom::read_reg(unsigned int address)
   m_seqnum++;
 
   // wait for response ( poll :( )
-  while(!m_raw->isDataValid()) { continue; }
+  uint tryidx=0;
+  for(tryidx=0;tryidx<10;tryidx++)
+    {
+      if(m_raw->isDataValid()) break;
+      usleep(10);
+    }
+  if(tryidx==10)
+    throw EndeavourComException("READ timeout");
 
   // Parse the response
   unsigned long long int read_data;
@@ -216,7 +237,14 @@ unsigned int EndeavourCom::readnext_reg()
   m_seqnum++;
 
   // wait for response ( poll :( )
-  while(!m_raw->isDataValid()) { continue; }
+  uint tryidx=0;
+  for(tryidx=0;tryidx<10;tryidx++)
+    {
+      if(m_raw->isDataValid()) break;
+      usleep(10);
+    }
+  if(tryidx==10)
+    throw EndeavourComException("SETID timeout");
 
   // Parse the response
   unsigned long long int read_data;
