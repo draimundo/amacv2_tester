@@ -83,7 +83,7 @@ int main()
           reg = stoul(reg_str);
           data = TB.END.read_reg(reg);
 
-          std::cout << "read: Register " << std::dec << reg << " has hex (decimal) data: " << std::hex << data << std::dec << "(" << data << ")" << std::endl;
+          std::cout << "read: Register " << std::dec << reg << " has hex (decimal) data: 0x" << std::hex << data << std::dec << "(" << data << ")" << std::endl;
 
         }
         else if(cmd == "write"){
@@ -98,7 +98,7 @@ int main()
 
           TB.END.write_reg(reg, data);
 
-          std::cout << "write: Register " << std::dec << reg << " with hex value: " << std::hex << data << std::dec << std::endl;
+          std::cout << "write: Register " << std::dec << reg << " with hex value: 0x" << std::hex << data << std::dec << std::endl;
         }
         else if(cmd == "exit"){
           std::cout << "exit!" << std::endl;
