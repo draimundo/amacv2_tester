@@ -151,7 +151,6 @@ public:
   const io_t FPGA_EFUSE_PULSE	 = {16, 0x2, 	OUT};
   const io_t HVref_HGND_SW	 = {17, 0x2, 	OUT};
 	
-	
   /* ======================================
      DAC CONTROL
      ====================================== */

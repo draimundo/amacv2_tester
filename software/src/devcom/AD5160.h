@@ -21,11 +21,10 @@ public:
 
 private:
 	std::shared_ptr<DeviceCom> m_dev;
-
-        // http://www.analog.com/media/en/technical-documentation/data-sheets/AD5160.pdf
-        // For the resistance float -> counts conversion
-        float m_R_W = 50;
-        float m_R_AB = 100e3;
+  // http://www.analog.com/media/en/technical-documentation/data-sheets/AD5160.pdf
+  // For the resistance float -> counts conversion
+  float m_R_W = 50;
+  float m_R_AB = 100e3;
 
 	uint8_t m_regVal;
 	

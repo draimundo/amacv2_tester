@@ -21,6 +21,7 @@ public:
 
 	virtual void read_reg(unsigned int address, uint8_t* data, unsigned int len){};
 	virtual void read_reg(uint8_t* data_in, uint8_t* data_out, unsigned int len){};
+
 private:
   unsigned int m_size;
 
