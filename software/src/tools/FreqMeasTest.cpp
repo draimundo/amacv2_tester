@@ -16,19 +16,16 @@ int main(){
 	dev.reset("HVOSC0");
 	
 	std::cout << "Starting measurments" << std::endl;
+  dev.set_ts_cnt("HVOSC0", 100E6);
 	dev.start("HVOSC0");
-	dev.read("HVOSC0");
 	while(true){
-		dev.freeze("HVOSC0", false);
-		usleep(2E6);
+		usleep(1.1E6);
+    dev.read("HVOSC0");
 		std::cout << "\nhi_n " << dev.get_hi_n("HVOSC0") << std::endl;
 		std::cout << "lo_n " << dev.get_lo_n("HVOSC0") << std::endl;
 		std::cout << "hi_t " << dev.get_hi_t("HVOSC0") << std::endl;
-
+    std::cout << "ts_cnt " << dev.get_ts_cnt("HVOSC0") << std::endl;
 		std::cout << "Measured frequency: " << dev.get_frq("HVOSC0") << "Hz" << std::endl;
-
-		dev.freeze("HVOSC0");
-		dev.read("HVOSC0");
 	}
 	
 	

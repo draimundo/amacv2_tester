@@ -34,8 +34,8 @@ public:
 
 private:
 	uint8_t m_id;
-	uint16_t m_hi_n;
-	uint16_t m_lo_n;
+	uint32_t m_hi_n;
+	uint32_t m_lo_n;
 	uint32_t m_hi_t;
 	std::shared_ptr<DeviceCom> m_dev;
 };
@@ -119,10 +119,10 @@ public:
 		return 0;
 	}
 	
-	uint16_t get_hi_n(FreqMeasInst FreqMeas::* ref){
+	uint32_t get_hi_n(FreqMeasInst FreqMeas::* ref){
 		return (this->*ref).hi_n;
 	}
-	uint16_t get_hi_n(std::string str){
+	uint32_t get_hi_n(std::string str){
 		if(regMap.find(str) != regMap.end()){
 			return(this->*regMap[str]).hi_n;
 		} else {
@@ -156,6 +156,9 @@ public:
 	}
 	
 	float get_frq(FreqMeasInst FreqMeas::* ref){
+    std::cerr << "hi_n: " << get_hi_n(ref) << std::endl;
+    std::cerr << "ts_cnt: " << get_ts_cnt(ref) << std::endl;
+    std::cerr << "bClkHz: " << m_bClkHz << std::endl;
 		return ((float)get_hi_n(ref)/get_ts_cnt(ref))*m_bClkHz;
 	}
 	float get_frq(std::string str){
