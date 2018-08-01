@@ -2,6 +2,8 @@
 #include "AMAC.h"
 #include "AMACTest.h"
 
+#include "EndeavourComException.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <iomanip>
@@ -32,18 +34,30 @@ int main()
   std::cout << "AMAC ON" << std::endl;
   usleep(1E6);
 
-  // Set ID
-  TB->END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
-  std::cout << "SETID" << std::endl;
-  usleep(1E6);
+  // Set ID, with two tries to be sure of success
+  try
+  {      
+    TB->END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+    std::cout << "SETID" << std::endl;
+    usleep(1E6);
+  }
+  catch(EndeavourComException e)
+  {
+    std::cout << e.what() << std::endl;
+    usleep(2E6);
+  }
 
-  // BER loop
-  test.dumpRegisters();
-
-  // Power off
-  TB->powerOff();
-  std::cout << "Power OFF" << std::endl;
-  usleep(1E6); // 1s wait for a clean power down
+  try
+  {      
+    TB->END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+    std::cout << "SETID" << std::endl;
+    usleep(1E6);
+  }
+  catch(EndeavourComException e)
+  {
+    std::cout << e.what() << std::endl;
+    usleep(2E6);
+  }
 
   return 0;
 }

@@ -14,13 +14,9 @@ void LTC2666::init(){
 }
 
 void LTC2666::reset(){
+  // originally did a power down and reset to DAC count = 0 here,
+  // but doesn't make sense to do this anymore if we want to use these on the fly
   
-  // Each reset, let's power down the chip, set to default span, 
-  // and power chip up with 0 counts per DAC
-  powerDownAll();
-  changeSpanAll(0x00);
-  writeUpdateAll(0x00);
-
 }
 
 void LTC2666::writeUpdateAll(unsigned int counts){

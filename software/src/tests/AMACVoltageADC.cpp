@@ -2,6 +2,8 @@
 #include "AMAC.h"
 #include "AMACTest.h"
 
+#include "EndeavourComException.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <iomanip>
@@ -27,16 +29,43 @@ int main()
   std::cout << "AMAC ON" << std::endl;
   usleep(1E6);
 
-  // Set ID
-  TB->END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
-  std::cout << "SETID" << std::endl;
-  usleep(1E6);
+  // Set ID, with two tries to be sure of success
+  try
+  {      
+    TB->END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+    std::cout << "SETID" << std::endl;
+    usleep(1E6);
+  }
+  catch(EndeavourComException e)
+  {
+    std::cout << e.what() << std::endl;
+    usleep(2E6);
+  }
+
+  try
+  {      
+    TB->END.setid(EndeavourCom::REFMODE::IDPads, 0x1F);
+    std::cout << "SETID" << std::endl;
+    usleep(1E6);
+  }
+  catch(EndeavourComException e)
+  {
+    std::cout << e.what() << std::endl;
+    usleep(2E6);
+  }
 
   // measure loop
   TB->END.wrField(&AMACv2Reg::VDDbg  , 0xE);
   TB->END.wrField(&AMACv2Reg::VDDbgen, 1);
   TB->END.wrField(&AMACv2Reg::AMbg   , 0xE);
   TB->END.wrField(&AMACv2Reg::AMbgen , 1);
+  usleep(1E6);
+
+  // Setting which has given us 1 mV / count
+  //TB->END.write_reg(52, 0x898D); // VDD = 1.206 for AMAC #10 (value from the spec)
+  //TB->END.write_reg(52, 0x898B); // VDD = 1.255 for AMAC #10 (1.277 for AMAC #9)
+  //std::cout << "VDD and AM BG" << std::endl;
+  //usleep(1E6);
 
   // Cal line
   TB->END.wrField(&AMACv2Reg::Ch4Mux, 1);

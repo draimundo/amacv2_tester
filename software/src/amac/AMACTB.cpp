@@ -151,24 +151,21 @@ void AMACTB::setDAC(dac_t pin, float voltage)
     break;
   case p10V :
     counts = (adj_voltage/10) * DAC_FSR;
-    std::cout << "+10V Range not supported yet"  << std::endl;
-    return;
+    break;
   case pm5V :
     counts = (adj_voltage + 5)/10 * DAC_FSR;
-    std::cout << "+-5V Range not supported yet"  << std::endl;
-    return;
+    break;
   case pm10V :
     counts = (adj_voltage + 10)/20 * DAC_FSR;
-    std::cout << "+-10V Range not supported yet"  << std::endl;
-    return;
+    break;
   case pm2_5V :
     counts = (adj_voltage + 2.5)/5 * DAC_FSR;
-    std::cout << "+-2.5V Range not supported yet"  << std::endl;
-    return;
+    break;
   default:
     break;
   }
 
+  pin.DAC->changeSpanChan(pin.chanNbr, (unsigned int) pin.dacChanSpan);	
   pin.DAC->writeUpdateChan(pin.chanNbr, counts);	
   return;
 }
