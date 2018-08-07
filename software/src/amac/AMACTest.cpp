@@ -149,6 +149,34 @@ void AMACTest::runVoltageADC(const std::string& chname, AMACv2Field AMACv2Reg::*
   fh.close();
 }
 
+void AMACTest::runBandgapScan()
+{
+  // Enable setting the bandgap
+  m_amactb->END.wrField(&AMACv2Reg::AMbgen , 1);
+  m_amactb->END.wrField(&AMACv2Reg::VDDbgen, 1);
+
+  std::ofstream fh;
+  fh.open(m_name+"_BANDGAP.csv");  
+
+  fh << "VDDBG" << "\t" << "AMBG" << "\t" << "AM600BG" << "\t" << "AM900BG" << "\t" << "VDD" << std::endl;
+
+  for(uint AMbg=0;AMbg<pow(2,4);AMbg++)
+    {
+      m_amactb->END.wrField(&AMACv2Reg::AMbg, AMbg);
+      for(uint VDDbg=0;VDDbg<pow(2,4);VDDbg++)
+	{
+	  m_amactb->END.wrField(&AMACv2Reg::VDDbg, VDDbg);
+	  usleep(10);
+	  float AM600BG=m_amactb->getADC(m_amactb->AM600BG);
+	  float AM900BG=m_amactb->getADC(m_amactb->AM900BG);
+	  float VDD    =m_amactb->getADC(m_amactb->AM_VDD_V);
+	  fh << VDDbg << "\t" << AMbg << "\t" << AM600BG << "\t" << AM900BG << "\t" << VDD << std::endl;
+	}
+    }
+
+  fh.close();
+}
+
 void AMACTest::runZeroCalib(const std::string& chname, AMACv2Field AMACv2Reg::* ch)
 {
   std::ofstream fh;

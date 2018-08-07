@@ -19,6 +19,8 @@ public:
   float runBER();  
   void runBERvsClock();
 
+  void runBandgapScan();
+
   void runVoltageADC(const std::string& chname, AMACv2Field AMACv2Reg::* ch, dac_t dac);
   void runZeroCalib(const std::string& chname, AMACv2Field AMACv2Reg::* ch);
 
