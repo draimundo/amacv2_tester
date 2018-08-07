@@ -34,6 +34,7 @@ void AMAC::syncReg(AMACv2Field AMACv2Reg::* ref)
 {
   EndeavourCom::write_reg(getAddr(ref), (this->*ref).readRaw());
 }
+
 void AMAC::wrField(AMACv2Field AMACv2Reg::* ref, uint32_t data)
 {
   setField(ref, data);

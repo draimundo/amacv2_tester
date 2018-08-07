@@ -22,6 +22,9 @@ void EndeavourCom::reset()
 
 void EndeavourCom::setid(REFMODE mode, unsigned int refid)
 {
+  m_raw->sendData(0, 10);
+  usleep(10);
+
   unsigned long long int databits=0;
 
   //{3'b110, 5'b11111, 3'b111, newamacid[4:0], 4'b1111, efuseid[19:0], 3'b111, idpads[4:0], crc[7:0]}
