@@ -181,16 +181,19 @@ void AMACTB::setIDPads(uint8_t id){
   setIO(ID4,(id>>4)&1);
 }
 
-float AMACTB::getADC(adc_t pin){
-  if(pin.mux != NOMUX){
-    selMUXChannel(pin.mux);
-    setIO(MPM_MUX_EN, true);
-    usleep(10E3);
-  }
-  
+float AMACTB::getADC(adc_t pin)
+{
+  if(pin.mux != NOMUX)
+    {
+      selMUXChannel(pin.mux);
+      setIO(MPM_MUX_EN, true);
+      usleep(10E3);
+    }
+
   uint16_t res = pin.ADC->setAndReadChan(pin.chanNbr, pin.adcChanSpan).result;
   float ret;
-  switch(pin.adcChanSpan){
+  switch(pin.adcChanSpan)
+    {
     case p1_25div:
       ret = ((float)res)*1.25/1.024;
       break;
@@ -217,7 +220,7 @@ float AMACTB::getADC(adc_t pin){
       break;
     default:
       break;
-  }
+    }
   if(pin.mux != NOMUX) setIO(MPM_MUX_EN, false);
     
   return (ret / ADC_FSR * ADC_REFBUF / pin.mult_fac); // scale result

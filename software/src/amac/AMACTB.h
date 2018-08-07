@@ -15,9 +15,9 @@
 
 enum direction_t{IN, OUT};
 struct io_t {
-	uint8_t bit;
-	uint8_t reg;
-	direction_t dir;
+  uint8_t bit;
+  uint8_t reg;
+  direction_t dir;
 };
 
 enum dacChanSpan_t{p5V, p10V, pm5V, pm10V, pm2_5V};

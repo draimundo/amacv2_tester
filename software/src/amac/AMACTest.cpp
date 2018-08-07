@@ -26,6 +26,61 @@ void AMACTest::dumpRegisters()
     }
 }
 
+void AMACTest::runPower()
+{
+  std::ofstream fh;
+  fh.open(m_name+"_Power.csv");
+
+  fh << "AM_VDDLR\tAM_VDDLR_Curr\tAM_VDCDC\tAM_VDCDC_Curr\tAM_VDD_HI\tAM_VDD_HI_Curr\tAM_VDD\tAVCC\tAVCC_Curr\tAVCC5\tAVCC5_Curr\tAVDD5\tVDD2V5\tAVEE\tVEE5\tVDD1V2" << std::endl;
+
+  float AM_VDDLR      =m_amactb->getADC(m_amactb->AM_VDDLR_V);
+  float AM_VDDLR_Curr =m_amactb->getADC(m_amactb->AM_VDDLR_A);
+
+  float AM_VDCDC      =m_amactb->getADC(m_amactb->AM_VDCDC_V);
+  float AM_VDCDC_Curr =m_amactb->getADC(m_amactb->AM_VDCDC_A);
+  
+  float AM_VDD_HI     =m_amactb->getADC(m_amactb->AM_VDD_HI_V);
+  float AM_VDD_HI_Curr=m_amactb->getADC(m_amactb->AM_VDD_HI_A);
+
+  float AM_VDD        =m_amactb->getADC(m_amactb->AM_VDD_V);
+
+  float AVCC     =m_amactb->getADC(m_amactb->AVCC_V);
+  float AVCC_Curr=m_amactb->getADC(m_amactb->AVCC_A);
+  float VCC5     =m_amactb->getADC(m_amactb->VCC5_V);
+  float VCC5_Curr=m_amactb->getADC(m_amactb->VCC5_A);
+  float AVDD5    =m_amactb->getADC(m_amactb->AVDD5_V);
+  float VDD2V5   =m_amactb->getADC(m_amactb->VDD2V5_V);
+  float AVEE     =m_amactb->getADC(m_amactb->AVEE_V);
+  float VEE5     =m_amactb->getADC(m_amactb->VEE5_V);
+  float VDD1V2   =m_amactb->getADC(m_amactb->VDD1V2_V);
+
+  fh << AM_VDDLR << "\t" << AM_VDDLR_Curr << "\t" << AM_VDCDC << "\t" << AM_VDCDC_Curr << "\t" << AM_VDD_HI << "\t" << AM_VDD_HI_Curr << "\t" << AM_VDD << "\t" << AVCC << "\t" << AVCC_Curr << "\t" << VCC5 << "\t" << VCC5_Curr << "\t" << AVDD5 << "\t" << VDD2V5 << "\t" << AVEE << "\t" << VEE5 << "\t" << VDD1V2 << std::endl;
+
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDDLR voltage: "  << AM_VDDLR       << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDDLR current: "  << AM_VDDLR_Curr  << "A" << std::endl;
+  std::cout << std::endl;
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDCDC voltage: "  << AM_VDCDC       << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDCDC current: "  << AM_VDCDC_Curr  << "A" << std::endl;
+  std::cout << std::endl;
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDD_HI voltage: " << AM_VDD_HI      << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDD_HI current: " << AM_VDD_HI_Curr << "A" << std::endl;
+  std::cout << std::endl;
+  std::cout << std::fixed << std::setprecision(10) << "AM_VDD voltage: "    << AM_VDD         << "V" << std::endl;
+  std::cout << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"AVCC voltage: "       << AVCC           << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"AVCC current: "       << AVCC_Curr      << "A" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"VCC5 voltage: "       << VCC5           << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"VCC5 current: "       << VCC5_Curr      << "A" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"AVDD5 voltage: "      << AVDD5          << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"VDD2V5 voltage: "     << VDD2V5         << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"AVEE voltage: "       << AVEE           << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"VEE5 voltage: "       << VEE5           << "V" << std::endl;
+  std::cout << std::fixed << std::setprecision(10) <<"VDD1V2 voltage: "     << VDD1V2         << "V" << std::endl;
+
+  fh.close();
+
+}
+
 void AMACTest::runBERvsClock()
 {
   for(uint freqset=0;freqset<pow(2,3);freqset++)

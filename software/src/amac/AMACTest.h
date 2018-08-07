@@ -12,8 +12,10 @@ public:
   AMACTest();
   ~AMACTest();
 
+  void runPower();
+
   void dumpRegisters();
-  
+
   float runBER();  
   void runBERvsClock();
 
