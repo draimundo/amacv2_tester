@@ -2,6 +2,8 @@
 #include "AMAC.h"
 #include "AMACTest.h"
 
+#include "EndeavourComException.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <iomanip>
@@ -28,7 +30,15 @@ int main()
   usleep(1E6);
 
   // Initialize the AMAC communication
-  TB->END.init();
+  try
+    {
+      TB->END.init();
+    }
+  catch(EndeavourComException &e)
+    {
+      std::cout << e.what() << std::endl;
+      return 1;
+    }
   std::cout << "Endeavour OK" << std::endl;
   usleep(1e6);
 
