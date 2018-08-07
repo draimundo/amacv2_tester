@@ -78,7 +78,8 @@ begin
             lo_n_o <= (others => '0');
             ts_cnt <= (others => '0');
             hi_n <= (others => '0');
-			lo_n <= (others => '0');
+            lo_n <= (others => '0');
+            hi_t <= (others => '0');
         else
 ---- EDGE COUNTERS
 			if(frq_s = '1' and frq_old = '0') then -- Rising edge
