@@ -13,7 +13,7 @@
 int main()
 {
   std::shared_ptr<AMACTB> TB=std::make_shared<AMACTB>();
-  AMACTest test("AMACREF1",TB);
+  AMACTest test("AMACREF3",TB);
 
   // Power on
   TB->powerOn();
@@ -69,9 +69,14 @@ int main()
 
   // Cal line
   TB->END.wrField(&AMACv2Reg::Ch4Mux, 1);
+  std::cout << "-- Calibrating CAL" << std::endl;
   test.runVoltageADC("CAL"  ,&AMACv2Reg::Ch4Value , TB->CAL);
+  std::cout << "-- Calibrating Hrefx" << std::endl;
   test.runVoltageADC("Hrefx",&AMACv2Reg::Ch10Value, TB->CAL);
+  std::cout << "-- Calibrating Hrefy" << std::endl;
   test.runVoltageADC("Hrefy",&AMACv2Reg::Ch11Value, TB->CAL);
+  std::cout << "-- Calibrating PTAT" << std::endl;
+  test.runVoltageADC("PTAT" ,&AMACv2Reg::Ch15Value, TB->PTAT);
 
   // Power off
   TB->powerOff();

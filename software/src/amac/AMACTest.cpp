@@ -123,32 +123,6 @@ float AMACTest::runBER()
   std::cout << "Reliability: " << ((float)good)/total << std::endl;
 }
 
-void AMACTest::runVoltageADC(const std::string& chname, AMACv2Field AMACv2Reg::* ch, dac_t dac)
-{
-  std::ofstream fh;
-  fh.open(m_name+"_VADC_"+chname+".csv");
-
-  fh << "Channel\tRampGain\tVoltage\tCounts" << std::endl;
-
-  
-  m_amactb->END.wrField(&AMACv2Reg::AMen,1);
-  m_amactb->END.wrField(&AMACv2Reg::AMenC,1);
-  usleep(5e3);
-  for(float v=0;v<=1.01;v+=0.01)
-    {
-      m_amactb->setDAC(dac, v);
-      for(int ramp=0; ramp<16; ramp++)
-	{
-	  m_amactb->END.wrField(&AMACv2Reg::AMintCalib, ramp);
-	  usleep(10e3);
-	  uint32_t counts=m_amactb->END.rdField(ch);
-	  fh << chname << "\t" << ramp << "\t" << v << "\t" << counts << std::endl;
-	}
-    }
-
-  fh.close();
-}
-
 void AMACTest::runBandgapScan()
 {
   // Enable setting the bandgap
@@ -171,6 +145,36 @@ void AMACTest::runBandgapScan()
 	  float AM900BG=m_amactb->getADC(m_amactb->AM900BG);
 	  float VDD    =m_amactb->getADC(m_amactb->AM_VDD_V);
 	  fh << VDDbg << "\t" << AMbg << "\t" << AM600BG << "\t" << AM900BG << "\t" << VDD << std::endl;
+	}
+    }
+
+  fh.close();
+}
+
+void AMACTest::runVoltageADC(const std::string& chname, AMACv2Field AMACv2Reg::* ch, dac_t dac)
+{
+  std::ofstream fh;
+  fh.open(m_name+"_VADC_"+chname+".csv");
+
+  fh << "Channel\tAMBG\tRampGain\tInputVoltage\tADCvalue" << std::endl;
+
+  m_amactb->END.wrField(&AMACv2Reg::AMbgen , 1);
+  m_amactb->END.wrField(&AMACv2Reg::AMen,1);
+  m_amactb->END.wrField(&AMACv2Reg::AMenC,1);
+  usleep(5e3);
+  for(uint AMbg=0;AMbg<pow(2,4);AMbg++)
+    {
+      m_amactb->END.wrField(&AMACv2Reg::AMbg, AMbg);
+      for(float v=0;v<=1.01;v+=0.01)
+	{
+	  m_amactb->setDAC(dac, v);
+	  for(int ramp=0; ramp<16; ramp++)
+	    {
+	      m_amactb->END.wrField(&AMACv2Reg::AMintCalib, ramp);
+	      usleep(10e3);
+	      uint32_t counts=m_amactb->END.rdField(ch);
+	      fh << chname << "\t" << AMbg << "\t" << ramp << "\t" << v << "\t" << counts << std::endl;
+	    }
 	}
     }
 
