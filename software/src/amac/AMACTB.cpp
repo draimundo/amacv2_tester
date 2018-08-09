@@ -147,6 +147,7 @@ void AMACTB::setDAC(dac_t pin, float voltage){
   //   return;
   // }
   float adj_voltage = voltage / pin.mult_fac; //adjust to voltage divider
+  //std::cout << "adj_voltage = " << adj_voltage << std::endl;
   uint16_t counts;
   switch(pin.dacChanSpan){
   case p5V :
@@ -154,21 +155,24 @@ void AMACTB::setDAC(dac_t pin, float voltage){
     break;
   case p10V :
     counts = (adj_voltage/10) * DAC_FSR;
-    break;
+    std::cout << "+10V Range not supported yet"  << std::endl;
+    return;
   case pm5V :
     counts = (adj_voltage + 5)/10 * DAC_FSR;
-    break;
+    std::cout << "+-5V Range not supported yet"  << std::endl;
+    return;
   case pm10V :
     counts = (adj_voltage + 10)/20 * DAC_FSR;
-    break;
+    std::cout << "+-10V Range not supported yet"  << std::endl;
+    return;
   case pm2_5V :
     counts = (adj_voltage + 2.5)/5 * DAC_FSR;
-    break;
+    std::cout << "+-2.5V Range not supported yet"  << std::endl;
+    return;
   default:
     break;
   }
-
-  pin.DAC->changeSpanChan(pin.chanNbr, (unsigned int) pin.dacChanSpan);	
+  std::cout << "counts = " << counts << std::endl;
   pin.DAC->writeUpdateChan(pin.chanNbr, counts);	
   return;
 }
@@ -181,19 +185,16 @@ void AMACTB::setIDPads(uint8_t id){
   setIO(ID4,(id>>4)&1);
 }
 
-float AMACTB::getADC(adc_t pin)
-{
-  if(pin.mux != NOMUX)
-    {
-      selMUXChannel(pin.mux);
-      setIO(MPM_MUX_EN, true);
-      usleep(10E3);
-    }
-
+float AMACTB::getADC(adc_t pin){
+  if(pin.mux != NOMUX){
+    selMUXChannel(pin.mux);
+    setIO(MPM_MUX_EN, true);
+    usleep(10E3);
+  }
+  
   uint16_t res = pin.ADC->setAndReadChan(pin.chanNbr, pin.adcChanSpan).result;
   float ret;
-  switch(pin.adcChanSpan)
-    {
+  switch(pin.adcChanSpan){
     case p1_25div:
       ret = ((float)res)*1.25/1.024;
       break;
@@ -220,7 +221,7 @@ float AMACTB::getADC(adc_t pin)
       break;
     default:
       break;
-    }
+  }
   if(pin.mux != NOMUX) setIO(MPM_MUX_EN, false);
     
   return (ret / ADC_FSR * ADC_REFBUF / pin.mult_fac); // scale result

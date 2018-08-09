@@ -10,15 +10,15 @@ void FreqMeasInst::init_inst(std::shared_ptr<DeviceCom> dev, uint8_t id, uint32_
 }
 
 void FreqMeasInst::reset_inst(bool active){
-	uint32_t data = m_dev->read_reg(3*m_id);
+	uint32_t data = m_dev->read_reg(4*m_id);
 	data = (data & 0x7FFFFFFF) | ((uint32_t)~active << 31); //reset active low in FW
-	m_dev->write_reg((3*m_id), data);
+	m_dev->write_reg((4*m_id), data);
 }
 
 void FreqMeasInst::freeze_inst(bool active){
-	uint32_t data = m_dev->read_reg(3*m_id);
+	uint32_t data = m_dev->read_reg(4*m_id);
 	data = (data & 0xBFFFFFFF) | ((uint32_t)active << 30);
-	m_dev->write_reg((3*m_id), data);
+	m_dev->write_reg((4*m_id), data);
 }
 
 void FreqMeasInst::start_inst(){
@@ -27,20 +27,15 @@ void FreqMeasInst::start_inst(){
 }
 
 void FreqMeasInst::set_ts_cnt_inst(uint32_t ts_cnt){
-	uint32_t data = m_dev->read_reg(3*m_id);
+	uint32_t data = m_dev->read_reg(4*m_id);
 	data = (data & 0xC0000000) | (ts_cnt & 0x3FFFFFFF);
-	m_dev->write_reg((3*m_id), data);
+	m_dev->write_reg((4*m_id), data);
 }
 
 void FreqMeasInst::read_inst(){
-  uint32_t edge_data = m_dev->read_reg(3*m_id+1);
-  m_hi_n = (uint16_t)(edge_data & 0x7FFF);
-  m_hi_flg = (bool)((edge_data & 0x8000) >> 15);
-  m_lo_n = (uint16_t)((edge_data & 0x7FFF0000) >> 16);
-  m_lo_flg = (bool)((edge_data & 0x80000000) >> 31);
-  uint32_t dc_data = m_dev->read_reg(3*m_id+2);
-  m_hi_t = (uint32_t)(dc_data & 0x7FFFFFFF);
-  m_t_flg = (bool)((dc_data & 0x80000000) >> 31);
+  m_hi_n = m_dev->read_reg(4*m_id+1);
+  m_lo_n = m_dev->read_reg(4*m_id+2);
+  m_hi_t = m_dev->read_reg(4*m_id+3);
 }
 
 uint32_t FreqMeasInst::get_ts_cnt_inst(){
