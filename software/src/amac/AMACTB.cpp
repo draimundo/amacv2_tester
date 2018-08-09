@@ -117,7 +117,7 @@ void AMACTB::setDAC(dac_t pin, float voltage){
   //   std::cout << "Undervoltage, channel min is " << pin.chanMin << "V, while set voltage is " << voltage << "V."  << std::endl;
   //   return;
   // }
-  float adj_voltage = voltage / pin.mult_fac; //adjust to voltage divider
+  float adj_voltage = (voltage-pin.offs) / pin.mult_fac; //adjust to voltage divider
   //std::cout << "adj_voltage = " << adj_voltage << std::endl;
   uint16_t counts;
   switch(pin.dacChanSpan){

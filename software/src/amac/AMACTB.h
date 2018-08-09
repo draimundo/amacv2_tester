@@ -24,6 +24,7 @@ enum dacChanSpan_t{p5V, p10V, pm5V, pm10V, pm2_5V};
 struct dac_t
 {
   float mult_fac;
+  float offs;
   float chanMin;
   float chanMax;
   dacChanSpan_t dacChanSpan;
@@ -160,22 +161,24 @@ public:
   void setDAC(dac_t pin, float voltage);
 	
   //DAC outputs
-  const dac_t CAL = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 0, .DAC = &DAC0};
-  const dac_t Cur1Vp = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 1, .DAC = &DAC0};
-  const dac_t Cur10Vp = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC0};
-  const dac_t PTAT = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC0};
-  const dac_t VCC1 = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC0};
-  const dac_t HVref = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC0};
-  const dac_t Cur10Vp_offset = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC0}; //To be adapted
-  const dac_t Cur1Vp_offset = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC0}; //To be adapted
-  const dac_t HVret_DAC = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 0, .DAC = &DAC1}; //To be adapted
-  const dac_t HVret_OffSetDAC = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 1, .DAC = &DAC1}; //To be adapted
-  const dac_t RgOsc_Vref = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC1}; //To be adapted
-  const dac_t HVOsc_Vref = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC1}; //To be adapted
-  const dac_t VDCDC_ADJ = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC1}; //To be adapted
-  const dac_t VDDHI_ADJ = {.mult_fac = 3.4/(3.4+1.6), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC1}; //To be adapted
-  const dac_t VDDRL_ADJ = {.mult_fac = 1.0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC1}; //To be adapted
-  const dac_t VDD1V2_ADJ = {.mult_fac = 1.6/(1.6+3.4), .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC1}; //To be adapted
+  
+  //Vout = (VDAC)*mult_fac + offs
+  const dac_t CAL = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 0, .DAC = &DAC0};
+  const dac_t Cur1Vp = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 1, .DAC = &DAC0};
+  const dac_t Cur10Vp = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.7, .chanMax = 1, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC0};
+  const dac_t PTAT = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC0};
+  const dac_t VCC1 = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC0};
+  const dac_t HVref = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC0};
+  const dac_t Cur10Vp_offset = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC0}; //To be adapted
+  const dac_t Cur1Vp_offset = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC0}; //To be adapted
+  const dac_t HVret_DAC = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 0, .DAC = &DAC1}; //To be adapted
+  const dac_t HVret_OffSetDAC = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 1, .DAC = &DAC1}; //To be adapted
+  const dac_t RgOsc_Vref = {.mult_fac = 1.0, .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 2, .DAC = &DAC1}; //To be adapted
+  const dac_t HVOsc_Vref = {.mult_fac = 1.0, .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 3, .DAC = &DAC1}; //To be adapted
+  const dac_t VDCDC_ADJ = {.mult_fac = -1.154, .offs=1.511, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 4, .DAC = &DAC1}; //To be adapted
+  const dac_t VDDHI_ADJ = {.mult_fac = 3.4/(3.4+1.6), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 5, .DAC = &DAC1}; //To be adapted
+  const dac_t VDDRL_ADJ = {.mult_fac = -1.154, .offs=1.511, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 6, .DAC = &DAC1}; //To be adapted
+  const dac_t VDD1V2_ADJ = {.mult_fac = 1.6/(1.6+3.4), .offs=0, .chanMin = 0.5, .chanMax = 0.8, .dacChanSpan = p5V, .chanNbr = 7, .DAC = &DAC1}; //To be adapted
 	
   /* ======================================
      ADC CONTROL
@@ -205,10 +208,10 @@ public:
   
   const adc_t AM_LVDS_CM0 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 0, .adcChanSpan = p1_25div, .ADC = &ADC2};
   const adc_t AM_LVDS_CM1 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 1, .adcChanSpan = p1_25div, .ADC = &ADC2};
-  const adc_t HVCtrl0 = {.mult_fac = 1, .mux = HVCtrl0, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
-  const adc_t HVCtrl1 = {.mult_fac = 1, .mux = HVCtrl1, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
-  const adc_t HVCtrl2 = {.mult_fac = 1, .mux = HVCtrl2, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
-  const adc_t HVCtrl3 = {.mult_fac = 1, .mux = HVCtrl3, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
+  const adc_t CP_HVCtrl0 = {.mult_fac = 1, .mux = HVCtrl0, .chanNbr = 2, .adcChanSpan = pm2_5, .ADC = &ADC2};
+  const adc_t CP_HVCtrl1 = {.mult_fac = 1, .mux = HVCtrl1, .chanNbr = 2, .adcChanSpan = pm2_5, .ADC = &ADC2};
+  const adc_t CP_HVCtrl2 = {.mult_fac = 1, .mux = HVCtrl2, .chanNbr = 2, .adcChanSpan = pm2_5, .ADC = &ADC2};
+  const adc_t CP_HVCtrl3 = {.mult_fac = 1, .mux = HVCtrl3, .chanNbr = 2, .adcChanSpan = pm2_5, .ADC = &ADC2};
   const adc_t AVCC_V = {.mult_fac = 1, .mux = AVCC, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
   const adc_t AVDD5_V = {.mult_fac = 1, .mux = AVDD5, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
   const adc_t VCC5_V = {.mult_fac = 1, .mux = VCC5, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};

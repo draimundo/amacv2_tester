@@ -10,7 +10,6 @@
 int main()
 {
   std::shared_ptr<AMACTB> TB=std::make_shared<AMACTB>();
-  AMACTest test("AMACREF1",TB);
 
   // Power on
   TB->powerOn();
