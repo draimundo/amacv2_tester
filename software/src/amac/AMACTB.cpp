@@ -77,35 +77,6 @@ void AMACTB::selHVretChannel(HVret_t sel){
   this->setIO(this->HVret_SW,(sel == HVret_t::HVret1)?false:true);	
 }
 
-void AMACTB::selMUXChannel(mux_t mux_sel){
-	uint32_t mux_data = m_dio->read_reg(0x2);
-	uint32_t mask = (1 << MUX_SEL2.bit) | (1 << MUX_SEL1.bit) | (1 << MUX_SEL0.bit);
-	uint8_t val = 0;
-	switch(mux_sel){
-		case HVCtrl0:
-		case AVCC: val = 0; 
-			break;
-		case HVCtrl1:
-		case AVDD5: val = 1; 
-			break;
-		case HVCtrl2:
-		case VCC5: val = 2; 
-			break;
-		case HVCtrl3:
-		case VDD2V5: val = 3; 
-			break;
-		case AVEE: val = 4; 
-			break;
-		case VEE5: val = 5; 
-			break;
-		case VDD1V2: val = 6; 
-			break;
-		default: val = 0;
-	}
-	mux_data = (mux_data & ~mask) | (val << MUX_SEL0.bit); // supposing the 3 stay grouped in future implementations
-	m_dio->write_reg(MUX_SEL0.reg, mux_data);	
-}
-
 void AMACTB::setIO(io_t pin, bool value){
 	if(pin.dir != OUT){
 		std::cout << "Pin direction error, not OUT" << std::endl;
@@ -185,10 +156,40 @@ void AMACTB::setIDPads(uint8_t id){
   setIO(ID4,(id>>4)&1);
 }
 
+void AMACTB::selMUXChannel(mux_t mux_sel){
+	uint32_t mux_data = m_dio->read_reg(0x2);
+	uint32_t mask = (1 << MUX_SEL2.bit) | (1 << MUX_SEL1.bit) | (1 << MUX_SEL0.bit);
+	uint8_t val = 0;
+	switch(mux_sel){
+		case HVCtrl0:
+		case AVCC: val = 0; 
+			break;
+		case HVCtrl1:
+		case AVDD5: val = 1; 
+			break;
+		case HVCtrl2:
+		case VCC5: val = 2; 
+			break;
+		case HVCtrl3:
+		case VDD2V5: val = 3; 
+			break;
+		case AVEE: val = 4; 
+			break;
+		case VEE5: val = 5; 
+			break;
+		case VDD1V2: val = 6; 
+			break;
+		default: val = 0;
+	}
+	mux_data = (mux_data & ~mask) | (val << MUX_SEL0.bit); // supposing the 3 stay grouped in future implementations
+	m_dio->write_reg(MUX_SEL0.reg, mux_data);	
+}
+
 float AMACTB::getADC(adc_t pin){
   if(pin.mux != NOMUX){
     selMUXChannel(pin.mux);
-    setIO(MPM_MUX_EN, true);
+    if(pin.mux <= HVCtrl3) setIO(HVSW_MUX_EN, true);
+    else setIO(MPM_MUX_EN, true);
     usleep(10E3);
   }
   
@@ -222,8 +223,8 @@ float AMACTB::getADC(adc_t pin){
     default:
       break;
   }
-  if(pin.mux != NOMUX) setIO(MPM_MUX_EN, false);
-    
+  setIO(MPM_MUX_EN, false);
+  setIO(HVSW_MUX_EN, false);
   return (ret / ADC_FSR * ADC_REFBUF / pin.mult_fac); // scale result
 }
 

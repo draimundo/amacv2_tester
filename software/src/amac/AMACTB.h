@@ -205,7 +205,10 @@ public:
   
   const adc_t AM_LVDS_CM0 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 0, .adcChanSpan = p1_25div, .ADC = &ADC2};
   const adc_t AM_LVDS_CM1 = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 1, .adcChanSpan = p1_25div, .ADC = &ADC2};
-  const adc_t HV_SW_Vout = {.mult_fac = 1, .mux = NOMUX, .chanNbr = 2, .adcChanSpan = p1_25div, .ADC = &ADC2};
+  const adc_t HVCtrl0 = {.mult_fac = 1, .mux = HVCtrl0, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
+  const adc_t HVCtrl1 = {.mult_fac = 1, .mux = HVCtrl1, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
+  const adc_t HVCtrl2 = {.mult_fac = 1, .mux = HVCtrl2, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
+  const adc_t HVCtrl3 = {.mult_fac = 1, .mux = HVCtrl3, .chanNbr = 2, .adcChanSpan = pm10V, .ADC = &ADC2};
   const adc_t AVCC_V = {.mult_fac = 1, .mux = AVCC, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
   const adc_t AVDD5_V = {.mult_fac = 1, .mux = AVDD5, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};
   const adc_t VCC5_V = {.mult_fac = 1, .mux = VCC5, .chanNbr = 3, .adcChanSpan = p2_5div, .ADC = &ADC2};

@@ -45,7 +45,7 @@ void FreqMeasInst::read_inst(){
 
 uint32_t FreqMeasInst::get_ts_cnt_inst(){
   uint32_t data = m_dev->read_reg(4*m_id);
- return(data & 0x3FFFFFFF);
+  return(data & 0x3FFFFFFF);
 }
 
 void FreqMeas::reset(FreqMeasInst FreqMeas::* ref, bool active){

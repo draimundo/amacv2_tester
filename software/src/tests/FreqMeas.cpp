@@ -58,38 +58,49 @@ int main()
   std::cout << "Measured CLKOUT frequency: " << TB->FRQ.get_frq("CLKOUT") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
-  TB->FRQ.set_ts_cnt("HVOSC0", 2.1*50E6);
+  TB->FRQ.set_ts_cnt("HVOSC0", 2*50E6);
   TB->FRQ.reset("HVOSC0");
   TB->FRQ.start("HVOSC0");
   usleep(1E6); //1s wait for conv and display
   TB->FRQ.read("HVOSC0");
   std::cout << "Measured HVOSC0 hi_n: " << (unsigned)TB->FRQ.get_hi_n("HVOSC0") << std::endl;
   std::cout << "Measured HVOSC0 ts_cnt: " << (unsigned)TB->FRQ.get_ts_cnt("HVOSC0") << std::endl;
-  
   std::cout << "Measured HVOSC0 frequency: " << TB->FRQ.get_frq("HVOSC0") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
-  TB->FRQ.set_ts_cnt("HVOSC1", 2.1*50E6);
+  TB->FRQ.set_ts_cnt("HVOSC1", 2*50E6);
   TB->FRQ.reset("HVOSC1");
   TB->FRQ.start("HVOSC1");
   usleep(1E6); //1s wait for conv and display
   TB->FRQ.read("HVOSC1");
+  
+  std::cout << "Measured HVOSC1 hi_n: " << (unsigned)TB->FRQ.get_hi_n("HVOSC1") << std::endl;
+  std::cout << "Measured HVOSC1 ts_cnt: " << (unsigned)TB->FRQ.get_ts_cnt("HVOSC1") << std::endl;
+  
   std::cout << "Measured HVOSC1 frequency: " << TB->FRQ.get_frq("HVOSC1") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
-  TB->FRQ.set_ts_cnt("HVOSC2", 2.1*50E6);
+  TB->FRQ.set_ts_cnt("HVOSC2", 2*50E6);
   TB->FRQ.reset("HVOSC2");
   TB->FRQ.start("HVOSC2");
   usleep(1E6); //1s wait for conv and display
+  std::cout << "Measured HVOSC2 hi_n: " << (unsigned)TB->FRQ.get_hi_n("HVOSC2") << std::endl;
+  std::cout << "Measured HVOSC2 ts_cnt: " << (unsigned)TB->FRQ.get_ts_cnt("HVOSC2") << std::endl;
+  
+  
   TB->FRQ.read("HVOSC2");
   std::cout << "Measured HVOSC2 frequency: " << TB->FRQ.get_frq("HVOSC2") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
-  TB->FRQ.set_ts_cnt("HVOSC3", 2.1*50E6);
+  TB->FRQ.set_ts_cnt("HVOSC3", 2*50E6);
   TB->FRQ.reset("HVOSC3");
   TB->FRQ.start("HVOSC3");
   usleep(1E6); //1s wait for conv and display
   TB->FRQ.read("HVOSC3");
+  std::cout << "Measured HVOSC3 hi_n: " << (unsigned)TB->FRQ.get_hi_n("HVOSC3") << std::endl;
+  std::cout << "Measured HVOSC3 ts_cnt: " << (unsigned)TB->FRQ.get_ts_cnt("HVOSC3") << std::endl;
+  
+  
   std::cout << "Measured HVOSC3 frequency: " << TB->FRQ.get_frq("HVOSC3") << "Hz" << std::endl;
 
   // Power off
