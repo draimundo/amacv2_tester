@@ -172,7 +172,7 @@ void AMACTB::setDAC(dac_t pin, float voltage){
   default:
     break;
   }
-  std::cout << "counts = " << counts << std::endl;
+  //std::cout << "counts = " << counts << std::endl;
   pin.DAC->writeUpdateChan(pin.chanNbr, counts);	
   return;
 }

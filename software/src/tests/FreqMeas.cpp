@@ -62,6 +62,10 @@ int main()
   TB->FRQ.reset("HVOSC0");
   TB->FRQ.start("HVOSC0");
   usleep(1E6); //1s wait for conv and display
+  TB->FRQ.read("HVOSC0");
+  std::cout << "Measured HVOSC0 hi_n: " << (unsigned)TB->FRQ.get_hi_n("HVOSC0") << std::endl;
+  std::cout << "Measured HVOSC0 ts_cnt: " << (unsigned)TB->FRQ.get_ts_cnt("HVOSC0") << std::endl;
+  
   std::cout << "Measured HVOSC0 frequency: " << TB->FRQ.get_frq("HVOSC0") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
@@ -69,6 +73,7 @@ int main()
   TB->FRQ.reset("HVOSC1");
   TB->FRQ.start("HVOSC1");
   usleep(1E6); //1s wait for conv and display
+  TB->FRQ.read("HVOSC1");
   std::cout << "Measured HVOSC1 frequency: " << TB->FRQ.get_frq("HVOSC1") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
@@ -76,6 +81,7 @@ int main()
   TB->FRQ.reset("HVOSC2");
   TB->FRQ.start("HVOSC2");
   usleep(1E6); //1s wait for conv and display
+  TB->FRQ.read("HVOSC2");
   std::cout << "Measured HVOSC2 frequency: " << TB->FRQ.get_frq("HVOSC2") << "Hz" << std::endl;
 
   TB->setDAC(TB->HVOsc_Vref, 0.15);
@@ -83,6 +89,7 @@ int main()
   TB->FRQ.reset("HVOSC3");
   TB->FRQ.start("HVOSC3");
   usleep(1E6); //1s wait for conv and display
+  TB->FRQ.read("HVOSC3");
   std::cout << "Measured HVOSC3 frequency: " << TB->FRQ.get_frq("HVOSC3") << "Hz" << std::endl;
 
   // Power off
